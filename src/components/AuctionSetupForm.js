@@ -5,7 +5,7 @@ import { Fieldset, FieldsetTitle, Label } from '../styles/formStyles';
 import Button from '../styles/buttonStyles';
 import tokenList from '../data/tokenList.json';
 
-export default function AuctionSetup({ onSubmit }) {
+export default function AuctionSetupForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
   console.log('tokenList', tokenList);
   console.log('AuctionSetup form errors', errors);
@@ -16,7 +16,7 @@ export default function AuctionSetup({ onSubmit }) {
         <FieldsetTitle>Asset to auction</FieldsetTitle>
         <Label htmlFor='amount'>
           Amount (tokens):
-          <input type='number' id='amount' name='amount' ref={register} />
+          <input type='number' step='0.001' min='0' id='amount' name='amount' ref={register} />
         </Label>
         <Label htmlFor='token'>
           ERC-20 token:
