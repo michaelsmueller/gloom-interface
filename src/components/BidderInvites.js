@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from '../contexts/web3Context';
 import Auction from '../contracts/Auction.json';
-import { BidderInvitesForm } from '.';
+import { BackButton, BidderInvitesForm } from '.';
 import { getSigner } from '../utils/web3Library';
 
 export default function BidderInvites() {
@@ -37,6 +37,7 @@ export default function BidderInvites() {
 
   return (
     <div>
+      <BackButton />
       <h1>Bidder invites</h1>
       <BidderInvitesForm onSubmit={inviteBidders} />
       <pre>Auction contract: {auctionAddress}</pre>

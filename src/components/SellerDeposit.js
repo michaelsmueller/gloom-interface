@@ -5,7 +5,7 @@ import { Contract } from '@ethersproject/contracts';
 import { parseEther } from '@ethersproject/units';
 import { Web3Context } from '../contexts/web3Context';
 import Auction from '../contracts/Auction.json';
-import { SellerDepositForm } from '.';
+import { BackButton, SellerDepositForm } from '.';
 import Button from '../styles/buttonStyles';
 import { getSigner } from '../utils/web3Library';
 
@@ -35,6 +35,7 @@ export default function SellerDeposit() {
 
   return (
     <div>
+      <BackButton />
       <h1>Fund deposit</h1>
       <SellerDepositForm onSubmit={fundDeposit} />
       <Button type='button' onClick={goToBidders}>
