@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Web3ReactProvider } from '@web3-react/core';
-import Web3ContextProvider from './contexts/web3Context';
-import GlobalStyle from './styles/globalStyles';
-import { getLibrary } from './utils/web3Library';
-import { Head, Home, AuctionSetup, AuctionDetails, SellerDeposit, BidderInvites } from './components';
+import GlobalStyle from 'styles/globalStyles';
+import Web3ContextProvider from 'contexts/web3Context';
+import { getLibrary } from 'utils/web3Library';
+import { Head, Home, AuctionSetup, AuctionDetails, SellerDeposit, BidderInvites } from 'components';
 
 export default function App() {
   return (

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
-import { Web3Context } from '../contexts/web3Context';
-import AuctionFactory from '../contracts/AuctionFactory.json';
-import Button from '../styles/buttonStyles';
-import { getSigner } from '../utils/web3Library';
+import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
+import Button from 'styles/buttonStyles';
 
 export default function Home() {
   const history = useHistory();

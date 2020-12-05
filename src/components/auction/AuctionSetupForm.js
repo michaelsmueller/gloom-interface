@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Fieldset, FieldsetTitle, Label } from '../../styles/formStyles';
-import Button from '../../styles/buttonStyles';
-import tokenList from '../../data/tokenList.json';
+import { Fieldset, FieldsetTitle, Label } from 'styles/formStyles';
+import Button from 'styles/buttonStyles';
+import tokenList from 'data/tokenList.json';
 
 export default function AuctionSetupForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();

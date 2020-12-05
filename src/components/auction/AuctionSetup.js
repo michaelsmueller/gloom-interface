@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
-import { Web3Context } from '../../contexts/web3Context';
-import AuctionFactory from '../../contracts/AuctionFactory.json';
-import { BackButton, AuctionSetupForm } from '../index';
-import Button from '../../styles/buttonStyles';
-import { getSigner } from '../../utils/web3Library';
-import { parseLocalDateTime, getLocalDateTime } from '../../utils/dateTime';
+import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
+import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
+import { BackButton, AuctionSetupForm } from 'components';
+import Button from 'styles/buttonStyles';
 
 export default function AuctionSetup() {
   const history = useHistory();

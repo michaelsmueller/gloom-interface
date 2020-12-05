@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
-import { Web3Context } from '../../contexts/web3Context';
-import Auction from '../../contracts/Auction.json';
-import { BackButton, SellerDepositForm } from '..';
-import Button from '../../styles/buttonStyles';
-import { getSigner } from '../../utils/web3Library';
+import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
+import { BackButton, SellerDepositForm } from 'components';
+import Button from 'styles/buttonStyles';
 
 export default function SellerDeposit() {
   const history = useHistory();
