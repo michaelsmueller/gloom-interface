@@ -4,7 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import Web3ContextProvider from './contexts/web3Context';
 import GlobalStyle from './styles/globalStyles';
 import { getLibrary } from './utils/web3Library';
-import { Head, AuctionSetup, SellerDeposit, BidderInvites } from './components';
+import { Head, Home, AuctionSetup, AuctionDetails, SellerDeposit, BidderInvites } from './components';
 
 export default function App() {
   return (
@@ -15,7 +15,9 @@ export default function App() {
           <GlobalStyle />
           {/* <Network /> */}
           <Switch>
+            <Route exact path='/' component={Home} />
             <Route exact path='/auctions/new' component={AuctionSetup} />
+            <Route exact path='/auctions/:id' component={AuctionDetails} />
             <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
             <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
           </Switch>

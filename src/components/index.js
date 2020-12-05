@@ -1,14 +1,15 @@
-// common
-export { default as Head } from './Head';
 export { default as Home } from './Home';
-export { default as BackButton } from './BackButton';
-export { default as Network } from './Network';
 
-// CreateAuction
-export { default as AuctionSetup } from './AuctionSetup';
-export { default as AuctionSetupForm } from './AuctionSetupForm';
-export { default as AuctionDetails } from './AuctionDetails';
-export { default as BidderInvites } from './BidderInvites';
-export { default as BidderInvitesForm } from './BidderInvitesForm';
-export { default as SellerDeposit } from './SellerDeposit';
-export { default as SellerDepositForm } from './SellerDepositForm';
+// common
+export { default as Head } from './common/Head';
+export { default as BackButton } from './common/BackButton';
+export { default as Network } from './common/Network';
+
+// auction
+export { default as AuctionSetup } from './auction/AuctionSetup';
+export { default as AuctionSetupForm } from './auction/AuctionSetupForm';
+export { default as AuctionDetails } from './auction/AuctionDetails';
+export { default as BidderInvites } from './auction/BidderInvites';
+export { default as BidderInvitesForm } from './auction/BidderInvitesForm';
+export { default as SellerDeposit } from './auction/SellerDeposit';
+export { default as SellerDepositForm } from './auction/SellerDepositForm';
