@@ -39,15 +39,22 @@ export default function Home() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const goToAuctionSetup = () => history.push(`/auctions/new`);
+  const goToAuctionSetup = () => history.push('/auctions/new');
+  const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
 
   return (
     <div>
-      <pre>{auctionAddress}</pre>
       <h1>Gloom</h1>
-      <Button type='button' onClick={goToAuctionSetup}>
-        New auction
-      </Button>
+      {!auctionAddress ? (
+        <Button type='button' onClick={goToAuctionSetup}>
+          New auction
+        </Button>
+      ) : null}
+      {auctionAddress ? (
+        <Button type='button' onClick={goToAuctionDetails}>
+          View auction
+        </Button>
+      ) : null}
     </div>
   );
 }
