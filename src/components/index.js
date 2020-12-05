@@ -1,5 +1,6 @@
 // general
 export { default as Head } from './Head';
+export { default as Home } from './Home';
 export { default as BackButton } from './BackButton';
 export { default as Network } from './Network';
 

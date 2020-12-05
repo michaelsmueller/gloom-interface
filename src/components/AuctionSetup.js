@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from '../contexts/web3Context';
 import AuctionFactory from '../contracts/AuctionFactory.json';
-import { AuctionSetupForm } from '.';
+import { BackButton, AuctionSetupForm } from '.';
 import Button from '../styles/buttonStyles';
 import { getSigner } from '../utils/web3Library';
 import { parseLocalDateTime, getLocalDateTime } from '../utils/dateTime';
@@ -63,10 +63,10 @@ export default function AuctionSetup() {
   const { address } = factoryContract || '';
   return (
     <div>
-      <h2>Auction factory</h2>
+      {/* <h2>Auction factory</h2>
       <Button type='button' onClick={getAuctions}>
         Get auction addresses
-      </Button>
+      </Button> */}
       <pre>factory address: {address}</pre>
       <pre>
         Auction addresses:
@@ -76,7 +76,8 @@ export default function AuctionSetup() {
       <br />
       <hr />
 
-      <h2>Set up auction</h2>
+      <BackButton />
+      <h1>Set up auction</h1>
       <AuctionSetupForm onSubmit={setupAuction} />
       {auctionAddresses.length ? (
         <Button type='button' onClick={goToSellerDeposit}>
