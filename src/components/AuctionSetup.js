@@ -12,7 +12,7 @@ import { parseLocalDateTime, getLocalDateTime } from '../utils/dateTime';
 export default function AuctionSetup() {
   const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  const { account: seller, active, error, library, chainId } = web3Context;
+  const { active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
   const [auctionAddresses, setAuctionAddresses] = useState([]);
 

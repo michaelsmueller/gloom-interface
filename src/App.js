@@ -4,7 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import Web3ContextProvider from './contexts/web3Context';
 import GlobalStyle from './styles/globalStyles';
 import { getLibrary } from './utils/web3Library';
-import { Head, Network, AuctionSetup, SellerDeposit, BidderInvites } from './components';
+import { Head, AuctionSetup, SellerDeposit, BidderInvites } from './components';
 
 export default function App() {
   return (

@@ -10,7 +10,7 @@ import { getSigner } from '../utils/web3Library';
 export default function BidderInvites() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
-  const { account, active, error, library } = web3Context;
+  const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
 
   useEffect(() => {
@@ -33,6 +33,9 @@ export default function BidderInvites() {
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
+    auctionContract.on('InvitedBidder', bidder => {
+      console.log('InvitedBidder event, bidder', bidder);
+    });
   };
 
   return (
