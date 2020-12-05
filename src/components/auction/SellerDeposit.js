@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
-import { parseEther } from '@ethersproject/units';
-import { Web3Context } from '../contexts/web3Context';
-import Auction from '../contracts/Auction.json';
-import { SellerDepositForm } from '.';
-import Button from '../styles/buttonStyles';
-import { getSigner } from '../utils/web3Library';
+import { formatUnits, parseEther } from '@ethersproject/units';
+import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
+import { BackButton, SellerDepositForm } from 'components';
+import Button from 'styles/buttonStyles';
 
 export default function SellerDeposit() {
   const history = useHistory();
@@ -28,13 +28,18 @@ export default function SellerDeposit() {
 
   const fundDeposit = async ({ sellerDeposit }) => {
     const overrides = { from: account, value: parseEther(sellerDeposit) };
-    auctionContract.receiveSellerDeposit(overrides);
+    await auctionContract.receiveSellerDeposit(overrides);
+    auctionContract.on('ReceiveSellerDeposit', (seller, deposit) => {
+      console.log('ReceiveSellerDeposit event, seller', seller);
+      console.log('ReceiveSellerDeposit event, sellerDeposit', formatUnits(deposit));
+    });
   };
 
   const goToBidders = () => history.push(`/auctions/${auctionAddress}/bidder-invites`);
 
   return (
     <div>
+      <BackButton />
       <h1>Fund deposit</h1>
       <SellerDepositForm onSubmit={fundDeposit} />
       <Button type='button' onClick={goToBidders}>

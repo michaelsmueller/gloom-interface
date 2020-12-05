@@ -6,6 +6,13 @@
     "node": true,
     "jest": true
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
   "extends": [
     "react-app",
     "airbnb",

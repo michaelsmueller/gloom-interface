@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
-import { Web3Context } from '../contexts/web3Context';
-import AuctionFactory from '../contracts/AuctionFactory.json';
-import { AuctionSetupForm } from '.';
-import Button from '../styles/buttonStyles';
-import { getSigner } from '../utils/web3Library';
-import { parseLocalDateTime, getLocalDateTime } from '../utils/dateTime';
+import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
+import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
+import { BackButton, AuctionSetupForm } from 'components';
+import Button from 'styles/buttonStyles';
 
 export default function AuctionSetup() {
   const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  const { account, active, error, library, chainId } = web3Context;
+  const { active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
   const [auctionAddresses, setAuctionAddresses] = useState([]);
 
@@ -33,7 +33,7 @@ export default function AuctionSetup() {
   };
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(amount, token, startDate, endDate, account);
+    const tx = await factoryContract.createAuction(amount, token, startDate, endDate);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
@@ -63,10 +63,10 @@ export default function AuctionSetup() {
   const { address } = factoryContract || '';
   return (
     <div>
-      <h2>Auction factory</h2>
+      {/* <h2>Auction factory</h2>
       <Button type='button' onClick={getAuctions}>
         Get auction addresses
-      </Button>
+      </Button> */}
       <pre>factory address: {address}</pre>
       <pre>
         Auction addresses:
@@ -76,7 +76,8 @@ export default function AuctionSetup() {
       <br />
       <hr />
 
-      <h2>Set up auction</h2>
+      <BackButton />
+      <h1>Set up auction</h1>
       <AuctionSetupForm onSubmit={setupAuction} />
       {auctionAddresses.length ? (
         <Button type='button' onClick={goToSellerDeposit}>
