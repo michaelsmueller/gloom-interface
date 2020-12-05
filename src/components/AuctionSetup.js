@@ -12,7 +12,7 @@ import { parseLocalDateTime, getLocalDateTime } from '../utils/dateTime';
 export default function AuctionSetup() {
   const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  const { account, active, error, library, chainId } = web3Context;
+  const { account: seller, active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
   const [auctionAddresses, setAuctionAddresses] = useState([]);
 
@@ -33,7 +33,7 @@ export default function AuctionSetup() {
   };
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(amount, token, startDate, endDate, account);
+    const tx = await factoryContract.createAuction(amount, token, startDate, endDate);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);

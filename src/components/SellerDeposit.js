@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
-import { parseEther } from '@ethersproject/units';
+import { formatUnits, parseEther } from '@ethersproject/units';
 import { Web3Context } from '../contexts/web3Context';
 import Auction from '../contracts/Auction.json';
 import { BackButton, SellerDepositForm } from '.';
@@ -28,7 +28,11 @@ export default function SellerDeposit() {
 
   const fundDeposit = async ({ sellerDeposit }) => {
     const overrides = { from: account, value: parseEther(sellerDeposit) };
-    auctionContract.receiveSellerDeposit(overrides);
+    await auctionContract.receiveSellerDeposit(overrides);
+    auctionContract.on('ReceiveSellerDeposit', (seller, deposit) => {
+      console.log('ReceiveSellerDeposit event, seller', seller);
+      console.log('ReceiveSellerDeposit event, sellerDeposit', formatUnits(deposit));
+    });
   };
 
   const goToBidders = () => history.push(`/auctions/${auctionAddress}/bidder-invites`);
