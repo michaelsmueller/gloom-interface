@@ -3,8 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits } from '@ethersproject/units';
-import { keccak256 } from '@ethersproject/keccak256';
-import { toUtf8Bytes } from '@ethersproject/strings';
+import { formatBytes32String } from '@ethersproject/strings';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { BackButton, CommitBidForm } from 'components';
@@ -41,17 +40,21 @@ export default function Bid() {
 
   const submitBid = async ({ bid }) => {
     console.log('bid', bid);
-    const randomBytes = toUtf8Bytes(`${Math.random()}`);
-    const salt = keccak256(randomBytes);
-    console.log('salt', salt);
-    // const overrides = { from: account };
-    // const tx = await auctionContract.setupBidders(bidderDeposit, bidderAddresses);
-    // const receipt = await tx.wait();
-    // console.log('tx', tx);
-    // console.log('receipt', receipt);
-    // auctionContract.on('InvitedBidder', bidder => {
-    //   console.log('InvitedBidder event, bidder', bidder);
-    // });
+    const bidHex = formatBytes32String(bid);
+    const salt = formatBytes32String(Math.random().toString());
+    console.log('bidBytes', bidHex);
+    console.log('randomBytes', salt);
+    const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
+    console.log('bidHash', hashedBid);
+    const tx = await auctionContract.commitBid(hashedBid);
+    const receipt = await tx.wait();
+    console.log('tx', tx);
+    console.log('receipt', receipt);
+    auctionContract.on('BidCommitted', (bidder, bidHash, bidCommitBlock) => {
+      console.log('bidder', bidder);
+      console.log('bidHash', bidHash);
+      console.log('bidCommitBlock', bidCommitBlock);
+    });
   };
 
   return (

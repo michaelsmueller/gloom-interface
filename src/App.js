@@ -4,7 +4,16 @@ import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'styles/globalStyles';
 import Web3ContextProvider from 'contexts/web3Context';
 import { getLibrary } from 'utils/web3Library';
-import { Head, Home, AuctionSetup, AuctionDetails, SellerDeposit, BidderInvites } from 'components';
+import {
+  Head,
+  Home,
+  AuctionSetup,
+  AuctionDetails,
+  SellerDeposit,
+  BidderInvites,
+  CommitBid,
+  NotFound,
+} from 'components';
 
 export default function App() {
   return (
@@ -20,6 +29,8 @@ export default function App() {
             <Route exact path='/auctions/:id' component={AuctionDetails} />
             <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
             <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
+            <Route exact path='/auctions/:id/commit-bid' component={CommitBid} />
+            <Route path='*' component={NotFound} />
           </Switch>
         </Router>
       </Web3ContextProvider>
