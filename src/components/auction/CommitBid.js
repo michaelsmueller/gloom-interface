@@ -12,7 +12,7 @@ import { getSigner } from 'utils/web3Library';
 export default function Bid() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library } = web3Context;
+  const { account, active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
   const [bidderDeposit, setBidderDeposit] = useState(null);
 
@@ -29,8 +29,8 @@ export default function Bid() {
     console.log('active');
     const getBidderDeposit = async () => {
       console.log('getBidderDeposit');
-      const temp = await auctionContract.getBidderDeposit();
-      setBidderDeposit(temp);
+      const deposit = await auctionContract.getBidderDeposit();
+      setBidderDeposit(deposit);
     };
     getBidderDeposit();
   }, [active, auctionContract]);
@@ -41,16 +41,17 @@ export default function Bid() {
   const submitBid = async ({ bid }) => {
     console.log('bid', bid);
     const bidHex = formatBytes32String(bid);
-    const salt = formatBytes32String(Math.random().toString());
-    console.log('bidBytes', bidHex);
-    console.log('randomBytes', salt);
+    // const salt = formatBytes32String(Math.random().toString());
+    const salt = formatBytes32String(account.substring(2, 33)); // 31 bytes
+    console.log('account', account);
+    console.log('salt', salt);
     const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
     console.log('bidHash', hashedBid);
     const tx = await auctionContract.commitBid(hashedBid);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
-    auctionContract.on('BidCommitted', (bidder, bidHash, bidCommitBlock) => {
+    auctionContract.on('LogBidCommitted', (bidder, bidHash, bidCommitBlock) => {
       console.log('bidder', bidder);
       console.log('bidHash', bidHash);
       console.log('bidCommitBlock', bidCommitBlock);

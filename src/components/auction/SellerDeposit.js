@@ -29,7 +29,7 @@ export default function SellerDeposit() {
   const fundDeposit = async ({ sellerDeposit }) => {
     const overrides = { from: account, value: parseEther(sellerDeposit) };
     await auctionContract.receiveSellerDeposit(overrides);
-    auctionContract.on('ReceiveSellerDeposit', (seller, deposit) => {
+    auctionContract.on('LogSellerDepositReceived', (seller, deposit) => {
       console.log('ReceiveSellerDeposit event, seller', seller);
       console.log('ReceiveSellerDeposit event, sellerDeposit', formatUnits(deposit));
     });

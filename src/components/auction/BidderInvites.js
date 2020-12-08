@@ -34,7 +34,7 @@ export default function BidderInvites() {
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
-    auctionContract.on('InvitedBidder', bidder => {
+    auctionContract.on('LogBidderInvited', bidder => {
       console.log('InvitedBidder event, bidder', bidder);
     });
   };
