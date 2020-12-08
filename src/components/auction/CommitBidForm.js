@@ -8,12 +8,17 @@ import { getPasswordStrength } from 'utils/validate';
 export default function CommitBidForm({ bidderDeposit, onSubmit }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [passwordShown, setPasswordShown] = useState(false);
   const password = useRef({});
   password.current = watch('password', '');
   console.log('BidderInvites form errors', errors);
 
-  const handleChange = ({ target }) => {
+  const handlePasswordChange = ({ target }) => {
     setPasswordStrength(getPasswordStrength(target.value));
+  };
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(!passwordShown);
   };
 
   return (
@@ -30,7 +35,15 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
         <FieldsetTitle>Bid</FieldsetTitle>
         <Label htmlFor='bid'>
           Amount (ETH):
-          <Input type='number' step='0.001' min='0' id='bid' name='bid' ref={register} />
+          <Input
+            type='number'
+            step='0.001'
+            min='0'
+            id='bid'
+            name='bid'
+            ref={register({ required: 'You must specify a bid' })}
+          />
+          {errors.bid && <p>{errors.bid.message}</p>}
         </Label>
       </Fieldset>
 
@@ -39,17 +52,26 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
         <Label htmlFor='password'>
           Password:
           <Input
-            type='password'
+            type={passwordShown ? 'text' : 'password'}
             id='password'
             name='password'
-            onChange={handleChange}
+            onChange={handlePasswordChange}
             ref={register({
               required: 'You must specify a password',
               validate: value => getPasswordStrength(value) > 2 || 'Password is too weak',
             })}
           />
+          <i
+            role='button'
+            onClick={togglePasswordVisiblity}
+            onKeyDown={togglePasswordVisiblity}
+            tabIndex={0}
+            className='material-icons-round'
+          >
+            visibility
+          </i>
           <pre>strength: {passwordStrength}</pre>
-          {errors.password && <em>{errors.password.message}</em>}
+          {errors.password && <p>{errors.password.message}</p>}
         </Label>
         <Label htmlFor='salt'>
           Repeat password:
@@ -59,7 +81,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
             name='passwordRepeat'
             ref={register({ validate: value => value === password.current || "Passwords don't match" })}
           />
-          {errors.passwordRepeat && <em>{errors.passwordRepeat.message}</em>}
+          {errors.passwordRepeat && <p>{errors.passwordRepeat.message}</p>}
         </Label>
       </Fieldset>
 

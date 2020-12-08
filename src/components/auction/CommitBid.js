@@ -9,7 +9,7 @@ import Auction from 'contracts/Auction.json';
 import { BackButton, CommitBidForm } from 'components';
 import { getSigner } from 'utils/web3Library';
 
-export default function Bid() {
+export default function CommitBid() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { account, active, error, library } = web3Context;
@@ -38,8 +38,9 @@ export default function Bid() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
-  const submitBid = async ({ bid }) => {
+  const submitBid = async ({ bid, password }) => {
     console.log('bid', bid);
+    console.log('password', password);
     const bidHex = formatBytes32String(bid);
     // const salt = formatBytes32String(Math.random().toString());
     const salt = formatBytes32String(account.substring(2, 33)); // 31 bytes
@@ -61,7 +62,7 @@ export default function Bid() {
   return (
     <div>
       <BackButton />
-      <h1>Submit bid</h1>
+      <h1>Commit bid</h1>
       <CommitBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={submitBid} />
       <pre>
         Auction contract: {auctionAddress}
