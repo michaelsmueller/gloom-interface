@@ -12,7 +12,7 @@ import { getSigner } from 'utils/web3Library';
 export default function CommitBid() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
-  const { account, active, error, library } = web3Context;
+  const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
   const [bidderDeposit, setBidderDeposit] = useState(null);
 
@@ -39,15 +39,15 @@ export default function CommitBid() {
   if (error) return <div>error</div>;
 
   const submitBid = async ({ bid, password }) => {
+    const bidHex = formatBytes32String(bid);
+    const salt = formatBytes32String(password);
+    const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
+
     console.log('bid', bid);
     console.log('password', password);
-    const bidHex = formatBytes32String(bid);
-    // const salt = formatBytes32String(Math.random().toString());
-    const salt = formatBytes32String(account.substring(2, 33)); // 31 bytes
-    console.log('account', account);
     console.log('salt', salt);
-    const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
-    console.log('bidHash', hashedBid);
+    console.log('hashedBid', hashedBid);
+
     const tx = await auctionContract.commitBid(hashedBid);
     const receipt = await tx.wait();
     console.log('tx', tx);

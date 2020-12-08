@@ -13,7 +13,15 @@ export default function SellerDeposit({ onSubmit }) {
         <FieldsetTitle>Seller deposit</FieldsetTitle>
         <Label htmlFor='amount'>
           Amount (ETH):
-          <Input type='number' step='0.001' min='0' id='seller-deposit' name='sellerDeposit' ref={register} />
+          <Input
+            type='number'
+            step='0.001'
+            min='0'
+            id='seller-deposit'
+            name='sellerDeposit'
+            ref={register({ required: 'You must specify an amount' })}
+          />
+          {errors.sellerDeposit && <p>{errors.sellerDeposit.message}</p>}
         </Label>
       </Fieldset>
       <Button type='submit'>Fund deposit</Button>

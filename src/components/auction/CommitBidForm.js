@@ -14,12 +14,11 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
   console.log('BidderInvites form errors', errors);
 
   const handlePasswordChange = ({ target }) => {
-    setPasswordStrength(getPasswordStrength(target.value));
+    const strength = getPasswordStrength(target.value);
+    setPasswordStrength(strength);
   };
 
-  const togglePasswordVisiblity = () => {
-    setPasswordShown(!passwordShown);
-  };
+  const togglePasswordVisiblity = () => setPasswordShown(!passwordShown);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -49,6 +48,10 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
 
       <Fieldset>
         <FieldsetTitle>Password</FieldsetTitle>
+        <em>
+          This password will be used to hide your bid. We will not store it, nor can it be recovered. If you lose this
+          password, you will not be able to reveal your bid and you will lose your deposit.
+        </em>
         <Label htmlFor='password'>
           Password:
           <Input
@@ -79,7 +82,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
             type='password'
             id='password_repeat'
             name='passwordRepeat'
-            ref={register({ validate: value => value === password.current || "Passwords don't match" })}
+            ref={register({ validate: value => value === password.current || 'Passwords do not match' })}
           />
           {errors.passwordRepeat && <p>{errors.passwordRepeat.message}</p>}
         </Label>

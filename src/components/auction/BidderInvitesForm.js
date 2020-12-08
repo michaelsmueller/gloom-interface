@@ -9,6 +9,9 @@ export default function BidderInvites({ onSubmit }) {
   const [counter, setCounter] = useState(0);
   const { register, handleSubmit, errors } = useForm();
   console.log('BidderInvites form errors', errors);
+  if (errors.bidders?.length) {
+    console.log('bidders errors', errors.bidders);
+  }
 
   const addBidder = () => {
     setIndexes(prevIndexes => [...prevIndexes, counter]);
@@ -31,7 +34,15 @@ export default function BidderInvites({ onSubmit }) {
         <FieldsetTitle>Bidder deposit</FieldsetTitle>
         <Label htmlFor='bidder-deposit'>
           Amount (ETH):
-          <Input type='number' step='0.001' min='0' id='bidder-deposit' name='bidderDeposit' ref={register} />
+          <Input
+            type='number'
+            step='0.001'
+            min='0'
+            id='bidder-deposit'
+            name='bidderDeposit'
+            ref={register({ required: 'You must specify an amount' })}
+          />
+          {errors.bidderDeposit && <p>{errors.bidderDeposit.message}</p>}
         </Label>
       </Fieldset>
 
@@ -45,12 +56,18 @@ export default function BidderInvites({ onSubmit }) {
               <Label htmlFor='account'>
                 <span>{index + 1}.&nbsp;</span>
                 Account:
-                <Input type='text' id='account' name={`${fieldName}.account`} ref={register} />
+                <Input
+                  type='text'
+                  id='account'
+                  name={`${fieldName}.account`}
+                  ref={register({ required: 'Bidder cannot be empty' })}
+                />
                 {index === last && (
                   <button type='button' onClick={removeBidder(index)}>
                     <i className='material-icons-round'>delete</i>
                   </button>
                 )}
+                {errors.bidders?.length && index in errors.bidders && <p>{errors.bidders[index].account.message}</p>}
               </Label>
             </div>
           );
