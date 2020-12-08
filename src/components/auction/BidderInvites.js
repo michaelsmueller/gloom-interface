@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
+import { parseEther } from '@ethersproject/units';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import { BackButton, BidderInvitesForm } from 'components';
@@ -29,11 +30,11 @@ export default function BidderInvites() {
     const bidderAddresses = bidders.map(bidder => bidder.account);
     console.log('bidderAddresses', bidderAddresses);
     // const overrides = { from: account };
-    const tx = await auctionContract.setupBidders(bidderDeposit, bidderAddresses);
+    const tx = await auctionContract.setupBidders(parseEther(bidderDeposit), bidderAddresses);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
-    auctionContract.on('InvitedBidder', bidder => {
+    auctionContract.on('LogBidderInvited', bidder => {
       console.log('InvitedBidder event, bidder', bidder);
     });
   };

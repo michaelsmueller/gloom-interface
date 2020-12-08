@@ -37,7 +37,7 @@ export default function AuctionSetup() {
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
-    factoryContract.on('AuctionCreated', event => console.log('AuctionCreated event', event));
+    factoryContract.on('LogAuctionCreated', event => console.log('AuctionCreated event', event));
     factoryContract.once(tx, transaction => {
       console.log('transaction mined', transaction);
       getAuctions();

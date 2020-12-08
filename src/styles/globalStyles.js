@@ -66,12 +66,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: inherit;
   }
 
-  input, select {
-    border-radius: 20px;
-    padding: 8px 15px;
-    box-shadow: inset -3px -3px 5px var(--nearWhite), inset  3px  3px 3px var(--shadow);
-  }
-
   input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
