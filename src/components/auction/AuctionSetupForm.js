@@ -7,9 +7,6 @@ import tokenList from 'data/tokenList.json';
 
 export default function AuctionSetupForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
-  console.log('tokenList', tokenList);
-  console.log('AuctionSetup form errors', errors);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset>

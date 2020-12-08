@@ -6,7 +6,6 @@ import Button from 'styles/buttonStyles';
 
 export default function SellerDeposit({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
-  console.log('SellerDeposit form errors', errors);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset>

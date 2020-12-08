@@ -5,9 +5,9 @@ import { Contract } from '@ethersproject/contracts';
 import { formatUnits } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
 import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
 import { BackButton, RevealBidForm } from 'components';
-import { getSigner } from 'utils/web3Library';
 
 export default function RevealBid() {
   const { id: auctionAddress } = useParams();
@@ -53,6 +53,7 @@ export default function RevealBid() {
     console.log('tx', tx);
     console.log('receipt', receipt);
     auctionContract.on('LogBidRevealed', (bidder, bidHexReturned, saltReturned) => {
+      console.log('event LogBidRevealed emitted');
       console.log('bidder', bidder);
       console.log('bidHex', bidHexReturned);
       console.log('salt', saltReturned);

@@ -2,17 +2,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
-import { formatUnits } from '@ethersproject/units';
+import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
 import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
 import { BackButton, CommitBidForm } from 'components';
-import { getSigner } from 'utils/web3Library';
 
 export default function CommitBid() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library } = web3Context;
+  const { account, active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
   const [bidderDeposit, setBidderDeposit] = useState(null);
 
@@ -48,14 +48,22 @@ export default function CommitBid() {
     console.log('salt', salt);
     console.log('hashedBid', hashedBid);
 
-    const tx = await auctionContract.commitBid(hashedBid);
+    console.log('parsed bidderDeposit', parseEther(formatUnits(bidderDeposit)));
+    const overrides = { from: account, value: parseEther(formatUnits(bidderDeposit)) };
+    const tx = await auctionContract.submitBid(hashedBid, overrides);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
+
+    auctionContract.on('LogBidderDepositReceived', (bidder, deposit) => {
+      console.log('ReceivedBidderDeposit event, bidder', bidder);
+      console.log('ReceivedBidderDeposit event, bidderDeposit', formatUnits(deposit));
+    });
+
     auctionContract.on('LogBidCommitted', (bidder, bidHash, bidCommitBlock) => {
-      console.log('bidder', bidder);
-      console.log('bidHash', bidHash);
-      console.log('bidCommitBlock', bidCommitBlock);
+      console.log('LogBidCommitted event bidder', bidder);
+      console.log('LogBidCommitted event bidHash', bidHash);
+      console.log('LogBidCommitted event bidCommitBlock', bidCommitBlock);
     });
   };
 

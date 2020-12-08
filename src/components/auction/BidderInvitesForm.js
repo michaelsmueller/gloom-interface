@@ -8,10 +8,6 @@ export default function BidderInvites({ onSubmit }) {
   const [indexes, setIndexes] = useState([]);
   const [counter, setCounter] = useState(0);
   const { register, handleSubmit, errors } = useForm();
-  console.log('BidderInvites form errors', errors);
-  if (errors.bidders?.length) {
-    console.log('bidders errors', errors.bidders);
-  }
 
   const addBidder = () => {
     setIndexes(prevIndexes => [...prevIndexes, counter]);

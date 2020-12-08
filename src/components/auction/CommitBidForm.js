@@ -11,13 +11,8 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
   const [passwordShown, setPasswordShown] = useState(false);
   const password = useRef({});
   password.current = watch('password', '');
-  console.log('BidderInvites form errors', errors);
 
-  const handlePasswordChange = ({ target }) => {
-    const strength = getPasswordStrength(target.value);
-    setPasswordStrength(strength);
-  };
-
+  const handlePasswordChange = ({ target }) => setPasswordStrength(getPasswordStrength(target.value));
   const togglePasswordVisiblity = () => setPasswordShown(!passwordShown);
 
   return (
@@ -63,7 +58,9 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
           <i
             role='button'
             onClick={togglePasswordVisiblity}
-            onKeyDown={togglePasswordVisiblity}
+            onKeyDown={e => {
+              if (e.key !== 'Tab') togglePasswordVisiblity();
+            }}
             tabIndex={0}
             className='material-icons-round'
           >

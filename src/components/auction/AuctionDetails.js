@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
+import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
 import { BackButton, AuctionDateTimes } from 'components';
-import { getSigner } from 'utils/web3Library';
 
 export default function AuctionDetails() {
   const { id: auctionAddress } = useParams();

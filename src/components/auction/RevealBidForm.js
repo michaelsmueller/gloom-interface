@@ -9,8 +9,6 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
   const [passwordShown, setPasswordShown] = useState(false);
   const password = useRef({});
   password.current = watch('password', '');
-  console.log('BidderInvites form errors', errors);
-
   const togglePasswordVisiblity = () => setPasswordShown(!passwordShown);
 
   return (
@@ -52,7 +50,9 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
           <i
             role='button'
             onClick={togglePasswordVisiblity}
-            onKeyDown={togglePasswordVisiblity}
+            onKeyDown={e => {
+              if (e.key !== 'Tab') togglePasswordVisiblity();
+            }}
             tabIndex={0}
             className='material-icons-round'
           >
