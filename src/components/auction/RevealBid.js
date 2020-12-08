@@ -6,10 +6,10 @@ import { formatUnits } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-import { BackButton, CommitBidForm } from 'components';
+import { BackButton, RevealBidForm } from 'components';
 import { getSigner } from 'utils/web3Library';
 
-export default function CommitBid() {
+export default function RevealBid() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { active, error, library } = web3Context;
@@ -38,7 +38,7 @@ export default function CommitBid() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
-  const submitBid = async ({ bid, password }) => {
+  const revealBid = async ({ bid, password }) => {
     const bidHex = formatBytes32String(bid);
     const salt = formatBytes32String(password);
     const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
@@ -48,29 +48,22 @@ export default function CommitBid() {
     console.log('salt', salt);
     console.log('hashedBid', hashedBid);
 
-    const tx = await auctionContract.commitBid(hashedBid);
+    const tx = await auctionContract.revealBid(bidHex, salt);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
-    auctionContract.on('LogBidCommitted', (bidder, bidHash, bidCommitBlock) => {
+    auctionContract.on('LogBidRevealed', (bidder, bidHexReturned, saltReturned) => {
       console.log('bidder', bidder);
-      console.log('bidHash', bidHash);
-      console.log('bidCommitBlock', bidCommitBlock);
+      console.log('bidHex', bidHexReturned);
+      console.log('salt', saltReturned);
     });
   };
 
   return (
     <div>
       <BackButton />
-      <h1>Commit bid</h1>
-      <div>
-        <em>
-          We will commit a hash of your bid to the blockchain, to register the amount confidentially. You will need to
-          enter your bid and password again at auction close to reveal your bid. We will not store your bid and
-          password, nor can they be recovered.
-        </em>
-      </div>
-      <CommitBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={submitBid} />
+      <h1>Reveal bid</h1>
+      <RevealBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={revealBid} />
       <pre>
         Auction contract: {auctionAddress}
         <br />

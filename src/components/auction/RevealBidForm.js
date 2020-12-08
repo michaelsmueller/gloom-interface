@@ -3,20 +3,13 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
 import Button from 'styles/buttonStyles';
-import { getPasswordStrength } from 'utils/validate';
 
-export default function CommitBidForm({ bidderDeposit, onSubmit }) {
+export default function RevealBidForm({ bidderDeposit, onSubmit }) {
   const { register, handleSubmit, watch, errors } = useForm();
-  const [passwordStrength, setPasswordStrength] = useState(0);
   const [passwordShown, setPasswordShown] = useState(false);
   const password = useRef({});
   password.current = watch('password', '');
   console.log('BidderInvites form errors', errors);
-
-  const handlePasswordChange = ({ target }) => {
-    const strength = getPasswordStrength(target.value);
-    setPasswordStrength(strength);
-  };
 
   const togglePasswordVisiblity = () => setPasswordShown(!passwordShown);
 
@@ -31,7 +24,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
       </Fieldset>
 
       <Fieldset>
-        <FieldsetTitle>Bid</FieldsetTitle>
+        <FieldsetTitle>Confirm bid</FieldsetTitle>
         <Label htmlFor='bid'>
           Amount (ETH):
           <Input
@@ -40,25 +33,21 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
             min='0'
             id='bid'
             name='bid'
-            ref={register({ required: 'You must specify a bid' })}
+            ref={register({ required: 'You must specify your bid' })}
           />
           {errors.bid && <p>{errors.bid.message}</p>}
         </Label>
       </Fieldset>
 
       <Fieldset>
-        <FieldsetTitle>Password</FieldsetTitle>
+        <FieldsetTitle>Confirm password</FieldsetTitle>
         <Label htmlFor='password'>
           Password:
           <Input
             type={passwordShown ? 'text' : 'password'}
             id='password'
             name='password'
-            onChange={handlePasswordChange}
-            ref={register({
-              required: 'You must specify a password',
-              validate: value => getPasswordStrength(value) > 2 || 'Password is too weak',
-            })}
+            ref={register({ required: 'You must specify your password' })}
           />
           <i
             role='button'
@@ -69,21 +58,10 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
           >
             visibility
           </i>
-          <pre>strength: {passwordStrength}</pre>
           {errors.password && <p>{errors.password.message}</p>}
         </Label>
-        <Label htmlFor='password-repeat'>
-          Repeat password:
-          <Input
-            type='password'
-            id='password-repeat'
-            name='passwordRepeat'
-            ref={register({ validate: value => value === password.current || 'Passwords do not match' })}
-          />
-          {errors.passwordRepeat && <p>{errors.passwordRepeat.message}</p>}
-        </Label>
       </Fieldset>
-      <Button type='submit'>Commit bid</Button>
+      <Button type='submit'>Reveal bid</Button>
     </form>
   );
 }

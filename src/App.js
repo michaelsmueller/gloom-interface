@@ -12,6 +12,7 @@ import {
   SellerDeposit,
   BidderInvites,
   CommitBid,
+  RevealBid,
   NotFound,
 } from 'components';
 
@@ -30,6 +31,7 @@ export default function App() {
             <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
             <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
             <Route exact path='/auctions/:id/commit-bid' component={CommitBid} />
+            <Route exact path='/auctions/:id/reveal-bid' component={RevealBid} />
             <Route path='*' component={NotFound} />
           </Switch>
         </Router>

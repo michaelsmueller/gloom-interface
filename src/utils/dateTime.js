@@ -73,10 +73,27 @@ export const getLocalDateTime = utcDateTime => {
 
 export const showLocalDateTime = utcDateTime => {
   try {
-    const date = new Date(utcDateTime);
-    if (isValidDate(date)) return date.toString().replace(/:\d{2}\sGMT.*/g, '');
+    if (utcDateTime) {
+      const date = new Date(utcDateTime);
+      if (isValidDate(date)) return date.toString().replace(/:\d{2}\sGMT.*/g, '');
+    }
     return '';
   } catch (error) {
     return error;
   }
+};
+
+export const calculateTimeLeft = utcDateTime => {
+  const now = new Date();
+  const difference = utcDateTime - parseLocalDateTime(now);
+  let timeLeft = {};
+  if (difference > 0) {
+    timeLeft = {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  }
+  return timeLeft;
 };
