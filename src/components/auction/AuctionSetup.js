@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AuctionFactory from 'contracts/AuctionFactory.json';
+import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
@@ -14,6 +15,7 @@ export default function AuctionSetup() {
   const { web3Context } = useContext(Web3Context);
   const { active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
+  const [logicContract, setLogicContract] = useState(null);
   const [auctionAddresses, setAuctionAddresses] = useState([]);
 
   useEffect(() => {
@@ -22,6 +24,15 @@ export default function AuctionSetup() {
     const { address } = AuctionFactory.networks[chainId];
     const factoryInstance = new Contract(address, AuctionFactory.abi, signer);
     setFactoryContract(factoryInstance);
+  }, [active, library, chainId]);
+
+  useEffect(() => {
+    if (!active) return;
+    const signer = getSigner(library);
+    const { address } = Auction.networks[chainId];
+    const logicInstance = new Contract(address, Auction.abi, signer);
+    console.log('logicInstance address', logicInstance.address);
+    setLogicContract(logicInstance);
   }, [active, library, chainId]);
 
   if (!active && !error) return <div>loading</div>;
@@ -33,7 +44,7 @@ export default function AuctionSetup() {
   };
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(amount, token, startDate, endDate);
+    const tx = await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
