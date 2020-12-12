@@ -3,13 +3,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'styles/globalStyles';
 import Web3ContextProvider from 'contexts/web3Context';
-import AuctionsContextProvider from 'contexts/auctionsContext';
 import { getLibrary } from 'utils/web3Library';
 import {
   Head,
   Home,
   Network,
-  // Contracts,
+  Contracts,
   AuctionSetup,
   AuctionDetails,
   SellerDeposit,
@@ -27,12 +26,10 @@ export default function App() {
           <Head />
           <GlobalStyle />
           <Network />
-          {/* <Contracts /> */}
+          <Contracts />
           <Switch>
             <Route exact path='/' component={Home} />
-            <AuctionsContextProvider>
-              <Route exact path='/auctions/new' component={AuctionSetup} />
-            </AuctionsContextProvider>
+            <Route exact path='/auctions/new' component={AuctionSetup} />
             <Route exact path='/auctions/:id' component={AuctionDetails} />
             <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
             <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
