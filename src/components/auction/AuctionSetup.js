@@ -2,9 +2,9 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import useContract from 'hooks/useContract';
-// import useAuctions from 'hooks/useAuctions';
+import useAuctions from 'hooks/useAuctions';
 import { Web3Context } from 'contexts/web3Context';
-import { AuctionsContext } from 'contexts/auctionsContext';
+// import { AuctionsContext } from 'contexts/auctionsContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
 import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
@@ -14,11 +14,11 @@ import Button from 'styles/buttonStyles';
 export default function AuctionSetup() {
   const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  const { auctionAddresses, getAuctions } = useContext(AuctionsContext);
+  // const { auctionAddresses, getAuctions } = useContext(AuctionsContext);
   const { active, error } = web3Context;
   const factoryContract = useContract(AuctionFactory, web3Context);
   const logicContract = useContract(Auction, web3Context);
-  // const [auctionAddresses] = useAuctions(factoryContract);
+  const { auctionAddresses, getAuctions } = useAuctions(factoryContract);
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
