@@ -7,6 +7,8 @@ import { getLibrary } from 'utils/web3Library';
 import {
   Head,
   Home,
+  Network,
+  Contracts,
   AuctionSetup,
   AuctionDetails,
   SellerDeposit,
@@ -23,7 +25,8 @@ export default function App() {
         <Router>
           <Head />
           <GlobalStyle />
-          {/* <Network /> */}
+          <Network />
+          <Contracts />
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/auctions/new' component={AuctionSetup} />

@@ -5,8 +5,11 @@ export { default as Home } from 'components/Home';
 // common
 export { default as Head } from 'components/common/Head';
 export { default as BackButton } from 'components/common/BackButton';
-export { default as Network } from 'components/common/Network';
 export { default as NotFound } from 'components/common/NotFound';
+
+// debug
+export { default as Contracts } from 'components/debug/Contracts';
+export { default as Network } from 'components/debug/Network';
 
 // auction
 export { default as AuctionSetup } from 'components/auction/AuctionSetup';

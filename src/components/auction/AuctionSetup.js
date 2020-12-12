@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import AuctionFactory from 'contracts/AuctionFactory.json';
-import { Contract } from '@ethersproject/contracts';
+import useContract from 'hooks/useContract';
+import useAuctionAddresses from 'hooks/useAuctionAddresses';
 import { Web3Context } from 'contexts/web3Context';
-import { getSigner } from 'utils/web3Library';
+import AuctionFactory from 'contracts/AuctionFactory.json';
+import Auction from 'contracts/Auction.json';
 import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
 import { BackButton, AuctionSetupForm } from 'components';
 import Button from 'styles/buttonStyles';
@@ -12,35 +13,23 @@ import Button from 'styles/buttonStyles';
 export default function AuctionSetup() {
   const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library, chainId } = web3Context;
-  const [factoryContract, setFactoryContract] = useState(null);
-  const [auctionAddresses, setAuctionAddresses] = useState([]);
-
-  useEffect(() => {
-    if (!active) return;
-    const signer = getSigner(library);
-    const { address } = AuctionFactory.networks[chainId];
-    const factoryInstance = new Contract(address, AuctionFactory.abi, signer);
-    setFactoryContract(factoryInstance);
-  }, [active, library, chainId]);
+  const { active, error } = web3Context;
+  const factoryContract = useContract(AuctionFactory, web3Context);
+  const logicContract = useContract(Auction, web3Context);
+  const { auctionAddresses, getAuctionAddresses } = useAuctionAddresses(factoryContract);
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const getAuctions = async () => {
-    const response = await factoryContract.getAddresses();
-    setAuctionAddresses(response);
-  };
-
   const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(amount, token, startDate, endDate);
+    const tx = await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
     const receipt = await tx.wait();
     console.log('tx', tx);
     console.log('receipt', receipt);
     factoryContract.on('LogAuctionCreated', event => console.log('AuctionCreated event', event));
-    factoryContract.once(tx, transaction => {
+    await factoryContract.once(tx, transaction => {
       console.log('transaction mined', transaction);
-      getAuctions();
+      getAuctionAddresses();
     });
   };
 
@@ -58,27 +47,15 @@ export default function AuctionSetup() {
     createAuction(data);
   };
 
+  // to do: allow for seller managing multiple options, here it is hardwire to first deployed:
   const goToSellerDeposit = () => history.push(`/auctions/${auctionAddresses[0]}/seller-deposit`);
 
-  const { address } = factoryContract || '';
   return (
     <div>
-      {/* <h2>Auction factory</h2>
-      <Button type='button' onClick={getAuctions}>
-        Get auction addresses
-      </Button> */}
-      <pre>factory address: {address}</pre>
-      <pre>
-        Auction addresses:
-        <br />
-        {JSON.stringify(auctionAddresses, null, 2)}
-      </pre>
-      <br />
-      <hr />
-
       <BackButton />
       <h1>Set up auction</h1>
       <AuctionSetupForm onSubmit={setupAuction} />
+      <pre>{JSON.stringify(auctionAddresses, null, 2)}</pre>
       {auctionAddresses.length ? (
         <Button type='button' onClick={goToSellerDeposit}>
           Make deposit
