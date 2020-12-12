@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Contract } from '@ethersproject/contracts';
 import { getSigner } from 'utils/web3Library';
 
-export default function useInstance(contract, web3Context) {
+export default function useContract(contract, web3Context) {
   const { active, library, chainId } = web3Context;
   const [instance, setInstance] = useState(null);
 
