@@ -1,30 +1,21 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Contract } from '@ethersproject/contracts';
+import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
-import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
 import { BackButton, AuctionDateTimes } from 'components';
+import Button from 'styles/buttonStyles';
 
 export default function AuctionDetails() {
   const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library } = web3Context;
-  const [auctionContract, setAuctionContract] = useState(null);
+  const { active, error } = web3Context;
+  const auctionContract = useContract(Auction, web3Context, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
 
   useEffect(() => {
-    if (!active) return;
-    const signer = getSigner(library);
-    const auctionInstance = new Contract(auctionAddress, Auction.abi, signer);
-    setAuctionContract(auctionInstance);
-  }, [active, library, auctionAddress]);
-
-  useEffect(() => {
-    console.log('useEffect 2');
     if (!active || !auctionContract) return;
-    console.log('active');
     const getDateTimes = async () => {
       console.log('getDateTimes');
       const dateTimes = await auctionContract.getDateTimes();
@@ -36,6 +27,18 @@ export default function AuctionDetails() {
     getDateTimes();
   }, [active, auctionContract]);
 
+  const startCommit = () => {
+    console.log('startCommit');
+  };
+
+  const startReveal = () => {
+    console.log('startReveal');
+  };
+
+  const startDeliver = () => {
+    console.log('startDeliver');
+  };
+
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
@@ -45,6 +48,15 @@ export default function AuctionDetails() {
       <BackButton />
       <h1>Auction details</h1>
       <AuctionDateTimes auctionDateTimes={auctionDateTimes} />
+      <Button type='button' onClick={startCommit}>
+        Start commit
+      </Button>
+      <Button type='button' onClick={startReveal}>
+        Start reveal
+      </Button>
+      <Button type='button' onClick={startDeliver}>
+        Start deliver
+      </Button>
       <pre>
         Auction contract: {auctionAddress}
         <br />

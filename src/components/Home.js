@@ -51,9 +51,12 @@ export default function Home() {
         </Button>
       ) : null}
       {auctionAddress ? (
-        <Button type='button' onClick={goToAuctionDetails}>
-          View auction
-        </Button>
+        <div>
+          <pre>{auctionAddress}</pre>
+          <Button type='button' onClick={goToAuctionDetails}>
+            View auction
+          </Button>
+        </div>
       ) : null}
     </div>
   );
