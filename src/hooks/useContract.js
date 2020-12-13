@@ -4,10 +4,9 @@ import { getSigner } from 'utils/web3Library';
 
 export default function useContract(contract, web3Context, deployedAddress = null) {
   const { active, library, chainId } = web3Context;
-
   const [instance, setInstance] = useState(null);
-  let address;
 
+  let address;
   if (deployedAddress) address = deployedAddress;
   else address = contract.networks[chainId]?.address;
 

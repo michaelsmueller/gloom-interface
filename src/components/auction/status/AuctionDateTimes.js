@@ -23,15 +23,17 @@ export default function AuctionDateTimes({ auctionDateTimes }) {
 
   // console.log(`timeLeft, ${JSON.stringify(timeLeft, null, 2)}`);
   return (
-    <pre>
+    <>
       <h2>Auction dates & times</h2>
-      <ul>
-        {/* <li>Now: {showLocalDateTime(now)}</li> */}
-        <li>Start date & time:&nbsp; {showLocalDateTime(startDateTime)}</li>
-        <li>End date & time:&nbsp; {showLocalDateTime(endDateTime)}</li>
-        <li>Time left: </li>
-        {timerComponents.length ? timerComponents : <span>Time is up!</span>}
-      </ul>
-    </pre>
+      <pre>
+        <ul>
+          {/* <li>Now: {showLocalDateTime(now)}</li> */}
+          <li>Start date & time:&nbsp; {showLocalDateTime(startDateTime)}</li>
+          <li>End date & time:&nbsp; {showLocalDateTime(endDateTime)}</li>
+          <li>Time left: </li>
+          {timerComponents.length ? timerComponents : <span>Time is up!</span>}
+        </ul>
+      </pre>
+    </>
   );
 }

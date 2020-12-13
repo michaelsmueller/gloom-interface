@@ -13,6 +13,7 @@ export default function AuctionDetails() {
   const { active, error } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
+  const [winner, setWinner] = useState('');
 
   useEffect(() => {
     if (!active || !auctionContract) return;
@@ -27,17 +28,19 @@ export default function AuctionDetails() {
     getDateTimes();
   }, [active, auctionContract]);
 
-  const startCommit = () => {
-    console.log('startCommit');
-  };
+  useEffect(() => {
+    console.log('listening for LogSetWinner event');
+    if (!active || !auctionContract) return;
+    auctionContract.on('LogSetWinner', bidder => {
+      console.log('LogSetWinner event, winner', bidder);
+      setWinner(bidder);
+    });
+  });
 
-  const startReveal = () => {
-    console.log('startReveal');
-  };
-
-  const startDeliver = () => {
-    console.log('startDeliver');
-  };
+  const startCommit = () => auctionContract.startCommit();
+  const startReveal = () => auctionContract.startReveal();
+  const startDeliver = () => auctionContract.startDeliver();
+  const startWithdraw = () => auctionContract.startWithdraw();
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
@@ -48,6 +51,12 @@ export default function AuctionDetails() {
       <BackButton />
       <h1>Auction details</h1>
       <AuctionDateTimes auctionDateTimes={auctionDateTimes} />
+      <h2>Winner</h2>
+      <pre>
+        <ul>
+          <li>{winner || 'pending'}</li>
+        </ul>
+      </pre>
       <Button type='button' onClick={startCommit}>
         Start commit
       </Button>
@@ -56,6 +65,9 @@ export default function AuctionDetails() {
       </Button>
       <Button type='button' onClick={startDeliver}>
         Start deliver
+      </Button>
+      <Button type='button' onClick={startWithdraw}>
+        Start withdraw
       </Button>
       <pre>
         Auction contract: {auctionAddress}
