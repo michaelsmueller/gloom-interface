@@ -13,11 +13,10 @@ export default function Home() {
   const { active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
   const [auctionAddress, setAuctionAddress] = useState('');
+  const [auctionInvitedAddress, setAuctionInvitedAddress] = useState('');
 
   useEffect(() => {
-    console.log('useEffect 1');
     if (!active) return;
-    console.log('active');
     const signer = getSigner(library);
     const { address } = AuctionFactory.networks[chainId];
     const factoryInstance = new Contract(address, AuctionFactory.abi, signer);
@@ -25,39 +24,59 @@ export default function Home() {
   }, [active, library, chainId]);
 
   useEffect(() => {
-    console.log('useEffect 2');
     if (!active || !factoryContract) return;
-    console.log('active');
     const getAuction = async () => {
-      console.log('getAuction');
       const auction = await factoryContract.getAuctionBy();
       if (auction !== '0x0000000000000000000000000000000000000000') setAuctionAddress(auction);
+      const auctionInvited = await factoryContract.getAuctionInvited();
+      if (auctionInvited !== '0x0000000000000000000000000000000000000000') setAuctionInvitedAddress(auctionInvited);
     };
     getAuction();
-  }, [active, auctionAddress, factoryContract]);
+  }, [active, factoryContract]);
+
+  useEffect(() => {
+    if (!active || !factoryContract) return null;
+    factoryContract.on('LogBidderRegistered', auction => {
+      console.log('LogBidderRegistered event, auction', auction);
+      setAuctionInvitedAddress(auction);
+    });
+    return () => factoryContract.removeAllListeners('LogBidderRegistered');
+  }, [active, factoryContract]);
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
   const goToAuctionSetup = () => history.push('/auctions/new');
   const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
+  const goToCommitBid = () => history.push(`/auctions/${auctionInvitedAddress}/commit-bid`);
 
   return (
     <div>
       <h1>Gloom</h1>
+      <h2>My auctions</h2>
       {!auctionAddress ? (
         <Button type='button' onClick={goToAuctionSetup}>
           New auction
         </Button>
-      ) : null}
-      {auctionAddress ? (
+      ) : (
         <div>
           <pre>{auctionAddress}</pre>
           <Button type='button' onClick={goToAuctionDetails}>
             View auction
           </Button>
         </div>
-      ) : null}
+      )}
+      <h2>Invited to bid</h2>
+      {auctionInvitedAddress ? (
+        <div>
+          <pre>{auctionInvitedAddress}</pre>
+          <Button type='button' onClick={goToCommitBid}>
+            Commit bid
+          </Button>
+        </div>
+      ) : (
+        <pre>none</pre>
+      )}
     </div>
   );
 }

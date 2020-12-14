@@ -30,11 +30,12 @@ export default function AuctionDetails() {
 
   useEffect(() => {
     console.log('listening for LogSetWinner event');
-    if (!active || !auctionContract) return;
+    if (!active || !auctionContract) return null;
     auctionContract.on('LogSetWinner', bidder => {
       console.log('LogSetWinner event, winner', bidder);
       setWinner(bidder);
     });
+    return () => auctionContract.removeAllListeners('LogSetWinner');
   });
 
   const startCommit = () => auctionContract.startCommit();
