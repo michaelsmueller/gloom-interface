@@ -49,10 +49,10 @@ export default function Home() {
   const goToAuctionSetup = () => history.push('/auctions/new');
   const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
   const goToCommitBid = () => history.push(`/auctions/${auctionInvitedAddress}/commit-bid`);
+  const goToRevealBid = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
 
   return (
     <div>
-      <h1>Gloom</h1>
       <h2>My auctions</h2>
       {!auctionAddress ? (
         <Button type='button' onClick={goToAuctionSetup}>
@@ -72,6 +72,10 @@ export default function Home() {
           <pre>{auctionInvitedAddress}</pre>
           <Button type='button' onClick={goToCommitBid}>
             Commit bid
+          </Button>
+          <pre>{auctionInvitedAddress}</pre>
+          <Button type='button' onClick={goToRevealBid}>
+            Reveal bid
           </Button>
         </div>
       ) : (

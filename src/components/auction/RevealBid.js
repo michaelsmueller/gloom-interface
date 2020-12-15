@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
+import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
@@ -39,15 +40,9 @@ export default function RevealBid() {
   if (error) return <div>error</div>;
 
   const revealBid = async ({ bid, password }) => {
-    const bidHex = formatBytes32String(bid);
+    const bidHex = hexZeroPad(+bid, 32);
+    console.log('bidHex', bidHex);
     const salt = formatBytes32String(password);
-    const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
-
-    console.log('bid', bid);
-    console.log('password', password);
-    console.log('salt', salt);
-    console.log('hashedBid', hashedBid);
-
     const tx = await auctionContract.revealBid(bidHex, salt);
     const receipt = await tx.wait();
     console.log('tx', tx);

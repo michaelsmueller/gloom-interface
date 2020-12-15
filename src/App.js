@@ -23,10 +23,11 @@ export default function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <Web3ContextProvider>
         <Router>
-          <Head />
           <GlobalStyle />
           <Network />
           <Contracts />
+          <hr style={{ margin: '15px 0' }} />
+          <Head />
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/auctions/new' component={AuctionSetup} />

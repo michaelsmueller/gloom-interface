@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
+import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
@@ -39,16 +40,10 @@ export default function CommitBid() {
   if (error) return <div>error</div>;
 
   const submitBid = async ({ bid, password }) => {
-    const bidHex = formatBytes32String(bid);
+    const bidHex = hexZeroPad(+bid, 32);
+    console.log('bidHex', bidHex);
     const salt = formatBytes32String(password);
     const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
-
-    console.log('bid', bid);
-    console.log('password', password);
-    console.log('salt', salt);
-    console.log('hashedBid', hashedBid);
-
-    console.log('parsed bidderDeposit', parseEther(formatUnits(bidderDeposit)));
     const overrides = { from: account, value: parseEther(formatUnits(bidderDeposit)) };
     const tx = await auctionContract.submitBid(hashedBid, overrides);
     const receipt = await tx.wait();
