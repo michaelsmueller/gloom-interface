@@ -39,8 +39,8 @@ export default function SellerDeposit() {
 
   return (
     <div>
-      <BackButton />
-      <h1>Fund deposit</h1>
+      {/* <BackButton /> */}
+      <h2>Fund deposit</h2>
       <SellerDepositForm onSubmit={fundDeposit} />
       <Button type='button' onClick={goToBidders}>
         Invite bidders

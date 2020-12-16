@@ -26,9 +26,9 @@ export default function App() {
       <Web3ContextProvider>
         <Router>
           <GlobalStyle />
-          {/* <Network /> */}
-          {/* <Contracts /> */}
-          {/* <hr style={{ margin: '15px 0' }} /> */}
+          <Network />
+          <Contracts />
+          <hr style={{ margin: '15px 0' }} />
           <Head />
           <Switch>
             <Route exact path='/' component={Home} />
