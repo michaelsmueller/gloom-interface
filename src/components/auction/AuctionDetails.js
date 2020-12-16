@@ -50,7 +50,7 @@ export default function AuctionDetails() {
   return (
     <div>
       <BackButton />
-      <h1>Auction details</h1>
+      <h2>Auction details</h2>
       <AuctionDateTimes auctionContract={auctionContract} />
       <h2>Winner</h2>
       <pre>

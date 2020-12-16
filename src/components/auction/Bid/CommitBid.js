@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
@@ -8,10 +7,9 @@ import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
-import { BackButton, CommitBidForm } from 'components';
+import { CommitBidForm } from 'components';
 
 export default function CommitBid({ auctionAddress }) {
-  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { account, active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
@@ -64,8 +62,7 @@ export default function CommitBid({ auctionAddress }) {
 
   return (
     <div>
-      {/* <BackButton /> */}
-      <h1>Commit bid</h1>
+      <h2>Commit bid</h2>
       <div>
         <em>
           We will commit a hash of your bid to the blockchain, to register the amount confidentially. You will need to

@@ -12,7 +12,7 @@ export default function TokenAndDatesForm({ onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Asset to auction</FieldsetTitle>
         <Label htmlFor='amount'>
-          Amount (tokens):
+          <div>Amount (tokens):</div>
           <Input
             type='number'
             step='1'
@@ -24,7 +24,7 @@ export default function TokenAndDatesForm({ onSubmit }) {
           {errors.amount && <p>{errors.amount.message}</p>}
         </Label>
         <Label htmlFor='token'>
-          ERC-20 token:
+          <div>ERC-20 token:</div>
           <Select
             id='token'
             name='token'
@@ -47,7 +47,7 @@ export default function TokenAndDatesForm({ onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Auction period</FieldsetTitle>
         <Label htmlFor='start-date'>
-          Start date & time:
+          <div>Start date & time:</div>
           <Input
             type='datetime-local'
             id='start-date'
@@ -57,7 +57,7 @@ export default function TokenAndDatesForm({ onSubmit }) {
           {errors.startDate && <p>{errors.startDate.message}</p>}
         </Label>
         <Label htmlFor='end-date'>
-          End date & time:
+          <div>End date & time:</div>
           <Input
             type='datetime-local'
             id='end-date'

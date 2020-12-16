@@ -1,17 +1,13 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-// import { useHistory, useParams } from 'react-router-dom';
 import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { BackButton, SellerDepositForm } from 'components';
-// import Button from 'styles/buttonStyles';
+import { SellerDepositForm } from 'components';
 
 export default function SellerDeposit({ auctionAddress }) {
-  // const history = useHistory();
-  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { account, active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
@@ -35,16 +31,9 @@ export default function SellerDeposit({ auctionAddress }) {
     });
   };
 
-  // const goToBidders = () => history.push(`/auctions/${auctionAddress}/bidder-invites`);
-
   return (
     <div>
-      {/* <BackButton /> */}
-      {/* <h2>Fund deposit</h2> */}
       <SellerDepositForm onSubmit={fundDeposit} />
-      {/* <Button type='button' onClick={goToBidders}>
-        Invite bidders
-      </Button> */}
     </div>
   );
 }

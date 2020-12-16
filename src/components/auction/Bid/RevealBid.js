@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
@@ -11,7 +10,6 @@ import Auction from 'contracts/Auction.json';
 import { BackButton, RevealBidForm } from 'components';
 
 export default function RevealBid({ auctionAddress }) {
-  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
@@ -57,14 +55,8 @@ export default function RevealBid({ auctionAddress }) {
 
   return (
     <div>
-      <BackButton />
-      <h1>Reveal bid</h1>
+      <h2>Reveal bid</h2>
       <RevealBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={revealBid} />
-      <pre>
-        Auction contract: {auctionAddress}
-        <br />
-        {JSON.stringify(auctionContract, null, 2)}
-      </pre>
     </div>
   );
 }

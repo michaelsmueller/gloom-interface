@@ -1,14 +1,11 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-// import { BackButton, AuctionDateTimes } from 'components';
 import Button from 'styles/buttonStyles';
 
 export default function StartPhases({ auctionAddress }) {
-  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
@@ -49,15 +46,7 @@ export default function StartPhases({ auctionAddress }) {
   console.log('auctionDateTimes', auctionDateTimes);
   return (
     <div>
-      {/* <BackButton /> */}
-      <h1>Phases</h1>
-      {/* <AuctionDateTimes auctionDateTimes={auctionDateTimes} /> */}
-      <h2>Winner</h2>
-      <pre>
-        <ul>
-          <li>{winner || 'pending'}</li>
-        </ul>
-      </pre>
+      <h2>Phases</h2>
       <Button type='button' onClick={startCommit}>
         Start commit
       </Button>
@@ -70,10 +59,11 @@ export default function StartPhases({ auctionAddress }) {
       <Button type='button' onClick={startWithdraw}>
         Start withdraw
       </Button>
+      <h2>Winner</h2>
       <pre>
-        Auction contract: {auctionAddress}
-        <br />
-        {JSON.stringify(auctionContract, null, 2)}
+        <ul>
+          <li>{winner || 'pending'}</li>
+        </ul>
       </pre>
     </div>
   );

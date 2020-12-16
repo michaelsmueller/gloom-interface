@@ -50,8 +50,7 @@ export default function AuctionDateTimes({ auctionAddress }) {
           {/* <li>Now: {showLocalDateTime(now)}</li> */}
           <li>Start date & time:&nbsp; {showLocalDateTime(startDateTime)}</li>
           <li>End date & time:&nbsp; {showLocalDateTime(endDateTime)}</li>
-          <li>Time left: </li>
-          {timerComponents || <span>Time is up!</span>}
+          <li>Time left:&nbsp; {timerComponents || <span>Auction ended!</span>}</li>
         </ul>
       </pre>
     </>

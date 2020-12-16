@@ -13,11 +13,17 @@ export const FieldsetTitle = styled.h3`
 `;
 
 export const Label = styled.label`
-  display: block;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   margin: 5px 0;
+  & > div {
+    width: 150px;
+  }
 `;
 
 export const Input = styled.input`
+  width: 50%;
   border-radius: 20px;
   padding: 8px 15px;
   box-shadow: ${props =>
@@ -25,6 +31,7 @@ export const Input = styled.input`
 `;
 
 export const Select = styled.select`
+  width: 50%;
   border-radius: 20px;
   padding: 8px 15px;
   box-shadow: inset -3px -3px 5px var(--nearWhite), inset 3px 3px 3px var(--shadow);
