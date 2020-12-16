@@ -2,8 +2,10 @@ import styled from 'styled-components/macro';
 
 const Container = styled.div`
   display: flex;
+  margin-top: 50px;
+  height: 400px;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   align-items: center;
 
   & > * {

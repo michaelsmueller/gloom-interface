@@ -9,7 +9,6 @@ export default function Web3ContextProvider({ children }) {
   const { activate } = web3Context;
   useEffect(() => {
     const injectedConnector = new InjectedConnector({ supportedChainIds: [1, 3, 4, 13, 1337] });
-    console.log('activating connector');
     activate(injectedConnector);
   }, [activate]);
   return <Web3Context.Provider value={{ web3Context }}>{children}</Web3Context.Provider>;
