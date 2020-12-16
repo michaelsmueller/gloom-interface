@@ -13,11 +13,6 @@ export default function Head() {
         />
         <link href='https://fonts.googleapis.com/icon?family=Material+Icons+Round' rel='stylesheet' />
       </Helmet>
-      <header>
-        <a href='/'>
-          <img src='/gloom-logo.png' alt='Gloom logo' />
-        </a>
-      </header>
     </>
   );
 }

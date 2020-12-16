@@ -35,5 +35,6 @@ export { default as RevealBid } from 'components/auction/Bid/RevealBid';
 export { default as RevealBidForm } from 'components/auction/Bid/RevealBidForm';
 
 // auction status
-export { default as AuctionDetails } from 'components/auction/AuctionDetails';
+// export { default as AuctionDetails } from 'components/auction/AuctionDetails';
+export { default as AssetDetails } from 'components/auction/status/AssetDetails';
 export { default as AuctionDateTimes } from 'components/auction/status/AuctionDateTimes';

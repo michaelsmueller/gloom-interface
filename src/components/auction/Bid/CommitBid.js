@@ -64,7 +64,7 @@ export default function CommitBid({ auctionAddress }) {
 
   return (
     <div>
-      <BackButton />
+      {/* <BackButton /> */}
       <h1>Commit bid</h1>
       <div>
         <em>
@@ -74,11 +74,6 @@ export default function CommitBid({ auctionAddress }) {
         </em>
       </div>
       <CommitBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={submitBid} />
-      <pre>
-        Auction contract: {auctionAddress}
-        <br />
-        {JSON.stringify(auctionContract, null, 2)}
-      </pre>
     </div>
   );
 }

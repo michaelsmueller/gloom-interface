@@ -32,7 +32,7 @@ export default function BidderInvites({ onSubmit }) {
           Amount (ETH):
           <Input
             type='number'
-            step='0.001'
+            step='1'
             min='0'
             id='bidder-deposit'
             name='bidderDeposit'

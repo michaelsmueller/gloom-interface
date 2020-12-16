@@ -5,8 +5,7 @@ import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { Bid } from 'components';
-import Button from 'styles/buttonStyles';
+import { Bid, AssetDetails, AuctionDateTimes } from 'components';
 
 export default function BidderDashboard() {
   // const history = useHistory();
@@ -60,8 +59,7 @@ export default function BidderDashboard() {
 
   return (
     <div>
-      <h1>Bidder Dashboard</h1>
-      <h2>Invited to bid</h2>
+      <h1>Bidder dashboard</h1>
       <div>auction address: {auctionAddress}</div>
       {/* {auctionAddress ? (
         <div>
@@ -82,7 +80,15 @@ export default function BidderDashboard() {
       ) : (
         <pre>none</pre>
       )} */}
-      <Bid auctionAddress={auctionAddress} />
+      {auctionAddress ? (
+        <>
+          <AssetDetails auctionAddress={auctionAddress} />
+          <AuctionDateTimes auctionAddress={auctionAddress} />
+          <Bid auctionAddress={auctionAddress} />
+        </>
+      ) : (
+        <div>You have no auction invites</div>
+      )}
       {/* <CommitBid auctionAddress={auctionAddress} />
       <RevealBid auctionAddress={auctionAddress} /> */}
     </div>

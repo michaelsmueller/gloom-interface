@@ -56,47 +56,31 @@ export default function Home() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const goToTokenAndDates = () => history.push('/auctions/new');
-  const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
-  const goToCommitBid = () => history.push(`/auctions/${auctionInvitedAddress}/commit-bid`);
-  const goToRevealBid = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
-  const goToPay = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
+  const goToSeller = () => history.push('seller');
+  const goToBidder = () => history.push('/bidder');
 
   return (
     <div>
-      <h2>My auctions</h2>
-      {!auctionAddress ? (
-        <Button type='button' onClick={goToTokenAndDates}>
-          New auction
-        </Button>
-      ) : (
-        <div>
-          <pre>{auctionAddress}</pre>
-          <Button type='button' onClick={goToAuctionDetails}>
-            View auction
-          </Button>
-        </div>
-      )}
-      <h2>Invited to bid</h2>
-      {auctionInvitedAddress ? (
-        <div>
-          <pre>{auctionInvitedAddress}</pre>
-          <Button type='button' onClick={goToCommitBid}>
-            Commit bid
-          </Button>
-          <pre>{auctionInvitedAddress}</pre>
-          <Button type='button' onClick={goToRevealBid}>
-            Reveal bid
-          </Button>
-          {!winner ? (
-            <Button type='button' onClick={goToPay}>
-              Pay
-            </Button>
-          ) : null}
-        </div>
-      ) : (
-        <pre>none</pre>
-      )}
+      <header>
+        <a href='/'>
+          <img src='/gloom-logo.png' alt='Gloom logo' />
+        </a>
+      </header>
+      <main>
+        <h1>Transactions outside the light of day</h1>
+        <p>
+          You backed the protocol and own a ton of tokens. You want to cash out but don’t want to hurt the project.
+          Gloom lets you conduct a private, invite-only auction with the security of the blockchain. Exit gracefully,
+          earn what you deserve.
+        </p>
+      </main>
+
+      <Button type='button' onClick={goToSeller}>
+        Auction ERC-20 tokens
+      </Button>
+      <Button type='button' onClick={goToBidder}>
+        Bid on auction
+      </Button>
     </div>
   );
 }

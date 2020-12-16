@@ -5,7 +5,7 @@ import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { AuctionSetup, AuctionDateTimes, StartPhases } from 'components';
+import { AuctionSetup, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
 // import Button from 'styles/buttonStyles';
 
 export default function SellerDashboard() {
@@ -52,7 +52,7 @@ export default function SellerDashboard() {
 
   return (
     <div>
-      <h1>Seller Dashboard</h1>
+      <h1>Seller dashboard</h1>
       <div>auction address: {auctionAddress}</div>
       {/* <Button type='button' onClick={goToTokenAndDates}>
         New auction
@@ -66,6 +66,7 @@ export default function SellerDashboard() {
         </div>
       )} */}
       <AuctionSetup auctionAddress={auctionAddress} />
+      <AssetDetails auctionAddress={auctionAddress} />
       <AuctionDateTimes auctionAddress={auctionAddress} />
       <StartPhases auctionAddress={auctionAddress} />
     </div>

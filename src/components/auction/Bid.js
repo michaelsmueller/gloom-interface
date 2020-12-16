@@ -61,7 +61,7 @@ export default function Bid({ auctionAddress }) {
 
   return (
     <div>
-      <h1>Commit Reveal</h1>
+      <h1>Bid</h1>
       <div>auction invited address: {auctionAddress}</div>
       {/* {auctionAddress ? (
         <div>
@@ -83,6 +83,7 @@ export default function Bid({ auctionAddress }) {
         <pre>none</pre>
       )} */}
       <TopNav showing={showing} setShowing={setShowing} />
+      foo
       {/* {showing === 'TOKEN_AND_DATES' && <TokenAndDates />} */}
       {showing === 'COMMIT_BID' && <CommitBid auctionAddress={auctionAddress} />}
       {showing === 'REVEAL_BID' && <RevealBid auctionAddress={auctionAddress} />}
@@ -99,7 +100,7 @@ const TopNav = ({ showing, setShowing, user }) => {
   const revealButtonStyle = showing === 'REVEAL_BID' ? highlighted : null;
   // const redeemedButtonStyle = showing === 'redeemed' ? highlighted : null;
   return (
-    <div className='offers-coupons-buttons'>
+    <div>
       {/* <button>Add</button> */}
       {/* <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
         Token & Dates
