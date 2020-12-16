@@ -40,7 +40,7 @@ export default function CommitBid() {
   if (error) return <div>error</div>;
 
   const submitBid = async ({ bid, password }) => {
-    const bidHex = hexZeroPad(+bid, 32);
+    const bidHex = hexZeroPad(parseEther(bid), 32);
     console.log('bidHex', bidHex);
     const salt = formatBytes32String(password);
     const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);

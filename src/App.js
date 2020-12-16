@@ -9,6 +9,8 @@ import {
   Home,
   Network,
   Contracts,
+  SellerDashboard,
+  BidderDashboard,
   AuctionSetup,
   AuctionDetails,
   SellerDeposit,
@@ -24,18 +26,23 @@ export default function App() {
       <Web3ContextProvider>
         <Router>
           <GlobalStyle />
-          <Network />
-          <Contracts />
-          <hr style={{ margin: '15px 0' }} />
+          {/* <Network /> */}
+          {/* <Contracts /> */}
+          {/* <hr style={{ margin: '15px 0' }} /> */}
           <Head />
           <Switch>
             <Route exact path='/' component={Home} />
+
+            <Route exact path='/seller' component={SellerDashboard} />
             <Route exact path='/auctions/new' component={AuctionSetup} />
             <Route exact path='/auctions/:id' component={AuctionDetails} />
             <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
+
+            <Route exact path='/bidder' component={BidderDashboard} />
             <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
             <Route exact path='/auctions/:id/commit-bid' component={CommitBid} />
             <Route exact path='/auctions/:id/reveal-bid' component={RevealBid} />
+
             <Route path='*' component={NotFound} />
           </Switch>
         </Router>

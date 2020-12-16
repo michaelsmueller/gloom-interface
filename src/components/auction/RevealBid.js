@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
-import { formatUnits } from '@ethersproject/units';
+import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
 import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
@@ -40,7 +40,7 @@ export default function RevealBid() {
   if (error) return <div>error</div>;
 
   const revealBid = async ({ bid, password }) => {
-    const bidHex = hexZeroPad(+bid, 32);
+    const bidHex = hexZeroPad(parseEther(bid), 32);
     console.log('bidHex', bidHex);
     const salt = formatBytes32String(password);
     const tx = await auctionContract.revealBid(bidHex, salt);
