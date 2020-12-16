@@ -1,32 +1,32 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-import { BackButton, AuctionDateTimes } from 'components';
+// import { BackButton, AuctionDateTimes } from 'components';
 import Button from 'styles/buttonStyles';
 
-export default function AuctionDetails() {
-  const { id: auctionAddress } = useParams();
+export default function StartPhases({ auctionAddress }) {
+  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
-  // const [auctionDateTimes, setAuctionDateTimes] = useState({});
+  const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [winner, setWinner] = useState('');
 
-  // useEffect(() => {
-  //   if (!active || !auctionContract) return;
-  //   const getDateTimes = async () => {
-  //     console.log('getDateTimes');
-  //     const dateTimes = await auctionContract.getDateTimes();
-  //     setAuctionDateTimes({
-  //       startDateTime: dateTimes[0].toNumber(),
-  //       endDateTime: dateTimes[1].toNumber(),
-  //     });
-  //   };
-  //   getDateTimes();
-  // }, [active, auctionContract]);
+  useEffect(() => {
+    if (!active || !auctionContract) return;
+    const getDateTimes = async () => {
+      console.log('getDateTimes');
+      const dateTimes = await auctionContract.getDateTimes();
+      setAuctionDateTimes({
+        startDateTime: dateTimes[0].toNumber(),
+        endDateTime: dateTimes[1].toNumber(),
+      });
+    };
+    getDateTimes();
+  }, [active, auctionContract]);
 
   useEffect(() => {
     console.log('listening for LogSetWinner event');
@@ -46,12 +46,12 @@ export default function AuctionDetails() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
-  // console.log('auctionDateTimes', auctionDateTimes);
+  console.log('auctionDateTimes', auctionDateTimes);
   return (
     <div>
-      <BackButton />
-      <h1>Auction details</h1>
-      <AuctionDateTimes auctionContract={auctionContract} />
+      {/* <BackButton /> */}
+      <h1>Phases</h1>
+      {/* <AuctionDateTimes auctionDateTimes={auctionDateTimes} /> */}
       <h2>Winner</h2>
       <pre>
         <ul>

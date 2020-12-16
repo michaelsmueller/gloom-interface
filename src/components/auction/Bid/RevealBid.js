@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
@@ -10,8 +10,8 @@ import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
 import { BackButton, RevealBidForm } from 'components';
 
-export default function RevealBid() {
-  const { id: auctionAddress } = useParams();
+export default function RevealBid({ auctionAddress }) {
+  // const { id: auctionAddress } = useParams();
   const { web3Context } = useContext(Web3Context);
   const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);

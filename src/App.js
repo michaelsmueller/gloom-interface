@@ -11,10 +11,10 @@ import {
   Contracts,
   SellerDashboard,
   BidderDashboard,
-  AuctionSetup,
+  // TokenAndDates,
+  // SellerDeposit,
+  // BidderInvites,
   AuctionDetails,
-  SellerDeposit,
-  BidderInvites,
   CommitBid,
   RevealBid,
   NotFound,
@@ -34,12 +34,13 @@ export default function App() {
             <Route exact path='/' component={Home} />
 
             <Route exact path='/seller' component={SellerDashboard} />
-            <Route exact path='/auctions/new' component={AuctionSetup} />
+            {/* <Route exact path='/auctions/new' component={TokenAndDates} /> */}
+            {/* <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} /> */}
+            {/* <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} /> */}
+
             <Route exact path='/auctions/:id' component={AuctionDetails} />
-            <Route exact path='/auctions/:id/seller-deposit' component={SellerDeposit} />
 
             <Route exact path='/bidder' component={BidderDashboard} />
-            <Route exact path='/auctions/:id/bidder-invites' component={BidderInvites} />
             <Route exact path='/auctions/:id/commit-bid' component={CommitBid} />
             <Route exact path='/auctions/:id/reveal-bid' component={RevealBid} />
 

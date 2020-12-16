@@ -56,7 +56,7 @@ export default function Home() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const goToAuctionSetup = () => history.push('/auctions/new');
+  const goToTokenAndDates = () => history.push('/auctions/new');
   const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
   const goToCommitBid = () => history.push(`/auctions/${auctionInvitedAddress}/commit-bid`);
   const goToRevealBid = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
@@ -66,7 +66,7 @@ export default function Home() {
     <div>
       <h2>My auctions</h2>
       {!auctionAddress ? (
-        <Button type='button' onClick={goToAuctionSetup}>
+        <Button type='button' onClick={goToTokenAndDates}>
           New auction
         </Button>
       ) : (

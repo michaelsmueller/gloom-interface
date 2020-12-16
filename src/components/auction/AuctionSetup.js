@@ -1,66 +1,88 @@
 /* eslint-disable no-console */
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
-import useContract from 'hooks/useContract';
-// import useAuctionAddresses from 'hooks/useAuctionAddresses';
+// import AuctionFactory from 'contracts/AuctionFactory.json';
+// import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
-import AuctionFactory from 'contracts/AuctionFactory.json';
-import Auction from 'contracts/Auction.json';
-import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
-import { AuctionSetupForm } from 'components';
-// import Button from 'styles/buttonStyles';
+// import { getSigner } from 'utils/web3Library';
+import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
+import Button from 'styles/buttonStyles';
 
-export default function AuctionSetup() {
+export default function AuctionSetup({ auctionAddress }) {
   // const history = useHistory();
   const { web3Context } = useContext(Web3Context);
-  // const { active, error } = web3Context;
-  const factoryContract = useContract(AuctionFactory, web3Context);
-  const logicContract = useContract(Auction, web3Context);
-  // const { auctionAddresses, getAuctionAddresses } = useAuctionAddresses(factoryContract);
+  const { active, error, library, chainId } = web3Context;
+  // const [factoryContract, setFactoryContract] = useState(null);
+  // const [auctionAddress, setAuctionAddress] = useState('');
+  const [showing, setShowing] = useState('TOKEN_AND_DATES');
 
-  // if (!active && !error) return <div>loading</div>;
-  // if (error) return <div>Error {error.message}</div>;
+  // useEffect(() => {
+  //   if (!active) return;
+  //   const signer = getSigner(library);
+  //   const { address } = AuctionFactory.networks[chainId];
+  //   const factoryInstance = new Contract(address, AuctionFactory.abi, signer);
+  //   setFactoryContract(factoryInstance);
+  // }, [active, library, chainId]);
 
-  const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
-    const receipt = await tx.wait();
-    console.log('tx', tx);
-    console.log('receipt', receipt);
-    factoryContract.on('LogAuctionCreated', event => console.log('AuctionCreated event', event));
-    // await factoryContract.once(tx, transaction => {
-    //   console.log('transaction mined', transaction);
-    // getAuctionAddresses();
-    // });
-  };
+  // useEffect(() => {
+  //   if (!active || !factoryContract) return;
+  //   const getAuction = async () => {
+  //     const auction = await factoryContract.getAuctionBy();
+  //     if (auction !== '0x0000000000000000000000000000000000000000') setAuctionAddress(auction);
+  //   };
+  //   getAuction();
+  // }, [active, factoryContract]);
 
-  const setupAuction = ({ amount, token, startDate, endDate }) => {
-    const data = {
-      amount,
-      token,
-      startDate: parseLocalDateTime(startDate),
-      endDate: parseLocalDateTime(endDate),
-    };
-    console.log('parsed data sent to createAuction', data);
-    console.log('checking parsed startDate', getLocalDateTime(data.startDate));
-    console.log('checking parsed endDate', getLocalDateTime(data.endDate));
-    // console.log('difference between two dates', data.endDate - data.startDate);
-    createAuction(data);
-  };
+  if (!active && !error) return <div>loading</div>;
+  if (error) return <div>Error {error.message}</div>;
 
-  // to do: allow for seller managing multiple options, here it is hardwire to first deployed:
-  // const goToSellerDeposit = () => history.push(`/auctions/${auctionAddresses[0]}/seller-deposit`);
+  // const goToTokenAndDates = () => history.push('/auctions/new');
+  // const goToAuctionDetails = () => history.push(`/auctions/${auctionAddress}`);
 
   return (
     <div>
-      {/* <BackButton /> */}
-      {/* <h1>Set up auction</h1> */}
-      <AuctionSetupForm onSubmit={setupAuction} />
-      {/* <pre>{JSON.stringify(auctionAddresses, null, 2)}</pre> */}
-      {/* {auctionAddresses.length ? (
-        <Button type='button' onClick={goToSellerDeposit}>
-          Make deposit
-        </Button>
-      ) : null} */}
+      <h1>Auction</h1>
+      {/* <Button type='button' onClick={goToTokenAndDates}>
+        New auction
+      </Button>
+      {auctionAddress && (
+        <div>
+          <pre>{auctionAddress}</pre>
+          <Button type='button' onClick={goToAuctionDetails}>
+            View auction
+          </Button>
+        </div>
+      )} */}
+      <TopNav showing={showing} setShowing={setShowing} />
+      {showing === 'TOKEN_AND_DATES' && <TokenAndDates />}
+      {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
+      {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}
     </div>
   );
 }
+
+const TopNav = ({ showing, setShowing, user }) => {
+  const handleClick = e => setShowing(e.target.value);
+  // const { partner } = user || '';
+  const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
+  const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;
+  const depositButtonStyle = showing === 'SELLER_DEPOSIT' ? highlighted : null;
+  const biddersButtonStyle = showing === 'BIDDER_INVITES' ? highlighted : null;
+  // const redeemedButtonStyle = showing === 'redeemed' ? highlighted : null;
+  return (
+    <div className='offers-coupons-buttons'>
+      {/* <button>Add</button> */}
+      <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
+        Token & Dates
+      </button>
+      <button type='button' style={depositButtonStyle} onClick={handleClick} value='SELLER_DEPOSIT'>
+        Deposit
+      </button>
+      <button type='button' style={biddersButtonStyle} onClick={handleClick} value='BIDDER_INVITES'>
+        Bidders
+      </button>
+      {/* {partner && <button style={scanButtonStyle} onClick={handleClick} value='scan'>Scan</button>}
+      {partner && <button style={redeemedButtonStyle} onClick={handleClick} value='redeemed'>Redeemed</button>} */}
+    </div>
+  );
+};

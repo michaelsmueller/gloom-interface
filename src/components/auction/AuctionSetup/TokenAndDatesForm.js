@@ -5,7 +5,7 @@ import { Fieldset, FieldsetTitle, Label, Input, Select } from 'styles/formStyles
 import Button from 'styles/buttonStyles';
 import tokenList from 'data/tokenListLocalhost.json';
 
-export default function AuctionSetupForm({ onSubmit }) {
+export default function TokenAndDatesForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

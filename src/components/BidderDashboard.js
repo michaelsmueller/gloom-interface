@@ -1,18 +1,19 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
+import { Bid } from 'components';
 import Button from 'styles/buttonStyles';
 
 export default function BidderDashboard() {
-  const history = useHistory();
+  // const history = useHistory();
   const { web3Context } = useContext(Web3Context);
   const { active, error, library, chainId } = web3Context;
   const [factoryContract, setFactoryContract] = useState(null);
-  const [auctionInvitedAddress, setAuctionInvitedAddress] = useState('');
+  const [auctionAddress, setAuctionAddress] = useState('');
   const [winner, setWinner] = useState('');
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function BidderDashboard() {
     if (!active || !factoryContract) return;
     const getAuctionInvited = async () => {
       const auctionInvited = await factoryContract.getAuctionInvited();
-      if (auctionInvited !== '0x0000000000000000000000000000000000000000') setAuctionInvitedAddress(auctionInvited);
+      if (auctionInvited !== '0x0000000000000000000000000000000000000000') setAuctionAddress(auctionInvited);
     };
     getAuctionInvited();
   }, [active, factoryContract]);
@@ -36,7 +37,7 @@ export default function BidderDashboard() {
     if (!active || !factoryContract) return null;
     factoryContract.on('LogBidderRegistered', auction => {
       console.log('LogBidderRegistered event, auction', auction);
-      setAuctionInvitedAddress(auction);
+      setAuctionAddress(auction);
     });
     return () => factoryContract.removeAllListeners('LogBidderRegistered');
   }, [active, factoryContract]);
@@ -53,20 +54,22 @@ export default function BidderDashboard() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const goToCommitBid = () => history.push(`/auctions/${auctionInvitedAddress}/commit-bid`);
-  const goToRevealBid = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
-  const goToPay = () => history.push(`/auctions/${auctionInvitedAddress}/reveal-bid`);
+  // const goToCommitBid = () => history.push(`/auctions/${auctionAddress}/commit-bid`);
+  // const goToRevealBid = () => history.push(`/auctions/${auctionAddress}/reveal-bid`);
+  // const goToPay = () => history.push(`/auctions/${auctionAddress}/reveal-bid`);
 
   return (
     <div>
+      <h1>Bidder Dashboard</h1>
       <h2>Invited to bid</h2>
-      {auctionInvitedAddress ? (
+      <div>auction address: {auctionAddress}</div>
+      {/* {auctionAddress ? (
         <div>
-          <pre>{auctionInvitedAddress}</pre>
+          <pre>{auctionAddress}</pre>
           <Button type='button' onClick={goToCommitBid}>
             Commit bid
           </Button>
-          <pre>{auctionInvitedAddress}</pre>
+          <pre>{auctionAddress}</pre>
           <Button type='button' onClick={goToRevealBid}>
             Reveal bid
           </Button>
@@ -78,7 +81,10 @@ export default function BidderDashboard() {
         </div>
       ) : (
         <pre>none</pre>
-      )}
+      )} */}
+      <Bid auctionAddress={auctionAddress} />
+      {/* <CommitBid auctionAddress={auctionAddress} />
+      <RevealBid auctionAddress={auctionAddress} /> */}
     </div>
   );
 }
