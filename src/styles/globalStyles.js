@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --textPrimary: rgba(0, 0, 0, 0.87);
+    --textPrimary: rgba(0, 0, 0, 0.8);
     --textSecondary: rgba(0, 0, 0, 0.60);
     --textDisabled:rgba(0, 0, 0, 0.38);
     --nearWhite: #ffffff73;
@@ -18,7 +18,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3 {
-    margin: 0.5em 0;
+    margin: 0.6em 0;
     --textPrimary: rgba(0, 0, 0, 0.87);
   }
 

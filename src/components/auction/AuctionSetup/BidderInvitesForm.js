@@ -29,10 +29,10 @@ export default function BidderInvites({ onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Bidder deposit</FieldsetTitle>
         <Label htmlFor='bidder-deposit'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input
             type='number'
-            step='0.001'
+            step='1'
             min='0'
             id='bidder-deposit'
             name='bidderDeposit'
@@ -50,8 +50,10 @@ export default function BidderInvites({ onSubmit }) {
           return (
             <div name={fieldName} key={fieldName}>
               <Label htmlFor='account'>
-                <span>{index + 1}.&nbsp;</span>
-                Account:
+                <div>
+                  <span>{index + 1}.&nbsp;</span>
+                  Account:
+                </div>
                 <Input
                   type='text'
                   id='account'

@@ -1,66 +1,49 @@
 /* eslint-disable no-console */
-import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import useContract from 'hooks/useContract';
-import useAuctionAddresses from 'hooks/useAuctionAddresses';
+import React, { useContext, useState } from 'react';
 import { Web3Context } from 'contexts/web3Context';
-import AuctionFactory from 'contracts/AuctionFactory.json';
-import Auction from 'contracts/Auction.json';
-import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
-import { BackButton, AuctionSetupForm } from 'components';
-import Button from 'styles/buttonStyles';
+import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
+import NavBar from 'styles/navStyles';
 
-export default function AuctionSetup() {
-  const history = useHistory();
+export default function AuctionSetup({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
-  const factoryContract = useContract(AuctionFactory, web3Context);
-  const logicContract = useContract(Auction, web3Context);
-  const { auctionAddresses, getAuctionAddresses } = useAuctionAddresses(factoryContract);
+  const [showing, setShowing] = useState('TOKEN_AND_DATES');
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;
 
-  const createAuction = async ({ amount, token, startDate, endDate }) => {
-    const tx = await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
-    const receipt = await tx.wait();
-    console.log('tx', tx);
-    console.log('receipt', receipt);
-    factoryContract.on('LogAuctionCreated', event => console.log('AuctionCreated event', event));
-    await factoryContract.once(tx, transaction => {
-      console.log('transaction mined', transaction);
-      getAuctionAddresses();
-    });
-  };
-
-  const setupAuction = ({ amount, token, startDate, endDate }) => {
-    const data = {
-      amount,
-      token,
-      startDate: parseLocalDateTime(startDate),
-      endDate: parseLocalDateTime(endDate),
-    };
-    console.log('parsed data sent to createAuction', data);
-    console.log('checking parsed startDate', getLocalDateTime(data.startDate));
-    console.log('checking parsed endDate', getLocalDateTime(data.endDate));
-    // console.log('difference between two dates', data.endDate - data.startDate);
-    createAuction(data);
-  };
-
-  // to do: allow for seller managing multiple options, here it is hardwire to first deployed:
-  const goToSellerDeposit = () => history.push(`/auctions/${auctionAddresses[0]}/seller-deposit`);
-
   return (
     <div>
-      <BackButton />
-      <h1>Set up auction</h1>
-      <AuctionSetupForm onSubmit={setupAuction} />
-      <pre>{JSON.stringify(auctionAddresses, null, 2)}</pre>
-      {auctionAddresses.length ? (
-        <Button type='button' onClick={goToSellerDeposit}>
-          Make deposit
-        </Button>
-      ) : null}
+      <h2>Auction</h2>
+      <TopNav showing={showing} setShowing={setShowing} />
+      {showing === 'TOKEN_AND_DATES' && <TokenAndDates />}
+      {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
+      {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}
     </div>
   );
 }
+
+const TopNav = ({ showing, setShowing, user }) => {
+  const handleClick = e => setShowing(e.target.value);
+  // const { partner } = user || '';
+  const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
+  const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;
+  const depositButtonStyle = showing === 'SELLER_DEPOSIT' ? highlighted : null;
+  const biddersButtonStyle = showing === 'BIDDER_INVITES' ? highlighted : null;
+  // const redeemedButtonStyle = showing === 'redeemed' ? highlighted : null;
+  return (
+    <NavBar>
+      {/* <button>Add</button> */}
+      <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
+        Token & Dates
+      </button>
+      <button type='button' style={depositButtonStyle} onClick={handleClick} value='SELLER_DEPOSIT'>
+        Deposit
+      </button>
+      <button type='button' style={biddersButtonStyle} onClick={handleClick} value='BIDDER_INVITES'>
+        Bidders
+      </button>
+      {/* {partner && <button style={redeemedButtonStyle} onClick={handleClick} value='redeemed'>Redeemed</button>} */}
+    </NavBar>
+  );
+};

@@ -1,16 +1,15 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Contract } from '@ethersproject/contracts';
 import { formatUnits, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
+import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
-import { BackButton, CommitBidForm } from 'components';
+import { CommitBidForm } from 'components';
 
-export default function CommitBid() {
-  const { id: auctionAddress } = useParams();
+export default function CommitBid({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
@@ -39,16 +38,10 @@ export default function CommitBid() {
   if (error) return <div>error</div>;
 
   const submitBid = async ({ bid, password }) => {
-    const bidHex = formatBytes32String(bid);
+    const bidHex = hexZeroPad(parseEther(bid), 32);
+    console.log('bidHex', bidHex);
     const salt = formatBytes32String(password);
     const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
-
-    console.log('bid', bid);
-    console.log('password', password);
-    console.log('salt', salt);
-    console.log('hashedBid', hashedBid);
-
-    console.log('parsed bidderDeposit', parseEther(formatUnits(bidderDeposit)));
     const overrides = { from: account, value: parseEther(formatUnits(bidderDeposit)) };
     const tx = await auctionContract.submitBid(hashedBid, overrides);
     const receipt = await tx.wait();
@@ -69,8 +62,7 @@ export default function CommitBid() {
 
   return (
     <div>
-      <BackButton />
-      <h1>Commit bid</h1>
+      <h2>Commit bid</h2>
       <div>
         <em>
           We will commit a hash of your bid to the blockchain, to register the amount confidentially. You will need to
@@ -79,11 +71,6 @@ export default function CommitBid() {
         </em>
       </div>
       <CommitBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={submitBid} />
-      <pre>
-        Auction contract: {auctionAddress}
-        <br />
-        {JSON.stringify(auctionContract, null, 2)}
-      </pre>
     </div>
   );
 }

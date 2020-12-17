@@ -11,10 +11,10 @@ export default function SellerDeposit({ onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Seller deposit</FieldsetTitle>
         <Label htmlFor='amount'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input
             type='number'
-            step='0.001'
+            step='1'
             min='0'
             id='seller-deposit'
             name='sellerDeposit'

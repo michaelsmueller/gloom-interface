@@ -16,7 +16,7 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Bidder deposit</FieldsetTitle>
         <Label htmlFor='bidder-deposit'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input type='number' value={bidderDeposit} id='bidder-deposit' name='bidderDeposit' readOnly />
         </Label>
       </Fieldset>
@@ -24,10 +24,10 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Confirm bid</FieldsetTitle>
         <Label htmlFor='bid'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input
             type='number'
-            step='0.001'
+            step='1'
             min='0'
             id='bid'
             name='bid'
@@ -40,7 +40,7 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Confirm password</FieldsetTitle>
         <Label htmlFor='password'>
-          Password:
+          <div>Password:</div>
           <Input
             type={passwordShown ? 'text' : 'password'}
             id='password'

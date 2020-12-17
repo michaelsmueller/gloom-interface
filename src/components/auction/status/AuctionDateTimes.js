@@ -1,12 +1,32 @@
 /* eslint-disable no-console */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import useContract from 'hooks/useContract';
+import { Web3Context } from 'contexts/web3Context';
+import Auction from 'contracts/Auction.json';
 import { calculateTimeLeft, showLocalDateTime } from 'utils/dateTime';
 
-export default function AuctionDateTimes({ auctionDateTimes }) {
-  const { startDateTime, endDateTime } = auctionDateTimes;
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(endDateTime));
+export default function AuctionDateTimes({ auctionAddress }) {
+  const { web3Context } = useContext(Web3Context);
+  // const { active, error } = web3Context;
+  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const [auctionDateTimes, setAuctionDateTimes] = useState({});
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(''));
 
   useEffect(() => {
+    if (!auctionContract) return;
+    const getDateTimes = async () => {
+      console.log('getDateTimes');
+      const dateTimes = await auctionContract.getDateTimes();
+      setAuctionDateTimes({
+        startDateTime: dateTimes[0].toNumber(),
+        endDateTime: dateTimes[1].toNumber(),
+      });
+    };
+    getDateTimes();
+  }, [auctionContract]);
+
+  useEffect(() => {
+    const { endDateTime } = auctionDateTimes || '';
     const timer = setTimeout(() => setTimeLeft(calculateTimeLeft(endDateTime)), 1000);
     return () => clearTimeout(timer);
   });
@@ -21,17 +41,18 @@ export default function AuctionDateTimes({ auctionDateTimes }) {
     );
   });
 
-  // console.log(`timeLeft, ${JSON.stringify(timeLeft, null, 2)}`);
+  const { startDateTime, endDateTime } = auctionDateTimes || '';
   return (
-    <pre>
+    <>
       <h2>Auction dates & times</h2>
-      <ul>
-        {/* <li>Now: {showLocalDateTime(now)}</li> */}
-        <li>Start date & time:&nbsp; {showLocalDateTime(startDateTime)}</li>
-        <li>End date & time:&nbsp; {showLocalDateTime(endDateTime)}</li>
-        <li>Time left: </li>
-        {timerComponents.length ? timerComponents : <span>Time is up!</span>}
-      </ul>
-    </pre>
+      <pre>
+        <ul>
+          {/* <li>Now: {showLocalDateTime(now)}</li> */}
+          <li>Start date & time:&nbsp; {showLocalDateTime(startDateTime)}</li>
+          <li>End date & time:&nbsp; {showLocalDateTime(endDateTime)}</li>
+          <li>Time left:&nbsp; {timerComponents || <span>Auction ended!</span>}</li>
+        </ul>
+      </pre>
+    </>
   );
 }

@@ -1,32 +1,29 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-import { BackButton, AuctionDateTimes } from 'components';
 import Button from 'styles/buttonStyles';
 
-export default function AuctionDetails() {
-  const { id: auctionAddress } = useParams();
+export default function StartPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
-  // const [auctionDateTimes, setAuctionDateTimes] = useState({});
+  const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [winner, setWinner] = useState('');
 
-  // useEffect(() => {
-  //   if (!active || !auctionContract) return;
-  //   const getDateTimes = async () => {
-  //     console.log('getDateTimes');
-  //     const dateTimes = await auctionContract.getDateTimes();
-  //     setAuctionDateTimes({
-  //       startDateTime: dateTimes[0].toNumber(),
-  //       endDateTime: dateTimes[1].toNumber(),
-  //     });
-  //   };
-  //   getDateTimes();
-  // }, [active, auctionContract]);
+  useEffect(() => {
+    if (!active || !auctionContract) return;
+    const getDateTimes = async () => {
+      console.log('getDateTimes');
+      const dateTimes = await auctionContract.getDateTimes();
+      setAuctionDateTimes({
+        startDateTime: dateTimes[0].toNumber(),
+        endDateTime: dateTimes[1].toNumber(),
+      });
+    };
+    getDateTimes();
+  }, [active, auctionContract]);
 
   useEffect(() => {
     console.log('listening for LogSetWinner event');
@@ -46,18 +43,10 @@ export default function AuctionDetails() {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
-  // console.log('auctionDateTimes', auctionDateTimes);
+  console.log('auctionDateTimes', auctionDateTimes);
   return (
     <div>
-      <BackButton />
-      <h2>Auction details</h2>
-      <AuctionDateTimes auctionContract={auctionContract} />
-      <h2>Winner</h2>
-      <pre>
-        <ul>
-          <li>{winner || 'pending'}</li>
-        </ul>
-      </pre>
+      <h2>Phases</h2>
       <Button type='button' onClick={startCommit}>
         Start commit
       </Button>
@@ -70,10 +59,11 @@ export default function AuctionDetails() {
       <Button type='button' onClick={startWithdraw}>
         Start withdraw
       </Button>
+      <h2>Winner</h2>
       <pre>
-        Auction contract: {auctionAddress}
-        <br />
-        {JSON.stringify(auctionContract, null, 2)}
+        <ul>
+          <li>{winner || 'pending'}</li>
+        </ul>
       </pre>
     </div>
   );

@@ -20,7 +20,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Bidder deposit</FieldsetTitle>
         <Label htmlFor='bidder-deposit'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input type='number' value={bidderDeposit} id='bidder-deposit' name='bidderDeposit' readOnly />
         </Label>
       </Fieldset>
@@ -28,10 +28,10 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Bid</FieldsetTitle>
         <Label htmlFor='bid'>
-          Amount (ETH):
+          <div>Amount (ETH):</div>
           <Input
             type='number'
-            step='0.001'
+            step='1'
             min='0'
             id='bid'
             name='bid'
@@ -44,7 +44,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
       <Fieldset>
         <FieldsetTitle>Password</FieldsetTitle>
         <Label htmlFor='password'>
-          Password:
+          <div>Password:</div>
           <Input
             type={passwordShown ? 'text' : 'password'}
             id='password'
@@ -70,7 +70,7 @@ export default function CommitBidForm({ bidderDeposit, onSubmit }) {
           {errors.password && <p>{errors.password.message}</p>}
         </Label>
         <Label htmlFor='password-repeat'>
-          Repeat password:
+          <div>Repeat password:</div>
           <Input
             type='password'
             id='password-repeat'

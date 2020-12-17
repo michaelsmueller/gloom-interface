@@ -1,15 +1,13 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Auction from 'contracts/Auction.json';
 import { Contract } from '@ethersproject/contracts';
 import { parseEther } from '@ethersproject/units';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { BackButton, BidderInvitesForm } from 'components';
+import { BidderInvitesForm } from 'components';
 
-export default function BidderInvites() {
-  const { id: auctionAddress } = useParams();
+export default function BidderInvites({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
@@ -29,7 +27,6 @@ export default function BidderInvites() {
     console.log('bidders', bidders);
     const bidderAddresses = bidders.map(bidder => bidder.account);
     console.log('bidderAddresses', bidderAddresses);
-    // const overrides = { from: account };
     const tx = await auctionContract.setupBidders(parseEther(bidderDeposit), bidderAddresses);
     const receipt = await tx.wait();
     console.log('tx', tx);
@@ -41,10 +38,7 @@ export default function BidderInvites() {
 
   return (
     <div>
-      <BackButton />
-      <h1>Bidder invites</h1>
       <BidderInvitesForm onSubmit={inviteBidders} />
-      <pre>Auction contract: {auctionAddress}</pre>
     </div>
   );
 }
