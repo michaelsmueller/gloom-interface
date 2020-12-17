@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --textPrimary: rgba(0, 0, 0, 0.87);
+    --textPrimary: rgba(0, 0, 0, 0.8);
     --textSecondary: rgba(0, 0, 0, 0.60);
     --textDisabled:rgba(0, 0, 0, 0.38);
     --nearWhite: #ffffff73;
