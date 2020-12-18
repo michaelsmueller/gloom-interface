@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Web3Context } from 'contexts/web3Context';
-import Container from 'styles/homeStyles';
+import { Container, Logo, Headline, SellingProposition, Buttons } from 'styles/homeStyles';
 import Button from 'styles/buttonStyles';
 
 export default function Home() {
@@ -20,22 +20,24 @@ export default function Home() {
     <Container>
       <header>
         <a href='/'>
-          <img src='/gloom-logo.png' alt='Gloom logo' />
+          <Logo src='gloom-logo-large.png' alt='Gloom logo' />
         </a>
       </header>
-      <h1>Transactions outside the light of day</h1>
-      <p>
+      <Headline>Transactions outside the light of day</Headline>
+      <SellingProposition>
         You backed the protocol and own a ton of tokens. You want to cash out but don’t want to hurt the project. Gloom
         lets you conduct a private, invite-only auction with the security of the blockchain. Exit gracefully, earn what
         you deserve.
-      </p>
+      </SellingProposition>
 
-      <Button type='button' onClick={goToSeller}>
-        Auction ERC-20 tokens
-      </Button>
-      <Button type='button' onClick={goToBidder}>
-        Bid on auction
-      </Button>
+      <Buttons>
+        <Button type='button' large onClick={goToSeller}>
+          Auction tokens
+        </Button>
+        <Button type='button' large onClick={goToBidder}>
+          Bid on auction
+        </Button>
+      </Buttons>
     </Container>
   );
 }

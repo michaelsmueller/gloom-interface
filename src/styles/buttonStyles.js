@@ -5,8 +5,8 @@ const Button = styled.button`
   padding: 15px;
   border-radius: 20px;
   box-shadow: -3px -3px 5px var(--nearWhite), 3px 3px 3px var(--shadow);
-  font-size: 0.8em;
   font-weight: 700;
+  font-size: ${props => (props.large ? '1.1em' : '0.8em')};
 
   &:hover {
     cursor: pointer;

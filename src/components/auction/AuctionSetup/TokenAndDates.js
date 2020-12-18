@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
+import { LoadingContext } from 'contexts/loadingContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
 import { parseLocalDateTime, getLocalDateTime } from 'utils/dateTime';
@@ -16,7 +17,8 @@ export default function TokenAndDates() {
   const factoryContract = useContract(AuctionFactory, web3Context);
   const logicContract = useContract(Auction, web3Context);
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
     setIsLoading(true);
@@ -46,10 +48,8 @@ export default function TokenAndDates() {
 
   return (
     <div>
-      <LoadingOverlay active={isLoading} spinner text='Waiting for transaction'>
-        <TokenAndDatesForm onSubmit={setupAuction} />
-        <ToastContainer position='bottom-right' newestOnTop />
-      </LoadingOverlay>
+      <TokenAndDatesForm onSubmit={setupAuction} />
+      <ToastContainer position='bottom-right' newestOnTop />
     </div>
   );
 }

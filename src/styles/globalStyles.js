@@ -33,7 +33,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     color: var(--textPrimary);
     background: var(--backgroundPrimary);
-    padding: 30px;
   }
 
   p {
