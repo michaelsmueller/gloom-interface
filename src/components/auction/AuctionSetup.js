@@ -4,6 +4,9 @@ import { Web3Context } from 'contexts/web3Context';
 import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
 import NavBar from 'styles/navStyles';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function AuctionSetup({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
@@ -15,16 +18,20 @@ export default function AuctionSetup({ auctionAddress }) {
   return (
     <div>
       <h2>Auction</h2>
-      <TopNav showing={showing} setShowing={setShowing} />
+      <TopNav showing={showing} setShowing={setShowing} auctionAddress={auctionAddress} />
       {showing === 'TOKEN_AND_DATES' && <TokenAndDates />}
       {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
       {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}
+      <ToastContainer position='bottom-right' newestOnTop />
     </div>
   );
 }
 
-const TopNav = ({ showing, setShowing, user }) => {
-  const handleClick = e => setShowing(e.target.value);
+const TopNav = ({ showing, setShowing, auctionAddress }) => {
+  const handleClick = e => {
+    if (auctionAddress) setShowing(e.target.value);
+    else toast.dark('Enter token and dates and click Set up auction.');
+  };
   // const { partner } = user || '';
   const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
   const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;
