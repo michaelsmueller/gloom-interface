@@ -15,7 +15,7 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.img`
-  max-width: 50vw;
+  max-width: 60vw;
 `;
 
 export const Headline = styled.h1`

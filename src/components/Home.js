@@ -25,8 +25,8 @@ export default function Home() {
       </header>
       <Headline>Transactions outside the light of day</Headline>
       <SellingProposition>
-        You backed the protocol and own a ton of tokens. You want to cash out but don’t want to hurt the project. Gloom
-        lets you conduct a private, invite-only auction with the security of the blockchain. Exit gracefully, earn what
+        You backed the protocol and own a ton of tokens. You want to cash out but without hurting the project. Gloom
+        lets you conduct a private, invite-only auction from the security of the blockchain. Exit gracefully, earn what
         you deserve.
       </SellingProposition>
 
