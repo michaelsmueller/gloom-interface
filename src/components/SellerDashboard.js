@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
@@ -23,7 +22,6 @@ export default function SellerDashboard() {
   useEffect(() => {
     if (!active || !factoryContract) return;
     factoryContract.on('LogAuctionCreated', auction => {
-      console.log('SellerDashboard LogAuctionCreated auction', auction);
       setAuctionAddress(auction);
     });
   });

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useContext } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
@@ -13,9 +12,6 @@ export default function SellerDeposit({ auctionAddress }) {
   const { account } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
-
-  // if (!active && !error) return <div>loading</div>;
-  // if (error) return <div>error</div>;
 
   const fundDeposit = async ({ sellerDeposit }) => {
     setIsLoading(true);

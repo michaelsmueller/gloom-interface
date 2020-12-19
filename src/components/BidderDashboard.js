@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
@@ -10,7 +9,6 @@ export default function BidderDashboard() {
   const { active, error } = web3Context;
   const factoryContract = useContract(AuctionFactory, web3Context);
   const [auctionAddress, setAuctionAddress] = useState('');
-  // const [winner, setWinner] = useState('');
 
   useEffect(() => {
     if (!active || !factoryContract) return;
@@ -24,7 +22,6 @@ export default function BidderDashboard() {
   useEffect(() => {
     if (!active || !factoryContract) return null;
     factoryContract.on('LogBidderRegistered', auction => {
-      console.log('LogBidderRegistered event, auction', auction);
       setAuctionAddress(auction);
     });
     return () => factoryContract.removeAllListeners('LogBidderRegistered');

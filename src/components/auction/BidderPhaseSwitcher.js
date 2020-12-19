@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
@@ -53,14 +52,10 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
     getEscrow();
   }, [account, active, auctionContract, winner]);
 
-  // if (!active && !error) return <div>loading</div>;
-  // if (error) return <div>Error {error.message}</div>;
   return (
     <div>
       <h2>Bid</h2>
-      {/* <div>auction invited address: {auctionAddress}</div> */}
       <BidderNav showing={showing} setShowing={setShowing} isWinner={winner === account} />
-      {/* {showing === 'TOKEN_AND_DATES' && <TokenAndDates />} */}
       {showing === 'COMMIT_BID' && <CommitBid auctionAddress={auctionAddress} bidderDeposit={bidderDeposit} />}
       {showing === 'REVEAL_BID' && <RevealBid auctionAddress={auctionAddress} />}
       {showing === 'PAY' && <Pay escrowAddress={escrowAddress} />}

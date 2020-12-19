@@ -1,17 +1,10 @@
-/* eslint-disable no-console */
-import React, { useContext, useState } from 'react';
-// import { Web3Context } from 'contexts/web3Context';
+import React, { useState } from 'react';
 import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
 import NavBar from 'styles/navStyles';
 import { toast } from 'react-toastify';
 
 export default function SellerPhaseSwitcher({ auctionAddress }) {
-  // const { web3Context } = useContext(Web3Context);
-  // const { active, error } = web3Context;
   const [showing, setShowing] = useState('TOKEN_AND_DATES');
-
-  // if (!active && !error) return <div>loading</div>;
-  // if (error) return <div>Error {error.message}</div>;
 
   return (
     <div>
@@ -29,15 +22,12 @@ const SellerNav = ({ showing, setShowing, auctionAddress }) => {
     if (auctionAddress) setShowing(e.target.value);
     else toast.warning('Enter token and dates, click Set up auction and wait for auction to be created.');
   };
-  // const { partner } = user || '';
   const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
   const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;
   const depositButtonStyle = showing === 'SELLER_DEPOSIT' ? highlighted : null;
   const biddersButtonStyle = showing === 'BIDDER_INVITES' ? highlighted : null;
-  // const redeemedButtonStyle = showing === 'redeemed' ? highlighted : null;
   return (
     <NavBar>
-      {/* <button>Add</button> */}
       <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
         Token & Dates
       </button>
@@ -47,7 +37,6 @@ const SellerNav = ({ showing, setShowing, auctionAddress }) => {
       <button type='button' style={biddersButtonStyle} onClick={handleClick} value='BIDDER_INVITES'>
         Bidders
       </button>
-      {/* {partner && <button style={redeemedButtonStyle} onClick={handleClick} value='redeemed'>Redeemed</button>} */}
     </NavBar>
   );
 };

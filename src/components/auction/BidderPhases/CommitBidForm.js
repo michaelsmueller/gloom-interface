@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';

@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Escrow from 'contracts/Escrow.json';
-import { formatUnits, parseEther } from '@ethersproject/units';
+import { formatUnits } from '@ethersproject/units';
 import { PayForm } from 'components';
 import { toast } from 'react-toastify';
 
@@ -23,9 +22,6 @@ export default function Pay({ escrowAddress }) {
     };
     getWinningBid();
   }, [active, escrowContract]);
-
-  // if (!active && !error) return <div>loading</div>;
-  // if (error) return <div>error</div>;
 
   const pay = async () => {
     setIsLoading(true);
