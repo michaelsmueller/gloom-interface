@@ -7,7 +7,7 @@ import NavBar from 'styles/navStyles';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function AuctionSetup({ auctionAddress }) {
+export default function SellerPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
   const [showing, setShowing] = useState('TOKEN_AND_DATES');

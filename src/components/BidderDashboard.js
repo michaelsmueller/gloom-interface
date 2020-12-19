@@ -4,7 +4,7 @@ import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { BackButton, Bid, AssetDetails, AuctionDateTimes } from 'components';
+import { BackButton, BidderPhases, AssetDetails, AuctionDateTimes } from 'components';
 
 export default function BidderDashboard() {
   const { web3Context } = useContext(Web3Context);
@@ -53,7 +53,7 @@ export default function BidderDashboard() {
         <>
           <AssetDetails auctionAddress={auctionAddress} />
           <AuctionDateTimes auctionAddress={auctionAddress} />
-          <Bid auctionAddress={auctionAddress} />
+          <BidderPhases auctionAddress={auctionAddress} />
         </>
       ) : (
         <div>You have no auction invites</div>

@@ -4,7 +4,7 @@ import { Web3Context } from 'contexts/web3Context';
 import { CommitBid, RevealBid } from 'components';
 import NavBar from 'styles/navStyles';
 
-export default function Bid({ auctionAddress }) {
+export default function BidderPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
   // const [winner, setWinner] = useState('');

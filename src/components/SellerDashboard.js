@@ -4,7 +4,7 @@ import AuctionFactory from 'contracts/AuctionFactory.json';
 import { Contract } from '@ethersproject/contracts';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
-import { BackButton, AuctionSetup, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
+import { BackButton, SellerPhases, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
 
 export default function SellerDashboard() {
   const { web3Context } = useContext(Web3Context);
@@ -47,7 +47,7 @@ export default function SellerDashboard() {
         <img src='gloom-logo.png' alt='Gloom logo' />
       </a>
       <h1>Seller dashboard</h1>
-      <AuctionSetup auctionAddress={auctionAddress} />
+      <SellerPhases auctionAddress={auctionAddress} />
       <AssetDetails auctionAddress={auctionAddress} />
       <AuctionDateTimes auctionAddress={auctionAddress} />
       <StartPhases auctionAddress={auctionAddress} />
