@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
-import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { calculateTimeLeft, showLocalDateTime } from 'utils/dateTime';
 
 export default function AuctionDateTimes({ auctionAddress }) {
-  const { web3Context } = useContext(Web3Context);
-  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const auctionContract = useContract(Auction, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(''));
 

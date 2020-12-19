@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 export default function CommitBid({ auctionAddress, bidderDeposit }) {
   const { web3Context } = useContext(Web3Context);
   const { account } = web3Context;
-  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const auctionContract = useContract(Auction, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
 
   const submitBid = async ({ bid, password }) => {

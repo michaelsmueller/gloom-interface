@@ -20,7 +20,7 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
 const SellerNav = ({ showing, setShowing, auctionAddress }) => {
   const handleClick = e => {
     if (auctionAddress) setShowing(e.target.value);
-    else toast.warning('Enter token and dates, click Set up auction and wait for auction to be created.');
+    else toast.warning('Auction has not been set up and mined yet.');
   };
   const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
   const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;

@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 export default function Pay({ escrowAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active } = web3Context;
-  const escrowContract = useContract(Escrow, web3Context, escrowAddress);
+  const escrowContract = useContract(Escrow, escrowAddress);
   const [winningBid, setWinningBid] = useState(null);
   const { setIsLoading } = useContext(LoadingContext);
 

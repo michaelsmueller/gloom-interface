@@ -7,7 +7,7 @@ import { BackButton, BidderPhaseSwitcher, AssetDetails, AuctionDateTimes } from 
 export default function BidderDashboard() {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
-  const factoryContract = useContract(AuctionFactory, web3Context);
+  const factoryContract = useContract(AuctionFactory);
   const [auctionAddress, setAuctionAddress] = useState('');
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function BidderDashboard() {
       setAuctionAddress(auction);
     });
     return () => factoryContract.removeAllListeners('LogBidderRegistered');
-  }, [active, factoryContract]);
+  });
 
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>Error {error.message}</div>;

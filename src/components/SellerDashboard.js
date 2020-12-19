@@ -7,7 +7,7 @@ import { BackButton, SellerPhaseSwitcher, AssetDetails, AuctionDateTimes, StartP
 export default function SellerDashboard() {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
-  const factoryContract = useContract(AuctionFactory, web3Context);
+  const factoryContract = useContract(AuctionFactory);
   const [auctionAddress, setAuctionAddress] = useState('');
 
   useEffect(() => {
@@ -20,10 +20,11 @@ export default function SellerDashboard() {
   }, [active, factoryContract]);
 
   useEffect(() => {
-    if (!active || !factoryContract) return;
+    if (!active || !factoryContract) return null;
     factoryContract.on('LogAuctionCreated', auction => {
       setAuctionAddress(auction);
     });
+    return () => factoryContract.removeAllListeners('LogAuctionCreated');
   });
 
   if (!active && !error) return <div>loading</div>;

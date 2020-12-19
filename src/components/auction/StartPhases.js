@@ -7,7 +7,7 @@ import Button from 'styles/buttonStyles';
 export default function StartPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active } = web3Context;
-  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const auctionContract = useContract(Auction, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [winner, setWinner] = useState('');
 

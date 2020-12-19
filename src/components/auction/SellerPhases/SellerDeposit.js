@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 export default function SellerDeposit({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account } = web3Context;
-  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const auctionContract = useContract(Auction, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
 
   const fundDeposit = async ({ sellerDeposit }) => {

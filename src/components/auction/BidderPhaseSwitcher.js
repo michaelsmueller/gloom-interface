@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 export default function BidderPhaseSwitcher({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active } = web3Context;
-  const auctionContract = useContract(Auction, web3Context, auctionAddress);
+  const auctionContract = useContract(Auction, auctionAddress);
   const [bidderDeposit, setBidderDeposit] = useState(null);
   const [winner, setWinner] = useState('');
   const [escrowAddress, setEscrowAddress] = useState(null);
