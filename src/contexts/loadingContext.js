@@ -7,7 +7,6 @@ export const LoadingContext = createContext();
 const StyledLoader = styled(LoadingOverlay)`
   padding: 30px;
   display: flex;
-  height: 100vh;
   flex-direction: column;
   align-items: center;
 `;
@@ -17,9 +16,7 @@ export default function LoadingContextProvider({ children }) {
   useEffect(() => setIsLoading(false), [setIsLoading]);
   return (
     <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
-      <StyledLoader active={isLoading} spinner>
-        {children}
-      </StyledLoader>
+      <StyledLoader active={isLoading}>{children}</StyledLoader>
     </LoadingContext.Provider>
   );
 }

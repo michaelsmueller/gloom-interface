@@ -7,9 +7,7 @@ import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
 import { parseLocalDateTime } from 'utils/dateTime';
 import { TokenAndDatesForm } from 'components';
-
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 export default function TokenAndDates() {
   const { web3Context } = useContext(Web3Context);
@@ -22,10 +20,14 @@ export default function TokenAndDates() {
     try {
       await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
       toast.info('Submitted transaction to create auction ');
-      factoryContract.once('error', error => toast.error(`Error creating auction: ${error.message}`));
-      factoryContract.once('LogAuctionCreated', event => toast.success(`Auction created: ${event}`));
+      factoryContract.once('error', error =>
+        toast.error(`Error creating auction: ${error.data?.message || error.message}`),
+      );
+      factoryContract.once('LogAuctionCreated', (auction, seller) =>
+        toast.success(`Auction ${auction} created by ${seller}`),
+      );
     } catch (error) {
-      toast.error(`Error: ${error.message}`);
+      toast.error(`Error: ${error.data?.message || error.message}`);
     }
     setIsLoading(false);
   };

@@ -1,33 +1,30 @@
 /* eslint-disable no-console */
 import React, { useContext, useState } from 'react';
-import { Web3Context } from 'contexts/web3Context';
+// import { Web3Context } from 'contexts/web3Context';
 import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
 import NavBar from 'styles/navStyles';
+import { toast } from 'react-toastify';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export default function SellerPhases({ auctionAddress }) {
-  const { web3Context } = useContext(Web3Context);
-  const { active, error } = web3Context;
+export default function SellerPhaseSwitcher({ auctionAddress }) {
+  // const { web3Context } = useContext(Web3Context);
+  // const { active, error } = web3Context;
   const [showing, setShowing] = useState('TOKEN_AND_DATES');
 
-  if (!active && !error) return <div>loading</div>;
-  if (error) return <div>Error {error.message}</div>;
+  // if (!active && !error) return <div>loading</div>;
+  // if (error) return <div>Error {error.message}</div>;
 
   return (
     <div>
       <h2>Auction</h2>
-      <TopNav showing={showing} setShowing={setShowing} auctionAddress={auctionAddress} />
+      <SellerNav showing={showing} setShowing={setShowing} auctionAddress={auctionAddress} />
       {showing === 'TOKEN_AND_DATES' && <TokenAndDates />}
       {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
       {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}
-      <ToastContainer position='bottom-right' newestOnTop />
     </div>
   );
 }
 
-const TopNav = ({ showing, setShowing, auctionAddress }) => {
+const SellerNav = ({ showing, setShowing, auctionAddress }) => {
   const handleClick = e => {
     if (auctionAddress) setShowing(e.target.value);
     else toast.dark('Enter token and dates and click Set up auction.');

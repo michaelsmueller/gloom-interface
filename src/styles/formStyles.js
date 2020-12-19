@@ -18,6 +18,8 @@ export const Label = styled.label`
   width: 100%;
   margin: 5px 0;
   & > div {
+    display: flex;
+    align-items: center;
     width: 150px;
   }
 `;

@@ -16,9 +16,9 @@ export default function App() {
         <Router>
           <GlobalStyle />
           <LoadingContextProvider>
-            <Network />
+            {/* <Network />
             <Contracts />
-            <hr style={{ margin: '15px 0' }} />
+            <hr style={{ margin: '15px 0' }} /> */}
             <Head />
             <ContentWrapper>
               <Switch>
@@ -27,7 +27,7 @@ export default function App() {
                 <Route path='/bidder' component={BidderDashboard} />
                 <Route path='*' component={NotFound} />
               </Switch>
-              <ToastContainer position='bottom-right' newestOnTop />
+              <ToastContainer />
             </ContentWrapper>
           </LoadingContextProvider>
         </Router>

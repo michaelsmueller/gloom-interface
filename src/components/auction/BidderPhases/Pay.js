@@ -7,13 +7,15 @@ import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
-import { RevealBidForm } from 'components';
+import Escrow from 'contracts/Escrow.json';
+import { PayForm } from 'components';
 
-export default function RevealBid({ auctionAddress }) {
+export default function Pay({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active, error, library } = web3Context;
   const [auctionContract, setAuctionContract] = useState(null);
-  const [bidderDeposit, setBidderDeposit] = useState(null);
+  const [escrowContract, setEscrowContract] = useState(null);
+  const [winningBid, setWinningBid] = useState(null);
 
   useEffect(() => {
     if (!active) return;
@@ -29,7 +31,7 @@ export default function RevealBid({ auctionAddress }) {
     const getBidderDeposit = async () => {
       console.log('getBidderDeposit');
       const deposit = await auctionContract.getBidderDeposit();
-      setBidderDeposit(deposit);
+      // setBidderDeposit(deposit);
     };
     getBidderDeposit();
   }, [active, auctionContract]);
@@ -37,26 +39,14 @@ export default function RevealBid({ auctionAddress }) {
   if (!active && !error) return <div>loading</div>;
   if (error) return <div>error</div>;
 
-  const revealBid = async ({ bid, password }) => {
-    const bidHex = hexZeroPad(parseEther(bid), 32);
-    console.log('bidHex', bidHex);
-    const salt = formatBytes32String(password);
-    const tx = await auctionContract.revealBid(bidHex, salt);
-    const receipt = await tx.wait();
-    console.log('tx', tx);
-    console.log('receipt', receipt);
-    auctionContract.on('LogBidRevealed', (bidder, bidHexReturned, saltReturned) => {
-      console.log('event LogBidRevealed emitted');
-      console.log('bidder', bidder);
-      console.log('bidHex', bidHexReturned);
-      console.log('salt', saltReturned);
-    });
+  const pay = async () => {
+    console.log('pay');
   };
 
   return (
     <div>
-      <h2>Reveal bid</h2>
-      <RevealBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={revealBid} />
+      <h2>Pay</h2>
+      <PayForm winningBid={winningBid ? formatUnits(winningBid) : ''} onSubmit={pay} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
   * {

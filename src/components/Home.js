@@ -1,21 +1,11 @@
 /* eslint-disable no-console */
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Web3Context } from 'contexts/web3Context';
 import { Container, Logo, Headline, SellingProposition, Buttons } from 'styles/homeStyles';
 import Button from 'styles/buttonStyles';
 
 export default function Home() {
   const history = useHistory();
-  const { web3Context } = useContext(Web3Context);
-  const { active, error } = web3Context;
-
-  if (!active && !error) return <div>loading</div>;
-  if (error) return <div>Error {error.message}</div>;
-
-  const goToSeller = () => history.push('/seller');
-  const goToBidder = () => history.push('/bidder');
-
   return (
     <Container>
       <header>
@@ -29,12 +19,11 @@ export default function Home() {
         lets you conduct a private, invite-only auction from the security of the blockchain. Exit gracefully, earn what
         you deserve.
       </SellingProposition>
-
       <Buttons>
-        <Button type='button' large onClick={goToSeller}>
+        <Button type='button' large onClick={() => history.push('/seller')}>
           Auction tokens
         </Button>
-        <Button type='button' large onClick={goToBidder}>
+        <Button type='button' large onClick={() => history.push('/bidder')}>
           Bid on auction
         </Button>
       </Buttons>
