@@ -45,6 +45,9 @@ export default function BidderDashboard() {
   return (
     <div>
       <BackButton />
+      <a href='/'>
+        <img src='gloom-logo.png' alt='Gloom logo' />
+      </a>
       <h1>Bidder dashboard</h1>
       {auctionAddress ? (
         <>

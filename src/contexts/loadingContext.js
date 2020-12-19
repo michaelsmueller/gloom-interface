@@ -6,6 +6,10 @@ export const LoadingContext = createContext();
 
 const StyledLoader = styled(LoadingOverlay)`
   padding: 30px;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default function LoadingContextProvider({ children }) {

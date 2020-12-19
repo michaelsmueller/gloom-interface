@@ -7,7 +7,7 @@ import { hexZeroPad } from '@ethersproject/bytes';
 import { Web3Context } from 'contexts/web3Context';
 import { getSigner } from 'utils/web3Library';
 import Auction from 'contracts/Auction.json';
-import { BackButton, RevealBidForm } from 'components';
+import { RevealBidForm } from 'components';
 
 export default function RevealBid({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);

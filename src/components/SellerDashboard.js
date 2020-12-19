@@ -43,6 +43,9 @@ export default function SellerDashboard() {
   return (
     <div>
       <BackButton />
+      <a href='/'>
+        <img src='gloom-logo.png' alt='Gloom logo' />
+      </a>
       <h1>Seller dashboard</h1>
       <AuctionSetup auctionAddress={auctionAddress} />
       <AssetDetails auctionAddress={auctionAddress} />

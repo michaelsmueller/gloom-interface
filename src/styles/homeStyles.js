@@ -2,8 +2,7 @@ import styled from 'styled-components/macro';
 
 export const Container = styled.div`
   display: flex;
-  margin-top: 50px;
-  height: 85vh;
+  margin-top: 30px;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
@@ -46,6 +45,7 @@ export const Buttons = styled.div`
   align-items: center;
 
   & > button {
+    margin: 10px;
     width: 200px;
     height: 75px;
   }

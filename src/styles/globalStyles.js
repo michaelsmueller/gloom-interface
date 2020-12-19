@@ -33,6 +33,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     color: var(--textPrimary);
     background: var(--backgroundPrimary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #root {
+    width: 100vw;
   }
 
   p {
