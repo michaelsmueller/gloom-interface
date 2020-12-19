@@ -27,7 +27,7 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
 const SellerNav = ({ showing, setShowing, auctionAddress }) => {
   const handleClick = e => {
     if (auctionAddress) setShowing(e.target.value);
-    else toast.dark('Enter token and dates and click Set up auction.');
+    else toast.warning('Enter token and dates, click Set up auction and wait for auction to be created.');
   };
   // const { partner } = user || '';
   const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };

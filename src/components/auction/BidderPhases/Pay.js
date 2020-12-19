@@ -1,52 +1,49 @@
 /* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import { Contract } from '@ethersproject/contracts';
-import { formatUnits, parseEther } from '@ethersproject/units';
-import { formatBytes32String } from '@ethersproject/strings';
-import { hexZeroPad } from '@ethersproject/bytes';
+import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
-import { getSigner } from 'utils/web3Library';
-import Auction from 'contracts/Auction.json';
+import { LoadingContext } from 'contexts/loadingContext';
 import Escrow from 'contracts/Escrow.json';
+import { formatUnits, parseEther } from '@ethersproject/units';
 import { PayForm } from 'components';
+import { toast } from 'react-toastify';
 
-export default function Pay({ auctionAddress }) {
+export default function Pay({ escrowAddress }) {
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library } = web3Context;
-  const [auctionContract, setAuctionContract] = useState(null);
-  const [escrowContract, setEscrowContract] = useState(null);
+  const { account, active } = web3Context;
+  const escrowContract = useContract(Escrow, web3Context, escrowAddress);
   const [winningBid, setWinningBid] = useState(null);
+  const { setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    if (!active) return;
-    const signer = getSigner(library);
-    const auctionInstance = new Contract(auctionAddress, Auction.abi, signer);
-    setAuctionContract(auctionInstance);
-  }, [active, library, auctionAddress]);
-
-  useEffect(() => {
-    console.log('useEffect 2');
-    if (!active || !auctionContract) return;
-    console.log('active');
-    const getBidderDeposit = async () => {
-      console.log('getBidderDeposit');
-      const deposit = await auctionContract.getBidderDeposit();
-      // setBidderDeposit(deposit);
+    if (!active || !escrowContract) return;
+    const getWinningBid = async () => {
+      const winning = await escrowContract.getWinningBid();
+      setWinningBid(winning);
     };
-    getBidderDeposit();
-  }, [active, auctionContract]);
+    getWinningBid();
+  }, [active, escrowContract]);
 
-  if (!active && !error) return <div>loading</div>;
-  if (error) return <div>error</div>;
+  // if (!active && !error) return <div>loading</div>;
+  // if (error) return <div>error</div>;
 
   const pay = async () => {
-    console.log('pay');
+    setIsLoading(true);
+    try {
+      await escrowContract.buyerPayment({ from: account, value: winningBid });
+      toast.info('Sending payment');
+      escrowContract.once('error', error =>
+        toast.error(`Error making payment: ${error.data?.message || error.message}`),
+      );
+      escrowContract.once('LogBuyerPaid', (buyer, amount) =>
+        toast.success(`${formatUnits(amount)} ETH payment completed by ${buyer}`),
+      );
+    } catch (error) {
+      toast.error(`Error: ${error.data?.message || error.message}`);
+    }
+    setIsLoading(false);
   };
 
-  return (
-    <div>
-      <h2>Pay</h2>
-      <PayForm winningBid={winningBid ? formatUnits(winningBid) : ''} onSubmit={pay} />
-    </div>
-  );
+  console.log('escrowAddress', escrowAddress);
+  return <PayForm winningBid={winningBid ? formatUnits(winningBid) : ''} onSubmit={pay} />;
 }

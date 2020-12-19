@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
@@ -10,21 +10,11 @@ import { hexZeroPad } from '@ethersproject/bytes';
 import { CommitBidForm } from 'components';
 import { toast } from 'react-toastify';
 
-export default function CommitBid({ auctionAddress }) {
+export default function CommitBid({ auctionAddress, bidderDeposit }) {
   const { web3Context } = useContext(Web3Context);
-  const { account, active } = web3Context;
+  const { account } = web3Context;
   const auctionContract = useContract(Auction, web3Context, auctionAddress);
-  const [bidderDeposit, setBidderDeposit] = useState(null);
   const { setIsLoading } = useContext(LoadingContext);
-
-  useEffect(() => {
-    if (!active || !auctionContract) return;
-    const getBidderDeposit = async () => {
-      const deposit = await auctionContract.getBidderDeposit();
-      setBidderDeposit(deposit);
-    };
-    getBidderDeposit();
-  }, [active, auctionContract]);
 
   // if (!active && !error) return <div>loading</div>;
   // if (error) return <div>error</div>;

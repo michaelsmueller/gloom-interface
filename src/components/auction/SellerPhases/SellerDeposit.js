@@ -26,7 +26,7 @@ export default function SellerDeposit({ auctionAddress }) {
         toast.error(`Error sending deposit: ${error.data?.message || error.message}`),
       );
       auctionContract.once('LogSellerDepositReceived', (seller, deposit) =>
-        toast.success(`${formatUnits(deposit)} ETH deposit received from ${seller}`),
+        toast.success(`${formatUnits(deposit)} ETH deposit completed by ${seller}`),
       );
     } catch (error) {
       toast.error(`Error: ${error.data?.message || error.message}`);
