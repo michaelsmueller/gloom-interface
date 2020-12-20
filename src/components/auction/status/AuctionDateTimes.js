@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import Auction from 'contracts/Auction.json';
 import { calculateTimeLeft, showLocalDateTime } from 'utils/dateTime';
 
 export default function AuctionDateTimes({ auctionAddress }) {
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(''));
 

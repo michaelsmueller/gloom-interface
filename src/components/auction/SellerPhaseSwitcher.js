@@ -1,10 +1,43 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import useContractAt from 'hooks/useContractAt';
+import { Web3Context } from 'contexts/web3Context';
+import Auction from 'contracts/Auction.json';
 import { TokenAndDates, SellerDeposit, BidderInvites } from 'components';
 import NavBar from 'styles/navStyles';
 import { toast } from 'react-toastify';
 
 export default function SellerPhaseSwitcher({ auctionAddress }) {
+  const { web3Context } = useContext(Web3Context);
+  const { account, active } = web3Context;
+  const auctionContract = useContractAt(Auction, auctionAddress);
+  const [winner, setWinner] = useState('');
+  const [escrowAddress, setEscrowAddress] = useState(null);
   const [showing, setShowing] = useState('TOKEN_AND_DATES');
+
+  console.log('before auctionContract', auctionContract);
+  console.log('before auctionAddress', auctionAddress);
+
+  useEffect(() => {
+    console.log('active', active);
+    if (!active || !auctionContract) return;
+    console.log('auctionContract', auctionContract);
+    console.log('useEffect 1');
+    const getWinner = async () => {
+      const winningBidder = await auctionContract.getWinner();
+      if (winningBidder !== '0x0000000000000000000000000000000000000000') setWinner(winningBidder);
+    };
+    getWinner();
+  }, [active, auctionContract]);
+
+  useEffect(() => {
+    if (!active || !auctionContract || winner !== account) return;
+    console.log('useEffect 2');
+    const getEscrow = async () => {
+      const escrow = await auctionContract.getEscrow();
+      setEscrowAddress(escrow);
+    };
+    getEscrow();
+  }, [account, active, auctionContract, winner]);
 
   return (
     <div>

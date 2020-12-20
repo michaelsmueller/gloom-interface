@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useContract from 'hooks/useContract';
+import useDeployedContract from 'hooks/useDeployedContract';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import { BackButton, BidderPhaseSwitcher, AssetDetails, AuctionDateTimes } from 'components';
@@ -7,7 +7,7 @@ import { BackButton, BidderPhaseSwitcher, AssetDetails, AuctionDateTimes } from 
 export default function BidderDashboard() {
   const { web3Context } = useContext(Web3Context);
   const { active, error } = web3Context;
-  const factoryContract = useContract(AuctionFactory);
+  const factoryContract = useDeployedContract(AuctionFactory);
   const [auctionAddress, setAuctionAddress] = useState('');
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 export default function CommitBid({ auctionAddress, bidderDeposit }) {
   const { web3Context } = useContext(Web3Context);
   const { account } = web3Context;
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
 
   const submitBid = async ({ bid, password }) => {

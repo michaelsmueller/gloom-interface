@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { Button } from 'styles/buttonStyles';
@@ -7,7 +7,7 @@ import { Button } from 'styles/buttonStyles';
 export default function StartPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active } = web3Context;
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const [auctionDateTimes, setAuctionDateTimes] = useState({});
   const [winner, setWinner] = useState('');
 

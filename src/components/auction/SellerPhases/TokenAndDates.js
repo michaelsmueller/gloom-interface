@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContract from 'hooks/useContract';
+import useDeployedContract from 'hooks/useDeployedContract';
 import { LoadingContext } from 'contexts/loadingContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
@@ -8,8 +8,8 @@ import { TokenAndDatesForm } from 'components';
 import { toast } from 'react-toastify';
 
 export default function TokenAndDates() {
-  const factoryContract = useContract(AuctionFactory);
-  const logicContract = useContract(Auction);
+  const factoryContract = useDeployedContract(AuctionFactory);
+  const logicContract = useDeployedContract(Auction);
   const { setIsLoading } = useContext(LoadingContext);
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {

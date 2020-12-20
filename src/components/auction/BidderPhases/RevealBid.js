@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import { parseEther } from '@ethersproject/units';
@@ -9,7 +9,7 @@ import { RevealBidForm } from 'components';
 import { toast } from 'react-toastify';
 
 export default function RevealBid({ auctionAddress }) {
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
 
   const revealBid = async ({ bid, password }) => {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Escrow from 'contracts/Escrow.json';
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 export default function Pay({ escrowAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active } = web3Context;
-  const escrowContract = useContract(Escrow, escrowAddress);
+  const escrowContract = useContractAt(Escrow, escrowAddress);
   const [winningBid, setWinningBid] = useState(null);
   const { setIsLoading } = useContext(LoadingContext);
 

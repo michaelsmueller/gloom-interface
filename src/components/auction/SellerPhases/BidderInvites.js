@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import { parseEther } from '@ethersproject/units';
@@ -7,7 +7,7 @@ import { BidderInvitesForm } from 'components';
 import { toast } from 'react-toastify';
 
 export default function BidderInvites({ auctionAddress }) {
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const { setIsLoading } = useContext(LoadingContext);
 
   const inviteBidders = async ({ bidderDeposit, bidders }) => {

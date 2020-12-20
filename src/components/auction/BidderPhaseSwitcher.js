@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useContract from 'hooks/useContract';
+import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { CommitBid, RevealBid, Pay } from 'components';
@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 export default function BidderPhaseSwitcher({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active } = web3Context;
-  const auctionContract = useContract(Auction, auctionAddress);
+  const auctionContract = useContractAt(Auction, auctionAddress);
   const [bidderDeposit, setBidderDeposit] = useState(null);
   const [winner, setWinner] = useState('');
   const [escrowAddress, setEscrowAddress] = useState(null);
