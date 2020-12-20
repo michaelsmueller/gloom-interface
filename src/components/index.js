@@ -24,6 +24,8 @@ export { default as BidderInvites } from 'components/auction/SellerPhases/Bidder
 export { default as BidderInvitesForm } from 'components/auction/SellerPhases/BidderInvitesForm';
 export { default as SellerDeposit } from 'components/auction/SellerPhases/SellerDeposit';
 export { default as SellerDepositForm } from 'components/auction/SellerPhases/SellerDepositForm';
+export { default as Transfer } from 'components/auction/SellerPhases/Transfer';
+export { default as TransferForm } from 'components/auction/SellerPhases/TransferForm';
 
 // bidder dashboard
 export { default as BidderDashboard } from 'components/BidderDashboard';

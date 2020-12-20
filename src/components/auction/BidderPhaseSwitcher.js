@@ -11,7 +11,8 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
   const { account, active } = web3Context;
   const auctionContract = useContractAt(Auction, auctionAddress);
   const [bidderDeposit, setBidderDeposit] = useState(null);
-  const [winner, setWinner] = useState('');
+  const [winningBid, setWinningBid] = useState(0);
+  const [winningBidder, setWinningBidder] = useState('');
   const [escrowAddress, setEscrowAddress] = useState(null);
   const [showing, setShowing] = useState('COMMIT_BID');
 
@@ -27,8 +28,11 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
   useEffect(() => {
     if (!active || !auctionContract) return;
     const getWinner = async () => {
-      const winningBidder = await auctionContract.getWinner();
-      if (winningBidder !== '0x0000000000000000000000000000000000000000') setWinner(winningBidder);
+      const [bidder, bid] = await auctionContract.getWinner();
+      if (bidder !== '0x0000000000000000000000000000000000000000') {
+        setWinningBidder(bidder);
+        setWinningBid(bid);
+      }
     };
     getWinner();
   }, [active, auctionContract]);
@@ -38,24 +42,25 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
     auctionContract.once('LogSetWinner', bidder => {
       if (account === bidder) toast.success(`Congratulations, you won the auction`);
       else toast.dark(`Sorry, you lost the auction`);
-      setWinner(bidder);
+      // setWinning(bidder);
     });
     return () => auctionContract.removeAllListeners('LogSetWinner');
   });
 
   useEffect(() => {
-    if (!active || !auctionContract || winner !== account) return;
+    if (!active || !auctionContract || winningBidder !== account) return;
     const getEscrow = async () => {
       const escrow = await auctionContract.getEscrow();
       setEscrowAddress(escrow);
     };
     getEscrow();
-  }, [account, active, auctionContract, winner]);
+  }, [account, active, auctionContract, winningBidder]);
 
+  console.log('render bidder');
   return (
     <div>
       <h2>Bid</h2>
-      <BidderNav showing={showing} setShowing={setShowing} isWinner={winner === account} />
+      <BidderNav showing={showing} setShowing={setShowing} isWinner={winningBidder === account} />
       {showing === 'COMMIT_BID' && <CommitBid auctionAddress={auctionAddress} bidderDeposit={bidderDeposit} />}
       {showing === 'REVEAL_BID' && <RevealBid auctionAddress={auctionAddress} />}
       {showing === 'PAY' && <Pay escrowAddress={escrowAddress} />}
@@ -65,7 +70,7 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
 
 const BidderNav = ({ showing, setShowing, isWinner }) => {
   const handleClick = e => setShowing(e.target.value);
-  const highlighted = { fontWeight: 600, borderBottom: '2px solid #ee2B7a' };
+  const highlighted = { fontWeight: 600, borderBottom: '2px solid var(--primary)' };
   const commitButtonStyle = showing === 'COMMIT_BID' ? highlighted : null;
   const revealButtonStyle = showing === 'REVEAL_BID' ? highlighted : null;
   const payButtonStyle = showing === 'PAY' ? highlighted : null;

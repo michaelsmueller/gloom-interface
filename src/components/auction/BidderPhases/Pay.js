@@ -17,8 +17,8 @@ export default function Pay({ escrowAddress }) {
   useEffect(() => {
     if (!active || !escrowContract) return;
     const getWinningBid = async () => {
-      const winning = await escrowContract.getWinningBid();
-      setWinningBid(winning);
+      const bid = await escrowContract.getWinningBid();
+      setWinningBid(bid);
     };
     getWinningBid();
   }, [active, escrowContract]);
