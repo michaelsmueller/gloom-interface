@@ -2,26 +2,30 @@ import React from 'react';
 import styled from 'styled-components/macro';
 import { useHistory } from 'react-router-dom';
 
-const Back = styled.div`
-  border: 2px solid var(--textPrimary);
+const Icon = styled.i`
   font-size: 12px;
   font-weight: 600;
-  border-radius: 6px;
-  height: 25px;
-  width: 55px;
-  line-height: 20px;
-  margin: 2em 0;
-  text-align: center;
   transition: 0.5s ease-out;
 
   &:hover {
     color: var(--primary);
     cursor: pointer;
-    border: 2px solid var(--primary);
   }
 `;
 
 export default function BackButton() {
   const history = useHistory();
-  return <Back onClick={() => history.goBack()}>← back</Back>;
+  return (
+    <Icon
+      role='button'
+      onKeyDown={e => {
+        if (e.key !== 'Tab') history.goBack();
+      }}
+      onClick={() => history.goBack()}
+      tabIndex={0}
+      className='material-icons-round'
+    >
+      arrow_back
+    </Icon>
+  );
 }

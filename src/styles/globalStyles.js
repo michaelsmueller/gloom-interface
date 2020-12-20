@@ -14,12 +14,13 @@ const GlobalStyle = createGlobalStyle`
     --textDisabled:rgba(0, 0, 0, 0.38);
     --nearWhite: #ffffff73;
     --backgroundPrimary: #dde1e7;
+    --gloomBlue: #536791;
     --shadow: rgba(94, 104, 121, 0.288);
     --primary: rgba(188, 0, 45, 1);
   }
 
   h1, h2, h3 {
-    margin: 0.6em 0;
+    margin: 0.5em 0;
     --textPrimary: rgba(0, 0, 0, 0.87);
   }
 

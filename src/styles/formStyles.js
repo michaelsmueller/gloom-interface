@@ -13,19 +13,23 @@ export const FieldsetTitle = styled.h3`
 `;
 
 export const Label = styled.label`
+  font-size: 0.9em;
   display: flex;
   flex-direction: row;
-  width: 100%;
   margin: 5px 0;
+  flex-basis: auto;
   & > div {
+    min-width: 20%;
     display: flex;
     align-items: center;
-    width: 150px;
+    @media (max-width: 768px) {
+      min-width: 40%;
+    }
   }
 `;
 
 export const Input = styled.input`
-  width: 50%;
+  flex-grow: 1;
   border-radius: 20px;
   padding: 8px 15px;
   box-shadow: ${props =>
@@ -33,7 +37,7 @@ export const Input = styled.input`
 `;
 
 export const Select = styled.select`
-  width: 50%;
+  flex-grow: 1;
   border-radius: 20px;
   padding: 8px 15px;
   box-shadow: inset -3px -3px 5px var(--nearWhite), inset 3px 3px 3px var(--shadow);

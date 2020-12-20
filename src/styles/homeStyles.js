@@ -2,7 +2,6 @@ import styled from 'styled-components/macro';
 
 export const Container = styled.div`
   display: flex;
-  margin-top: 30px;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
@@ -14,18 +13,18 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.img`
-  max-width: 60vw;
+  max-width: 50vw;
 `;
 
 export const Headline = styled.h1`
-  margin-top: 40px;
+  margin-top: 20px;
   max-width: 700px;
   font-size: calc(1.4em + 0.5vw);
 `;
 
 export const SellingProposition = styled.p`
-  font-size: 1.1em;
-  line-height: 1.5em;
+  font-size: 1em;
+  line-height: 1.4em;
   max-width: 700px;
 `;
 
