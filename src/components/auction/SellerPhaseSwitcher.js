@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import useContractAt from 'hooks/useContractAt';
+import useWinner from 'hooks/useWinner';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { formatEther } from '@ethersproject/units';
-import { TokenAndDates, SellerDeposit, BidderInvites, Transfer } from 'components';
+import { TokenAndDates, SellerDeposit, BidderInvites, Transfer, SellerWithdraw } from 'components';
 import NavBar from 'styles/navStyles';
 import { toast } from 'react-toastify';
 
@@ -11,22 +12,24 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { account, active } = web3Context;
   const auctionContract = useContractAt(Auction, auctionAddress);
-  const [winningBid, setWinningBid] = useState(0);
-  const [winningBidder, setWinningBidder] = useState('');
+  const [sellerDeposit, setSellerDeposit] = useState(null);
+  const { setWinningBid, winningBidder, setWinningBidder } = useWinner(auctionContract);
+  // const [winningBid, setWinningBid] = useState(0);
+  // const [winningBidder, setWinningBidder] = useState('');
   const [escrowAddress, setEscrowAddress] = useState(null);
   const [showing, setShowing] = useState('TOKEN_AND_DATES');
 
-  useEffect(() => {
-    if (!active || !auctionContract) return;
-    const getWinner = async () => {
-      const [bidder, bid] = await auctionContract.getWinner();
-      if (bidder !== '0x0000000000000000000000000000000000000000') {
-        setWinningBidder(bidder);
-        setWinningBid(bid);
-      }
-    };
-    getWinner();
-  }, [active, auctionContract]);
+  // useEffect(() => {
+  //   if (!active || !auctionContract) return;
+  //   const getWinner = async () => {
+  //     const [bidder, bid] = await auctionContract.getWinner();
+  //     if (bidder !== '0x0000000000000000000000000000000000000000') {
+  //       setWinningBidder(bidder);
+  //       setWinningBid(bid);
+  //     }
+  //   };
+  //   getWinner();
+  // }, [active, auctionContract]);
 
   useEffect(() => {
     if (!active || !auctionContract) return null;
@@ -55,6 +58,7 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
       {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
       {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}
       {showing === 'TRANSFER' && <Transfer escrowAddress={escrowAddress} />}
+      {showing === 'WITHDRAW' && <SellerWithdraw auctionAddress={auctionAddress} escrowAddress={escrowAddress} />}
     </div>
   );
 }
@@ -69,6 +73,7 @@ const SellerNav = ({ showing, setShowing, auctionAddress, isWinner }) => {
   const depositButtonStyle = showing === 'SELLER_DEPOSIT' ? highlighted : null;
   const biddersButtonStyle = showing === 'BIDDER_INVITES' ? highlighted : null;
   const transferButtonStyle = showing === 'TRANSFER' ? highlighted : null;
+  const withdrawButtonStyle = showing === 'WITHDRAW' ? highlighted : null;
   return (
     <NavBar>
       <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
@@ -81,9 +86,14 @@ const SellerNav = ({ showing, setShowing, auctionAddress, isWinner }) => {
         Bidders
       </button>
       {isWinner && (
-        <button type='button' style={transferButtonStyle} onClick={handleClick} value='TRANSFER'>
-          Transfer
-        </button>
+        <>
+          <button type='button' style={transferButtonStyle} onClick={handleClick} value='TRANSFER'>
+            Transfer
+          </button>
+          <button type='button' style={withdrawButtonStyle} onClick={handleClick} value='WITHDRAW'>
+            Withdraw
+          </button>
+        </>
       )}
     </NavBar>
   );
