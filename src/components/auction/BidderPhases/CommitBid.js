@@ -22,7 +22,6 @@ export default function CommitBid({ auctionAddress, bidderDeposit }) {
       const salt = formatBytes32String(password);
       const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
       await auctionContract.submitBid(hashedBid, { from: account, value: parseEther(formatEther(bidderDeposit)) });
-
       toast.info('Committing bid');
       auctionContract.once('error', error =>
         toast.error(`Error committing bid: ${error.data?.message || error.message}`),

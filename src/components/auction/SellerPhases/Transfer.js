@@ -1,21 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useContractAt from 'hooks/useContractAt';
+import { useContractAt, useEscrowAddress } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
+import Auction from 'contracts/Auction.json';
 import Escrow from 'contracts/Escrow.json';
 import IERC20 from 'contracts/IERC20.json';
 import { formatUnits } from '@ethersproject/units';
 import { TransferForm } from 'components';
 import { toast } from 'react-toastify';
 
-export default function Transfer({ escrowAddress }) {
+export default function Transfer({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
   const { active } = web3Context;
+  const auctionContract = useContractAt(Auction, auctionAddress);
+  const { escrowAddress } = useEscrowAddress(auctionContract);
   const escrowContract = useContractAt(Escrow, escrowAddress);
+
   const [amount, setAmount] = useState(null);
   const [tokenAddress, setTokenAddress] = useState('');
   const tokenContract = useContractAt(IERC20, tokenAddress);
   const { setIsLoading } = useContext(LoadingContext);
+
+  // TO DO FIGURE OUT WHY THIS REQUIRES RERENDER
 
   useEffect(() => {
     if (!active || !escrowContract) return;
@@ -51,5 +57,6 @@ export default function Transfer({ escrowAddress }) {
     setIsLoading(false);
   };
 
+  console.log('transfer component, auctionAddress, escrowAddress', auctionAddress, escrowAddress);
   return <TransferForm amount={amount ? formatUnits(amount) : ''} onSubmit={transfer} />;
 }

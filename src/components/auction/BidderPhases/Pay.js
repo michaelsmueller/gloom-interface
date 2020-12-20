@@ -1,27 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
-import useContractAt from 'hooks/useContractAt';
+import React, { useContext } from 'react';
+import { useContractAt, useEscrowAddress, useWinner } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
+import Auction from 'contracts/Auction.json';
 import Escrow from 'contracts/Escrow.json';
 import { formatEther } from '@ethersproject/units';
 import { PayForm } from 'components';
 import { toast } from 'react-toastify';
 
-export default function Pay({ escrowAddress }) {
+export default function Pay({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);
-  const { account, active } = web3Context;
+  const { account } = web3Context;
+  const auctionContract = useContractAt(Auction, auctionAddress);
+  const { escrowAddress } = useEscrowAddress(auctionContract);
   const escrowContract = useContractAt(Escrow, escrowAddress);
-  const [winningBid, setWinningBid] = useState(null);
+  const { winningBid } = useWinner(auctionContract);
   const { setIsLoading } = useContext(LoadingContext);
-
-  useEffect(() => {
-    if (!active || !escrowContract) return;
-    const getWinningBid = async () => {
-      const bid = await escrowContract.getWinningBid();
-      setWinningBid(bid);
-    };
-    getWinningBid();
-  }, [active, escrowContract]);
 
   const pay = async () => {
     setIsLoading(true);

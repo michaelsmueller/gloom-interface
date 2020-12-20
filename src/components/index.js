@@ -15,6 +15,7 @@ export { default as Network } from 'components/debug/Network';
 // seller dashboard
 export { default as SellerDashboard } from 'components/SellerDashboard';
 export { default as SellerPhaseSwitcher } from 'components/auction/SellerPhaseSwitcher';
+export { default as SellerNav } from 'components/auction/SellerNav';
 export { default as StartPhases } from 'components/auction/StartPhases';
 
 // seller phases
@@ -32,6 +33,7 @@ export { default as SellerWithdrawForm } from 'components/auction/SellerPhases/S
 // bidder dashboard
 export { default as BidderDashboard } from 'components/BidderDashboard';
 export { default as BidderPhaseSwitcher } from 'components/auction/BidderPhaseSwitcher';
+export { default as BidderNav } from 'components/auction/BidderNav';
 
 // bidder phases
 export { default as CommitBid } from 'components/auction/BidderPhases/CommitBid';

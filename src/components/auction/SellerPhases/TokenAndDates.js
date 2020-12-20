@@ -15,8 +15,6 @@ export default function TokenAndDates() {
   const { setIsLoading } = useContext(LoadingContext);
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
-    // console.log('token' token);
-    // console.log(parseUnits(token));
     setIsLoading(true);
     try {
       await factoryContract.createAuction(
