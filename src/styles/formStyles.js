@@ -22,7 +22,7 @@ export const Label = styled.label`
     min-width: 20%;
     display: flex;
     align-items: center;
-    @media (max-width: 768px) {
+    @media (max-width: 576px) {
       min-width: 40%;
     }
   }

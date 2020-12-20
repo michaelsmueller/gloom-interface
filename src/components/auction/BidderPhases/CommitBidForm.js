@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 import { getPasswordStrength } from 'utils/validate';
 
 export default function CommitBidForm({ bidderDeposit, onSubmit }) {

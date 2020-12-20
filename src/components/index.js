@@ -4,7 +4,7 @@ export { default as Home } from 'components/Home';
 
 // common
 export { default as Head } from 'components/common/Head';
-export { default as Nav } from 'components/common/Nav';
+export { default as Banner } from 'components/common/Banner';
 export { default as BackButton } from 'components/common/BackButton';
 export { default as NotFound } from 'components/common/NotFound';
 

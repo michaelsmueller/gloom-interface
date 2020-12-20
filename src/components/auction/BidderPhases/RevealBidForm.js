@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function RevealBidForm({ onSubmit }) {
   const { register, handleSubmit, watch, errors } = useForm();

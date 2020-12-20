@@ -4,7 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'styles/globalStyles';
 import Web3ContextProvider from 'contexts/web3Context';
 import { getLibrary } from 'utils/web3Library';
-import { Head, Home, Network, Contracts, Nav, SellerDashboard, BidderDashboard, NotFound } from 'components';
+import { Head, Home, Network, Contracts, Banner, SellerDashboard, BidderDashboard, NotFound } from 'components';
 import LoadingContextProvider from 'contexts/loadingContext';
 import { ToastContainer } from 'react-toastify';
 import ContentWrapper from 'styles/appStyles';
@@ -23,9 +23,9 @@ export default function App() {
             <ContentWrapper>
               <Switch>
                 <Route exact path='/' component={Home} />
-                <NavRoute exact path='/seller' component={SellerDashboard} />
-                <NavRoute exact path='/bidder' component={BidderDashboard} />
-                <NavRoute path='*' component={NotFound} />
+                <BannerRoute exact path='/seller' component={SellerDashboard} />
+                <BannerRoute exact path='/bidder' component={BidderDashboard} />
+                <BannerRoute path='*' component={NotFound} />
               </Switch>
               <ToastContainer />
             </ContentWrapper>
@@ -36,13 +36,13 @@ export default function App() {
   );
 }
 
-const NavRoute = ({ exact, path, component: Component }) => (
+const BannerRoute = ({ exact, path, component: Component }) => (
   <Route
     exact={exact}
     path={path}
     component={() => (
       <>
-        <Nav />
+        <Banner />
         <Component />
       </>
     )}

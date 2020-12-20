@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input, Select } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 import tokenList from 'data/tokenListLocalhost.json';
 
 export default function TokenAndDatesForm({ onSubmit }) {

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useContract from 'hooks/useContract';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function StartPhases({ auctionAddress }) {
   const { web3Context } = useContext(Web3Context);

@@ -9,7 +9,7 @@ export default function Web3ContextProvider({ children }) {
   const web3Context = useWeb3React();
   const { activate } = web3Context;
   useEffect(() => {
-    const injectedConnector = new InjectedConnector({ supportedChainIds: [1, 3, 4, 13, 42, 1337] });
+    const injectedConnector = new InjectedConnector({ supportedChainIds: [42, 1337] });
     // const network = new NetworkConnector({
     //   urls: { 42: 'https://kovan.infura.io/v3/658ac54d0a4e41ddb61fbcaf9ab2c666' },
     // });

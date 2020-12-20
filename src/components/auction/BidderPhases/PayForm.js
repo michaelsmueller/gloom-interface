@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function PayForm({ winningBid, onSubmit }) {
   const { handleSubmit } = useForm();

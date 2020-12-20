@@ -34,7 +34,7 @@ export const Buttons = styled.div`
   flex-direction: row;
   width: 40vw;
 
-  @media (max-width: 768px) {
+  @media (max-width: 576px) {
     flex-direction: column;
     min-width: 60vw;
     max-width: 70vw;

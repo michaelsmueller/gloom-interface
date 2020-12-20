@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Logo, Headline, SellingProposition, Buttons } from 'styles/homeStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function Home() {
   const history = useHistory();
