@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
+import { formatEther } from '@ethersproject/units';
 import { TokenAndDates, SellerDeposit, BidderInvites, Transfer } from 'components';
 import NavBar from 'styles/navStyles';
 import { toast } from 'react-toastify';
@@ -29,7 +30,11 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
 
   useEffect(() => {
     if (!active || !auctionContract) return null;
-    auctionContract.once('LogSetWinner', bidder => toast.success(`${bidder} won the auction`));
+    auctionContract.once('LogSetWinner', (bidder, bid) => {
+      toast.success(`${bidder} won the auction with a bid of ${formatEther(bid)}`);
+      setWinningBidder(bidder);
+      setWinningBid(bid);
+    });
     return () => auctionContract.removeAllListeners('LogSetWinner');
   });
 
@@ -42,7 +47,6 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
     getEscrow();
   }, [account, active, auctionContract, winningBidder]);
 
-  console.log('render');
   return (
     <div>
       <h2>Auction</h2>

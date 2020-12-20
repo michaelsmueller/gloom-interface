@@ -3,7 +3,7 @@ import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
-import { formatUnits, parseEther } from '@ethersproject/units';
+import { formatEther, parseEther } from '@ethersproject/units';
 import { formatBytes32String } from '@ethersproject/strings';
 import { hexZeroPad } from '@ethersproject/bytes';
 import { CommitBidForm } from 'components';
@@ -21,14 +21,14 @@ export default function CommitBid({ auctionAddress, bidderDeposit }) {
       const bidHex = hexZeroPad(parseEther(bid), 32);
       const salt = formatBytes32String(password);
       const hashedBid = await auctionContract.getSaltedHash(bidHex, salt);
-      await auctionContract.submitBid(hashedBid, { from: account, value: parseEther(formatUnits(bidderDeposit)) });
+      await auctionContract.submitBid(hashedBid, { from: account, value: parseEther(formatEther(bidderDeposit)) });
 
       toast.info('Committing bid');
       auctionContract.once('error', error =>
         toast.error(`Error committing bid: ${error.data?.message || error.message}`),
       );
       auctionContract.once('LogBidderDepositReceived', (bidder, deposit) =>
-        toast.success(`${formatUnits(deposit)} ETH deposit received from ${bidder}`),
+        toast.success(`${formatEther(deposit)} ETH deposit received from ${bidder}`),
       );
       auctionContract.once('LogBidCommitted', (bidder, bidHash, bidCommitBlock) =>
         toast.success(`Hashed bid ${bidHash} commited from ${bidder} at block ${bidCommitBlock}`),
@@ -39,5 +39,5 @@ export default function CommitBid({ auctionAddress, bidderDeposit }) {
     setIsLoading(false);
   };
 
-  return <CommitBidForm bidderDeposit={bidderDeposit ? formatUnits(bidderDeposit) : ''} onSubmit={submitBid} />;
+  return <CommitBidForm bidderDeposit={bidderDeposit ? formatEther(bidderDeposit) : ''} onSubmit={submitBid} />;
 }

@@ -3,6 +3,8 @@ import useDeployedContract from 'hooks/useDeployedContract';
 import { LoadingContext } from 'contexts/loadingContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
+import { parseUnits } from '@ethersproject/units';
+import { DECIMALS } from 'data/constants';
 import { parseLocalDateTime } from 'utils/dateTime';
 import { TokenAndDatesForm } from 'components';
 import { toast } from 'react-toastify';
@@ -13,9 +15,17 @@ export default function TokenAndDates() {
   const { setIsLoading } = useContext(LoadingContext);
 
   const createAuction = async ({ amount, token, startDate, endDate }) => {
+    // console.log('token' token);
+    // console.log(parseUnits(token));
     setIsLoading(true);
     try {
-      await factoryContract.createAuction(logicContract.address, amount, token, startDate, endDate);
+      await factoryContract.createAuction(
+        logicContract.address,
+        parseUnits(amount, DECIMALS),
+        token,
+        startDate,
+        endDate,
+      );
       toast.info('Submitted transaction to create auction ');
       factoryContract.once('error', error =>
         toast.error(`Error creating auction: ${error.data?.message || error.message}`),

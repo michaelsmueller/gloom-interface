@@ -42,7 +42,7 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
     auctionContract.once('LogSetWinner', bidder => {
       if (account === bidder) toast.success(`Congratulations, you won the auction`);
       else toast.dark(`Sorry, you lost the auction`);
-      // setWinning(bidder);
+      setWinningBidder(bidder);
     });
     return () => auctionContract.removeAllListeners('LogSetWinner');
   });

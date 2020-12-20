@@ -15,7 +15,7 @@ export default function TransferForm({ amount, onSubmit }) {
           <Input type='number' value={amount} id='amount' name='amount' readOnly />
         </Label>
       </Fieldset>
-      <Button type='submit'>Transfer</Button>
+      <Button type='submit'>Approve & transfer</Button>
     </form>
   );
 }

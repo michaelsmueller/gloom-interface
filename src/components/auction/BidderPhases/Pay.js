@@ -3,7 +3,7 @@ import useContractAt from 'hooks/useContractAt';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Escrow from 'contracts/Escrow.json';
-import { formatUnits } from '@ethersproject/units';
+import { formatEther } from '@ethersproject/units';
 import { PayForm } from 'components';
 import { toast } from 'react-toastify';
 
@@ -32,7 +32,7 @@ export default function Pay({ escrowAddress }) {
         toast.error(`Error making payment: ${error.data?.message || error.message}`),
       );
       escrowContract.once('LogBuyerPaid', (buyer, amount) =>
-        toast.success(`${formatUnits(amount)} ETH payment completed by ${buyer}`),
+        toast.success(`${formatEther(amount)} ETH payment completed by ${buyer}`),
       );
     } catch (error) {
       toast.error(`Error: ${error.data?.message || error.message}`);
@@ -40,6 +40,5 @@ export default function Pay({ escrowAddress }) {
     setIsLoading(false);
   };
 
-  console.log('escrowAddress', escrowAddress);
-  return <PayForm winningBid={winningBid ? formatUnits(winningBid) : ''} onSubmit={pay} />;
+  return <PayForm winningBid={winningBid ? formatEther(winningBid) : ''} onSubmit={pay} />;
 }
