@@ -1,10 +1,9 @@
-/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
-export default function RevealBidForm({ bidderDeposit, onSubmit }) {
+export default function RevealBidForm({ onSubmit }) {
   const { register, handleSubmit, watch, errors } = useForm();
   const [passwordShown, setPasswordShown] = useState(false);
   const password = useRef({});
@@ -13,14 +12,6 @@ export default function RevealBidForm({ bidderDeposit, onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset>
-        <FieldsetTitle>Bidder deposit</FieldsetTitle>
-        <Label htmlFor='bidder-deposit'>
-          <div>Amount (ETH):</div>
-          <Input type='number' value={bidderDeposit} id='bidder-deposit' name='bidderDeposit' readOnly />
-        </Label>
-      </Fieldset>
-
       <Fieldset>
         <FieldsetTitle>Confirm bid</FieldsetTitle>
         <Label htmlFor='bid'>

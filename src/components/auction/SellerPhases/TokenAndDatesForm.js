@@ -1,9 +1,18 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input, Select } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
-import tokenList from 'data/tokenListLocalhost.json';
+import { Button } from 'styles/buttonStyles';
+// import tokenList from 'data/tokenListLocalhost.json';
+
+import MikeToken from 'contracts/MikeToken.json';
+
+const tokenList = [
+  {
+    symbol: 'MIKE',
+    name: 'Mike',
+    address: MikeToken.networks[1337].address,
+  },
+];
 
 export default function TokenAndDatesForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();

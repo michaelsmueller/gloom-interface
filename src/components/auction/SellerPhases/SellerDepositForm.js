@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function SellerDeposit({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();

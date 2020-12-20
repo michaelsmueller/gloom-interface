@@ -1,14 +1,12 @@
-import React, { useContext } from 'react';
-import useContract from 'hooks/useContract';
+import React from 'react';
+import useDeployedContract from 'hooks/useDeployedContract';
 import useAuctionAddresses from 'hooks/useAuctionAddresses';
-import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
 
 export default function Contracts() {
-  const { web3Context } = useContext(Web3Context);
-  const factoryContract = useContract(AuctionFactory, web3Context);
-  const logicContract = useContract(Auction, web3Context);
+  const factoryContract = useDeployedContract(AuctionFactory);
+  const logicContract = useDeployedContract(Auction);
   const { auctionAddresses } = useAuctionAddresses(factoryContract);
   const { address: factoryAddress } = factoryContract || '';
   const { address: logicAddress } = logicContract || '';

@@ -1,24 +1,14 @@
-/* eslint-disable no-console */
 import React, { useContext, useEffect, useState } from 'react';
-import AuctionFactory from 'contracts/AuctionFactory.json';
-import { Contract } from '@ethersproject/contracts';
+import useDeployedContract from 'hooks/useDeployedContract';
 import { Web3Context } from 'contexts/web3Context';
-import { getSigner } from 'utils/web3Library';
-import { BackButton, AuctionSetup, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
+import AuctionFactory from 'contracts/AuctionFactory.json';
+import { BackButton, SellerPhaseSwitcher, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
 
 export default function SellerDashboard() {
   const { web3Context } = useContext(Web3Context);
-  const { active, error, library, chainId } = web3Context;
-  const [factoryContract, setFactoryContract] = useState(null);
+  const { active, error } = web3Context;
+  const factoryContract = useDeployedContract(AuctionFactory);
   const [auctionAddress, setAuctionAddress] = useState('');
-
-  useEffect(() => {
-    if (!active) return;
-    const signer = getSigner(library);
-    const { address } = AuctionFactory.networks[chainId];
-    const factoryInstance = new Contract(address, AuctionFactory.abi, signer);
-    setFactoryContract(factoryInstance);
-  }, [active, library, chainId]);
 
   useEffect(() => {
     if (!active || !factoryContract) return;
@@ -30,11 +20,11 @@ export default function SellerDashboard() {
   }, [active, factoryContract]);
 
   useEffect(() => {
-    if (!active || !factoryContract) return;
+    if (!active || !factoryContract) return null;
     factoryContract.on('LogAuctionCreated', auction => {
-      console.log('SellerDashboard LogAuctionCreated auction', auction);
       setAuctionAddress(auction);
     });
+    return () => factoryContract.removeAllListeners('LogAuctionCreated');
   });
 
   if (!active && !error) return <div>loading</div>;
@@ -44,7 +34,7 @@ export default function SellerDashboard() {
     <div>
       <BackButton />
       <h1>Seller dashboard</h1>
-      <AuctionSetup auctionAddress={auctionAddress} />
+      <SellerPhaseSwitcher auctionAddress={auctionAddress} />
       <AssetDetails auctionAddress={auctionAddress} />
       <AuctionDateTimes auctionAddress={auctionAddress} />
       <StartPhases auctionAddress={auctionAddress} />

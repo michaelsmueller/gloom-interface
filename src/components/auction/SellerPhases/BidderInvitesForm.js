@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
-import Button from 'styles/buttonStyles';
+import { Button } from 'styles/buttonStyles';
 
 export default function BidderInvites({ onSubmit }) {
   const [indexes, setIndexes] = useState([]);

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -13,12 +14,13 @@ const GlobalStyle = createGlobalStyle`
     --textDisabled:rgba(0, 0, 0, 0.38);
     --nearWhite: #ffffff73;
     --backgroundPrimary: #dde1e7;
+    --gloomBlue: #536791;
     --shadow: rgba(94, 104, 121, 0.288);
     --primary: rgba(188, 0, 45, 1);
   }
 
   h1, h2, h3 {
-    margin: 0.6em 0;
+    margin: 0.5em 0;
     --textPrimary: rgba(0, 0, 0, 0.87);
   }
 
@@ -33,7 +35,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     color: var(--textPrimary);
     background: var(--backgroundPrimary);
-    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #root {
+    width: 100vw;
   }
 
   p {
