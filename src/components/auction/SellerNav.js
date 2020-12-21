@@ -1,22 +1,22 @@
 import React from 'react';
 import NavBar from 'styles/navStyles';
-import { toast } from 'react-toastify';
 
-export default function SellerNav({ showing, setShowing, auctionAddress, isWinner }) {
-  const handleClick = e => {
-    if (auctionAddress) setShowing(e.target.value);
-    else toast.warning('Auction has not been set up and mined yet.');
-  };
+export default function SellerNav({ showing, setShowing, isWinner }) {
+  const handleClick = e => setShowing(e.target.value);
   const highlighted = { fontWeight: 600, borderBottom: '2px solid var(--primary)' };
   const buttonStyle = value => (showing === value ? highlighted : null);
-  const setupButtonStyle = buttonStyle('TOKEN');
+  const summaryButtonStyle = buttonStyle('SUMMARY');
+  const tokenButtonStyle = buttonStyle('TOKEN');
   const depositButtonStyle = buttonStyle('SELLER_DEPOSIT');
   const biddersButtonStyle = buttonStyle('BIDDER_INVITES');
   const transferButtonStyle = buttonStyle('TRANSFER');
   const withdrawButtonStyle = buttonStyle('WITHDRAW');
   return (
     <NavBar>
-      <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN'>
+      <button type='button' style={summaryButtonStyle} onClick={handleClick} value='SUMMARY'>
+        Summary
+      </button>
+      <button type='button' style={tokenButtonStyle} onClick={handleClick} value='TOKEN'>
         Token
       </button>
       <button type='button' style={depositButtonStyle} onClick={handleClick} value='SELLER_DEPOSIT'>

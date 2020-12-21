@@ -1,22 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import useContractAt from 'hooks/useContractAt';
-import { Web3Context } from 'contexts/web3Context';
+import React from 'react';
+import { useContractAt } from 'hooks';
 import Auction from 'contracts/Auction.json';
 import { Button } from 'styles/buttonStyles';
 
 export default function StartPhases({ auctionAddress }) {
-  const { web3Context } = useContext(Web3Context);
-  const { active } = web3Context;
   const auctionContract = useContractAt(Auction, auctionAddress);
-  const [winner, setWinner] = useState('');
-
-  useEffect(() => {
-    if (!active || !auctionContract) return null;
-    auctionContract.on('LogSetWinner', bidder => {
-      setWinner(bidder);
-    });
-    return () => auctionContract.removeAllListeners('LogSetWinner');
-  });
 
   const startCommit = () => auctionContract.startCommit();
   const startReveal = () => auctionContract.startReveal();
@@ -25,25 +13,18 @@ export default function StartPhases({ auctionAddress }) {
 
   return (
     <div>
-      <h2>Phases</h2>
       <Button type='button' onClick={startCommit}>
-        Start commit
+        Commit
       </Button>
       <Button type='button' onClick={startReveal}>
-        Start reveal
+        Reveal
       </Button>
       <Button type='button' onClick={startDeliver}>
-        Start deliver
+        Deliver
       </Button>
       <Button type='button' onClick={startWithdraw}>
-        Start withdraw
+        Withdraw
       </Button>
-      <h2>Winner</h2>
-      <pre>
-        <ul>
-          <li>{winner || 'pending'}</li>
-        </ul>
-      </pre>
     </div>
   );
 }

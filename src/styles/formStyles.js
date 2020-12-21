@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
 export const Fieldset = styled.fieldset`
-  margin: 10px 0;
+  margin: 15px 0;
   padding: 10px;
   border: none;
   border-radius: 20px;

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { LoadingContext } from 'contexts/loadingContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
@@ -8,7 +8,7 @@ import { DECIMALS } from 'data/constants';
 import { TokenForm } from 'components';
 import { toast } from 'react-toastify';
 
-export default function Token() {
+export default function SellerSummary() {
   const factoryContract = useDeployedContract(AuctionFactory);
   const logicContract = useDeployedContract(Auction);
   const { setIsLoading } = useContext(LoadingContext);

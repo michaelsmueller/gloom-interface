@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
-import { BackButton, SellerPhaseSwitcher, AssetDetails, StartPhases } from 'components';
+import { BackButton, SellerPhaseSwitcher } from 'components';
 import Container from 'styles/dashboardStyles';
 
 export default function SellerDashboard() {
@@ -36,8 +36,6 @@ export default function SellerDashboard() {
       <BackButton />
       <h1>Seller dashboard</h1>
       <SellerPhaseSwitcher auctionAddress={auctionAddress} />
-      <AssetDetails auctionAddress={auctionAddress} />
-      <StartPhases auctionAddress={auctionAddress} />
     </Container>
   );
 }

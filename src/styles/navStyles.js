@@ -6,8 +6,14 @@ const NavBar = styled.div`
 
   & > button {
     padding: 5px 0;
-    margin: 10px;
+    margin: 5px 10px;
     text-transform: uppercase;
+    transition: 0.1s ease-out;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--primary);
+    }
   }
 `;
 

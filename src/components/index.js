@@ -13,6 +13,8 @@ export { default as SellerNav } from 'components/auction/SellerNav';
 export { default as StartPhases } from 'components/auction/StartPhases';
 
 // seller phases
+export { default as SellerSummary } from 'components/auction/SellerPhases/SellerSummary';
+export { default as SellerSummaryForm } from 'components/auction/SellerPhases/SellerSummaryForm';
 export { default as Token } from 'components/auction/SellerPhases/Token';
 export { default as TokenForm } from 'components/auction/SellerPhases/TokenForm';
 export { default as BidderInvites } from 'components/auction/SellerPhases/BidderInvites';
@@ -38,6 +40,3 @@ export { default as Pay } from 'components/auction/BidderPhases/Pay';
 export { default as PayForm } from 'components/auction/BidderPhases/PayForm';
 export { default as BidderWithdraw } from 'components/auction/BidderPhases/BidderWithdraw';
 export { default as BidderWithdrawForm } from 'components/auction/BidderPhases/BidderWithdrawForm';
-
-// auction status
-export { default as AssetDetails } from 'components/auction/status/AssetDetails';

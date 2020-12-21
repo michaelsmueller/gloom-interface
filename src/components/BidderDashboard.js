@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
-import { BackButton, BidderPhaseSwitcher, AssetDetails } from 'components';
+import { BackButton, BidderPhaseSwitcher } from 'components';
 import Container from 'styles/dashboardStyles';
 
 export default function BidderDashboard() {
@@ -36,10 +36,7 @@ export default function BidderDashboard() {
       <BackButton />
       <h1>Bidder dashboard</h1>
       {auctionAddress ? (
-        <>
-          <AssetDetails auctionAddress={auctionAddress} />
-          <BidderPhaseSwitcher auctionAddress={auctionAddress} />
-        </>
+        <BidderPhaseSwitcher auctionAddress={auctionAddress} />
       ) : (
         <div>You have no auction invites</div>
       )}
