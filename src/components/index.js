@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-
 export { default as Home } from 'components/Home';
 
 // common
