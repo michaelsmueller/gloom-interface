@@ -4,7 +4,7 @@ import { Web3ReactProvider } from '@web3-react/core';
 import GlobalStyle from 'styles/globalStyles';
 import Web3ContextProvider from 'contexts/web3Context';
 import { getLibrary } from 'utils/web3Library';
-import { Head, Home, Network, Contracts, Banner, SellerDashboard, BidderDashboard, NotFound } from 'components';
+import { Head, Home, Banner, SellerDashboard, BidderDashboard, NotFound } from 'components';
 import LoadingContextProvider from 'contexts/loadingContext';
 import { ToastContainer } from 'react-toastify';
 import ContentWrapper from 'styles/appStyles';
@@ -12,9 +12,6 @@ import ContentWrapper from 'styles/appStyles';
 export default function App() {
   return (
     <Router>
-      {/* <Network />
-            <Contracts />
-            <hr style={{ margin: '15px 0' }} /> */}
       <Head />
       <ContentWrapper>
         <GlobalStyle />

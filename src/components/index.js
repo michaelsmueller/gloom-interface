@@ -8,10 +8,6 @@ export { default as Banner } from 'components/common/Banner';
 export { default as BackButton } from 'components/common/BackButton';
 export { default as NotFound } from 'components/common/NotFound';
 
-// debug
-export { default as Contracts } from 'components/debug/Contracts';
-export { default as Network } from 'components/debug/Network';
-
 // seller dashboard
 export { default as SellerDashboard } from 'components/SellerDashboard';
 export { default as SellerPhaseSwitcher } from 'components/auction/SellerPhaseSwitcher';
