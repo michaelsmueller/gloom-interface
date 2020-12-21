@@ -8,11 +8,12 @@ export default function SellerNav({ showing, setShowing, auctionAddress, isWinne
     else toast.warning('Auction has not been set up and mined yet.');
   };
   const highlighted = { fontWeight: 600, borderBottom: '2px solid var(--primary)' };
-  const setupButtonStyle = showing === 'TOKEN_AND_DATES' ? highlighted : null;
-  const depositButtonStyle = showing === 'SELLER_DEPOSIT' ? highlighted : null;
-  const biddersButtonStyle = showing === 'BIDDER_INVITES' ? highlighted : null;
-  const transferButtonStyle = showing === 'TRANSFER' ? highlighted : null;
-  const withdrawButtonStyle = showing === 'WITHDRAW' ? highlighted : null;
+  const buttonStyle = value => (showing === value ? highlighted : null);
+  const setupButtonStyle = buttonStyle('TOKEN_AND_DATES');
+  const depositButtonStyle = buttonStyle('SELLER_DEPOSIT');
+  const biddersButtonStyle = buttonStyle('BIDDER_INVITES');
+  const transferButtonStyle = buttonStyle('TRANSFER');
+  const withdrawButtonStyle = buttonStyle('WITHDRAW');
   return (
     <NavBar>
       <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>

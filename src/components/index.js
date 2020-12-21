@@ -36,6 +36,8 @@ export { default as RevealBid } from 'components/auction/BidderPhases/RevealBid'
 export { default as RevealBidForm } from 'components/auction/BidderPhases/RevealBidForm';
 export { default as Pay } from 'components/auction/BidderPhases/Pay';
 export { default as PayForm } from 'components/auction/BidderPhases/PayForm';
+export { default as BidderWithdraw } from 'components/auction/BidderPhases/BidderWithdraw';
+export { default as BidderWithdrawForm } from 'components/auction/BidderPhases/BidderWithdrawForm';
 
 // auction status
 export { default as AssetDetails } from 'components/auction/status/AssetDetails';

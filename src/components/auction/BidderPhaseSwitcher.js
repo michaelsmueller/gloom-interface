@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useContractAt, useBidderDeposit, useWinner } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
-import { BidderNav, CommitBid, RevealBid, Pay } from 'components';
+import { BidderNav, CommitBid, RevealBid, Pay, BidderWithdraw } from 'components';
 import { toast } from 'react-toastify';
 
 export default function BidderPhaseSwitcher({ auctionAddress }) {
@@ -30,6 +30,7 @@ export default function BidderPhaseSwitcher({ auctionAddress }) {
       {showing === 'COMMIT_BID' && <CommitBid auctionAddress={auctionAddress} bidderDeposit={bidderDeposit} />}
       {showing === 'REVEAL_BID' && <RevealBid auctionAddress={auctionAddress} />}
       {showing === 'PAY' && <Pay auctionAddress={auctionAddress} />}
+      {showing === 'WITHDRAW' && <BidderWithdraw auctionAddress={auctionAddress} />}
     </div>
   );
 }
