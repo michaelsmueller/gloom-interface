@@ -11,40 +11,40 @@ import ContentWrapper from 'styles/appStyles';
 
 export default function App() {
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Web3ContextProvider>
-        <Router>
-          <GlobalStyle />
-          <LoadingContextProvider>
-            {/* <Network />
+    <Router>
+      {/* <Network />
             <Contracts />
             <hr style={{ margin: '15px 0' }} /> */}
-            <Head />
-            <ContentWrapper>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <BannerRoute exact path='/seller' component={SellerDashboard} />
-                <BannerRoute exact path='/bidder' component={BidderDashboard} />
-                <BannerRoute path='*' component={NotFound} />
-              </Switch>
-              <ToastContainer />
-            </ContentWrapper>
-          </LoadingContextProvider>
-        </Router>
-      </Web3ContextProvider>
-    </Web3ReactProvider>
+      <Head />
+      <ContentWrapper>
+        <GlobalStyle />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <AppRoute exact path='/seller' component={SellerDashboard} />
+          <AppRoute exact path='/bidder' component={BidderDashboard} />
+          <AppRoute path='*' component={NotFound} />
+        </Switch>
+        <ToastContainer />
+      </ContentWrapper>
+    </Router>
   );
 }
 
-const BannerRoute = ({ exact, path, component: Component }) => (
-  <Route
-    exact={exact}
-    path={path}
-    component={() => (
-      <>
-        <Banner />
-        <Component />
-      </>
-    )}
-  />
+const AppRoute = ({ exact, path, component: Component }) => (
+  <Web3ReactProvider getLibrary={getLibrary}>
+    <Web3ContextProvider>
+      <LoadingContextProvider>
+        <Route
+          exact={exact}
+          path={path}
+          component={() => (
+            <>
+              <Banner />
+              <Component />
+            </>
+          )}
+        />
+      </LoadingContextProvider>
+    </Web3ContextProvider>
+  </Web3ReactProvider>
 );
