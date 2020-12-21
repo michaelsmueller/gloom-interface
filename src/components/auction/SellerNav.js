@@ -9,15 +9,15 @@ export default function SellerNav({ showing, setShowing, auctionAddress, isWinne
   };
   const highlighted = { fontWeight: 600, borderBottom: '2px solid var(--primary)' };
   const buttonStyle = value => (showing === value ? highlighted : null);
-  const setupButtonStyle = buttonStyle('TOKEN_AND_DATES');
+  const setupButtonStyle = buttonStyle('TOKEN');
   const depositButtonStyle = buttonStyle('SELLER_DEPOSIT');
   const biddersButtonStyle = buttonStyle('BIDDER_INVITES');
   const transferButtonStyle = buttonStyle('TRANSFER');
   const withdrawButtonStyle = buttonStyle('WITHDRAW');
   return (
     <NavBar>
-      <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN_AND_DATES'>
-        Token & Dates
+      <button type='button' style={setupButtonStyle} onClick={handleClick} value='TOKEN'>
+        Token
       </button>
       <button type='button' style={depositButtonStyle} onClick={handleClick} value='SELLER_DEPOSIT'>
         Deposit

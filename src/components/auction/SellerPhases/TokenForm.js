@@ -14,7 +14,7 @@ const tokenList = [
   },
 ];
 
-export default function TokenAndDatesForm({ onSubmit }) {
+export default function TokenForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,30 +50,6 @@ export default function TokenAndDatesForm({ onSubmit }) {
             ))}
           </Select>
           {errors.token && <p>{errors.token.message}</p>}
-        </Label>
-      </Fieldset>
-
-      <Fieldset>
-        <FieldsetTitle>Auction period</FieldsetTitle>
-        <Label htmlFor='start-date'>
-          <div>Start date & time:</div>
-          <Input
-            type='datetime-local'
-            id='start-date'
-            name='startDate'
-            ref={register({ required: 'You must specify a start date & time' })}
-          />
-          {errors.startDate && <p>{errors.startDate.message}</p>}
-        </Label>
-        <Label htmlFor='end-date'>
-          <div>End date & time:</div>
-          <Input
-            type='datetime-local'
-            id='end-date'
-            name='endDate'
-            ref={register({ required: 'You must specify an end date & time' })}
-          />
-          {errors.endDate && <p>{errors.endDate.message}</p>}
         </Label>
       </Fieldset>
 
