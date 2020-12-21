@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { useContractAt, useEscrowAddress, useBidderDeposit } from 'hooks';
+import { useContractAt, useEscrowAddress, useBidderDeposit, useAsset } from 'hooks';
 // import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import Escrow from 'contracts/Escrow.json';
-import { formatEther, parseEther } from '@ethersproject/units';
+import { formatEther, formatUnits } from '@ethersproject/units';
+import { DECIMALS } from 'data/constants';
 import { BidderWithdrawForm } from 'components';
 import { toast } from 'react-toastify';
 
@@ -14,6 +15,7 @@ export default function BidderWithdraw({ auctionAddress }) {
   const { escrowAddress } = useEscrowAddress(auctionContract);
   const escrowContract = useContractAt(Escrow, escrowAddress);
   const { bidderDeposit } = useBidderDeposit(auctionContract);
+  const { tokenAmount, tokenContract } = useAsset(auctionContract);
   const { setIsLoading } = useContext(LoadingContext);
 
   const withdrawDeposit = async () => {
@@ -32,18 +34,18 @@ export default function BidderWithdraw({ auctionAddress }) {
   };
 
   const withdrawTokens = async () => {
-    // try {
-    //   await escrowContract.sellerWithdraw();
-    //   toast.info('Withdrawing payment');
-    //   auctionContract.once('error', error =>
-    //     toast.error(`Error withdrawing payment: ${error.data?.message || error.message}`),
-    //   );
-    //   escrowContract.once('LogSellerWithdrew', (seller, amount) =>
-    //     toast.success(`${formatEther(amount)} ETH payment withdrawel completed by ${seller}`),
-    //   );
-    // } catch (error) {
-    //   toast.error(`Error: ${error.data?.message || error.message}`);
-    // }
+    try {
+      await escrowContract.buyerWithdraw();
+      toast.info('Withdrawing tokens');
+      escrowContract.once('error', error =>
+        toast.error(`Error withdrawing tokens: ${error.data?.message || error.message}`),
+      );
+      escrowContract.once('LogBuyerWithdrew', (buyer, amount) =>
+        toast.success(`${formatUnits(amount, DECIMALS)} token withdrawel completed by ${buyer}`),
+      );
+    } catch (error) {
+      toast.error(`Error: ${error.data?.message || error.message}`);
+    }
   };
 
   const withdraw = async () => {
@@ -53,5 +55,12 @@ export default function BidderWithdraw({ auctionAddress }) {
     setIsLoading(false);
   };
 
-  return <BidderWithdrawForm bidderDeposit={bidderDeposit ? formatEther(bidderDeposit) : ''} onSubmit={withdraw} />;
+  return (
+    <BidderWithdrawForm
+      bidderDeposit={bidderDeposit ? formatEther(bidderDeposit) : ''}
+      tokenAmount={tokenAmount ? formatUnits(tokenAmount, DECIMALS) : ''}
+      tokenContract={tokenContract}
+      onSubmit={withdraw}
+    />
+  );
 }
