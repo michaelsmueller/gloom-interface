@@ -3,6 +3,7 @@ import useDeployedContract from 'hooks/useDeployedContract';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import { BackButton, BidderPhaseSwitcher, AssetDetails } from 'components';
+import Container from 'styles/dashboardStyles';
 
 export default function BidderDashboard() {
   const { web3Context } = useContext(Web3Context);
@@ -31,7 +32,7 @@ export default function BidderDashboard() {
   if (error) return <div>Error {error.message}</div>;
 
   return (
-    <div>
+    <Container>
       <BackButton />
       <h1>Bidder dashboard</h1>
       {auctionAddress ? (
@@ -42,6 +43,6 @@ export default function BidderDashboard() {
       ) : (
         <div>You have no auction invites</div>
       )}
-    </div>
+    </Container>
   );
 }

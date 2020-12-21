@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useContractAt, useEscrowAddress, useBidderDeposit, useAsset } from 'hooks';
-// import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import Escrow from 'contracts/Escrow.json';
@@ -10,7 +9,6 @@ import { BidderWithdrawForm } from 'components';
 import { toast } from 'react-toastify';
 
 export default function BidderWithdraw({ auctionAddress }) {
-  // const { web3Context } = useContext(Web3Context);
   const auctionContract = useContractAt(Auction, auctionAddress);
   const { escrowAddress } = useEscrowAddress(auctionContract);
   const escrowContract = useContractAt(Escrow, escrowAddress);

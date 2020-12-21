@@ -19,6 +19,13 @@ const GlobalStyle = createGlobalStyle`
     --primary: rgba(188, 0, 45, 1);
   }
 
+  #root {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   h1, h2, h3 {
     margin: 0.5em 0;
     --textPrimary: rgba(0, 0, 0, 0.87);
@@ -35,13 +42,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     color: var(--textPrimary);
     background: var(--backgroundPrimary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #root {
-    width: 100vw;
   }
 
   p {

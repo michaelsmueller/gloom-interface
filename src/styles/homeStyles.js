@@ -1,10 +1,13 @@
 import styled from 'styled-components/macro';
 
 export const Container = styled.div`
+  height: 90vh;
+  max-width: 640px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin: 30px;
 
   & > * {
     align-items: center;

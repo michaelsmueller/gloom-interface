@@ -5,6 +5,7 @@ import LoadingOverlay from 'react-loading-overlay';
 export const LoadingContext = createContext();
 
 const StyledLoader = styled(LoadingOverlay)`
+  width: 100vw;
   padding: 80px 20px;
   display: flex;
   flex-direction: column;
