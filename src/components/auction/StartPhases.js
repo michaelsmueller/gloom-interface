@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useContractAt, usePhase } from 'hooks';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
@@ -10,6 +10,15 @@ export default function StartPhases({ auctionAddress, isBidder = false, rerender
   const auctionContract = useContractAt(Auction, auctionAddress);
   const { phase, setPhase } = usePhase(auctionContract);
   const { setIsLoading } = useContext(LoadingContext);
+
+  useEffect(() => {
+    if (!auctionContract) return null;
+    auctionContract.once('LogPhaseChangeTo', newPhase => {
+      toast.success(`Phase is now ${newPhase}`);
+      setPhase(newPhase);
+    });
+    return () => auctionContract.removeAllListeners('LogPhaseChangeTo');
+  });
 
   const changePhase = async callback => {
     setIsLoading(true);
