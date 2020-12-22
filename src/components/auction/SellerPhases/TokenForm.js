@@ -19,7 +19,7 @@ export default function TokenForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset>
-        <FieldsetTitle>Asset to auction</FieldsetTitle>
+        <FieldsetTitle>Auctioned asset</FieldsetTitle>
         <Label htmlFor='amount'>
           <div>Amount (tokens):</div>
           <Input

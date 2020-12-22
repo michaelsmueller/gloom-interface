@@ -77,6 +77,11 @@ const GlobalStyle = createGlobalStyle`
   input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
+
+  .Toastify__toast {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.8em;
+  }
 }
 `;
 

@@ -6,13 +6,15 @@ export { default as Banner } from 'components/common/Banner';
 export { default as BackButton } from 'components/common/BackButton';
 export { default as NotFound } from 'components/common/NotFound';
 
+// both seller and bidder
+export { default as StartPhases } from 'components/auction/StartPhases';
+
 // seller dashboard
 export { default as SellerDashboard } from 'components/SellerDashboard';
 export { default as SellerPhaseSwitcher } from 'components/auction/SellerPhaseSwitcher';
 export { default as SellerNav } from 'components/auction/SellerNav';
 
 // seller phases
-export { default as StartPhases } from 'components/auction/SellerPhases/StartPhases';
 export { default as SellerSummary } from 'components/auction/SellerPhases/SellerSummary';
 export { default as SellerSummaryForm } from 'components/auction/SellerPhases/SellerSummaryForm';
 export { default as Token } from 'components/auction/SellerPhases/Token';
@@ -32,6 +34,8 @@ export { default as BidderPhaseSwitcher } from 'components/auction/BidderPhaseSw
 export { default as BidderNav } from 'components/auction/BidderNav';
 
 // bidder phases
+export { default as BidderSummary } from 'components/auction/BidderPhases/BidderSummary';
+export { default as BidderSummaryForm } from 'components/auction/BidderPhases/BidderSummaryForm';
 export { default as CommitBid } from 'components/auction/BidderPhases/CommitBid';
 export { default as CommitBidForm } from 'components/auction/BidderPhases/CommitBidForm';
 export { default as RevealBid } from 'components/auction/BidderPhases/RevealBid';

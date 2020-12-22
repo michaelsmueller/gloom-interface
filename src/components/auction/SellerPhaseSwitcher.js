@@ -36,8 +36,8 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
     <div>
       <h2>Auction</h2>
       <SellerNav showing={showing} setShowing={setShowing} isWinner={winningBidder} />
-      <StartPhases auctionAddress={auctionAddress} />
-      {showing === 'SUMMARY' && <SellerSummary auctionAddress={auctionAddress} winningBidder={winningBidder} />}
+      <StartPhases auctionAddress={auctionAddress} rerender={winningBidder} />
+      {showing === 'SUMMARY' && <SellerSummary auctionAddress={auctionAddress} rerender={winningBidder} />}
       {showing === 'TOKEN' && <Token />}
       {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
       {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}

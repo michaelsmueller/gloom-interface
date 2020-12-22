@@ -1,8 +1,8 @@
 import React from 'react';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
 
-export default function SellerSummaryForm({ data }) {
-  const { tokenAmount, tokenContract, sellerDeposit, winningBid, winningBidder, bidderDeposit, bidders } = data;
+export default function BidderSummaryForm({ data }) {
+  const { tokenAmount, tokenContract, sellerDeposit, winningBid, winningBidder, bidderDeposit } = data;
   return (
     <form>
       <Fieldset>
@@ -40,19 +40,6 @@ export default function SellerSummaryForm({ data }) {
           <div>Amount (ETH):</div>
           <Input type='number' value={bidderDeposit} id='bidder-deposit' name='bidderDeposit' readOnly />
         </Label>
-      </Fieldset>
-      <Fieldset>
-        <FieldsetTitle>Invited bidders</FieldsetTitle>
-        {bidders.map(bidder => {
-          return (
-            <div name='bidder' key={bidder}>
-              <Label htmlFor='account'>
-                <div>Address:</div>
-                <Input type='text' value={bidder} id='bidder' name='bidder' readOnly />
-              </Label>
-            </div>
-          );
-        })}
       </Fieldset>
     </form>
   );

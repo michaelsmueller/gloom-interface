@@ -24,7 +24,7 @@ export default function BidderWithdraw({ auctionAddress }) {
         toast.error(`Error withdrawing deposit: ${error.data?.message || error.message}`),
       );
       auctionContract.once('LogBidderDepositWithdrawn', (bidder, deposit) =>
-        toast.success(`${formatEther(deposit)} ETH withdrawel completed by ${bidder}`),
+        toast.success(`${formatEther(deposit)} ETH withdrawal completed by ${bidder}`),
       );
     } catch (error) {
       toast.error(`Error: ${error.data?.message || error.message}`);
@@ -39,7 +39,7 @@ export default function BidderWithdraw({ auctionAddress }) {
         toast.error(`Error withdrawing tokens: ${error.data?.message || error.message}`),
       );
       escrowContract.once('LogBuyerWithdrew', (buyer, amount) =>
-        toast.success(`${formatUnits(amount, DECIMALS)} token withdrawel completed by ${buyer}`),
+        toast.success(`${formatUnits(amount, DECIMALS)} token withdrawal completed by ${buyer}`),
       );
     } catch (error) {
       toast.error(`Error: ${error.data?.message || error.message}`);
