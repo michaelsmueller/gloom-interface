@@ -15,5 +15,5 @@ export default function usePhase(auctionContract) {
     getPhase();
   }, [active, auctionContract]);
 
-  return { phase };
+  return { phase, setPhase };
 }

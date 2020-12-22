@@ -6,7 +6,7 @@ const NavBar = styled.div`
 
   & > button {
     padding: 5px 0;
-    margin: 5px 10px;
+    margin: 10px;
     text-transform: uppercase;
     transition: 0.1s ease-out;
 

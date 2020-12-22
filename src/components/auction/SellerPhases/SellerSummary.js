@@ -3,7 +3,7 @@ import { useContractAt, useAsset, useSellerDeposit, useWinner, useBidderDeposit,
 import Auction from 'contracts/Auction.json';
 import { formatUnits, formatEther } from '@ethersproject/units';
 import { DECIMALS } from 'data/constants';
-import { StartPhases, SellerSummaryForm } from 'components';
+import { SellerSummaryForm } from 'components';
 
 export default function SellerSummary({ auctionAddress }) {
   const auctionContract = useContractAt(Auction, auctionAddress);
@@ -23,10 +23,5 @@ export default function SellerSummary({ auctionAddress }) {
     bidders,
   };
 
-  return (
-    <>
-      <StartPhases auctionAddress={auctionAddress} />
-      <SellerSummaryForm data={data} />
-    </>
-  );
+  return <SellerSummaryForm data={data} />;
 }

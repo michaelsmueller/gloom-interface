@@ -9,6 +9,8 @@ export const Button = styled.button`
   font-size: ${props => (props.large ? '1.1em' : '0.8em')};
   transition: 0.1s ease-out;
 
+  color: ${props => (props.active ? 'var(--primary)' : null)};
+
   &:hover {
     cursor: pointer;
     color: var(--primary);

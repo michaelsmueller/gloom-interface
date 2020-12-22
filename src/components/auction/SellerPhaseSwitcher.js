@@ -3,7 +3,16 @@ import { useContractAt, useWinner } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import Auction from 'contracts/Auction.json';
 import { formatEther } from '@ethersproject/units';
-import { SellerNav, SellerSummary, Token, SellerDeposit, BidderInvites, Transfer, SellerWithdraw } from 'components';
+import {
+  SellerNav,
+  StartPhases,
+  SellerSummary,
+  Token,
+  SellerDeposit,
+  BidderInvites,
+  Transfer,
+  SellerWithdraw,
+} from 'components';
 import { toast } from 'react-toastify';
 
 export default function SellerPhaseSwitcher({ auctionAddress }) {
@@ -27,7 +36,8 @@ export default function SellerPhaseSwitcher({ auctionAddress }) {
     <div>
       <h2>Auction</h2>
       <SellerNav showing={showing} setShowing={setShowing} isWinner={winningBidder} />
-      {showing === 'SUMMARY' && <SellerSummary auctionAddress={auctionAddress} reloadOn={winningBidder} />}
+      <StartPhases auctionAddress={auctionAddress} />
+      {showing === 'SUMMARY' && <SellerSummary auctionAddress={auctionAddress} winningBidder={winningBidder} />}
       {showing === 'TOKEN' && <Token />}
       {showing === 'SELLER_DEPOSIT' && <SellerDeposit auctionAddress={auctionAddress} />}
       {showing === 'BIDDER_INVITES' && <BidderInvites auctionAddress={auctionAddress} />}

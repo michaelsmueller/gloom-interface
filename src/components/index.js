@@ -10,9 +10,9 @@ export { default as NotFound } from 'components/common/NotFound';
 export { default as SellerDashboard } from 'components/SellerDashboard';
 export { default as SellerPhaseSwitcher } from 'components/auction/SellerPhaseSwitcher';
 export { default as SellerNav } from 'components/auction/SellerNav';
-export { default as StartPhases } from 'components/auction/StartPhases';
 
 // seller phases
+export { default as StartPhases } from 'components/auction/SellerPhases/StartPhases';
 export { default as SellerSummary } from 'components/auction/SellerPhases/SellerSummary';
 export { default as SellerSummaryForm } from 'components/auction/SellerPhases/SellerSummaryForm';
 export { default as Token } from 'components/auction/SellerPhases/Token';
