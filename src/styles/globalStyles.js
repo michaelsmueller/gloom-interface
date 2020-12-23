@@ -19,6 +19,13 @@ const GlobalStyle = createGlobalStyle`
     --primary: rgba(188, 0, 45, 1);
   }
 
+  #root {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   h1, h2, h3 {
     margin: 0.5em 0;
     --textPrimary: rgba(0, 0, 0, 0.87);
@@ -35,13 +42,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans', sans-serif;
     color: var(--textPrimary);
     background: var(--backgroundPrimary);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  #root {
-    width: 100vw;
   }
 
   p {
@@ -76,6 +76,11 @@ const GlobalStyle = createGlobalStyle`
 
   input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
+  }
+
+  .Toastify__toast {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 0.8em;
   }
 }
 `;

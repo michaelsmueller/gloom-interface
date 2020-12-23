@@ -1,29 +1,22 @@
 import React, { useContext } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { LoadingContext } from 'contexts/loadingContext';
 import AuctionFactory from 'contracts/AuctionFactory.json';
 import Auction from 'contracts/Auction.json';
 import { parseUnits } from '@ethersproject/units';
 import { DECIMALS } from 'data/constants';
-import { parseLocalDateTime } from 'utils/dateTime';
-import { TokenAndDatesForm } from 'components';
+import { TokenForm } from 'components';
 import { toast } from 'react-toastify';
 
-export default function TokenAndDates() {
+export default function SellerSummary() {
   const factoryContract = useDeployedContract(AuctionFactory);
   const logicContract = useDeployedContract(Auction);
   const { setIsLoading } = useContext(LoadingContext);
 
-  const createAuction = async ({ amount, token, startDate, endDate }) => {
+  const createAuction = async ({ amount, token }) => {
     setIsLoading(true);
     try {
-      await factoryContract.createAuction(
-        logicContract.address,
-        parseUnits(amount, DECIMALS),
-        token,
-        startDate,
-        endDate,
-      );
+      await factoryContract.createAuction(logicContract.address, parseUnits(amount, DECIMALS), token);
       toast.info('Submitted transaction to create auction ');
       factoryContract.once('error', error =>
         toast.error(`Error creating auction: ${error.data?.message || error.message}`),
@@ -37,15 +30,7 @@ export default function TokenAndDates() {
     setIsLoading(false);
   };
 
-  const setupAuction = ({ amount, token, startDate, endDate }) => {
-    const data = {
-      amount,
-      token,
-      startDate: parseLocalDateTime(startDate),
-      endDate: parseLocalDateTime(endDate),
-    };
-    createAuction(data);
-  };
+  const setupAuction = ({ amount, token }) => createAuction({ amount, token });
 
-  return <TokenAndDatesForm onSubmit={setupAuction} />;
+  return <TokenForm onSubmit={setupAuction} />;
 }

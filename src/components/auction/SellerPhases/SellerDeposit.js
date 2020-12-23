@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContractAt from 'hooks/useContractAt';
+import { useContractAt } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';

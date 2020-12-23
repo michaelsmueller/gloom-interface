@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import useContractAt from 'hooks/useContractAt';
+import { useContractAt } from 'hooks';
 import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import { parseEther } from '@ethersproject/units';

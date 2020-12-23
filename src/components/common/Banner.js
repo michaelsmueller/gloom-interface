@@ -26,7 +26,7 @@ export default function Banner() {
     <Container>
       <Content>
         <a href='/'>
-          <Logo src='test.png' alt='Gloom logo' />
+          <Logo src='gloom-logo.png' alt='Gloom logo' />
         </a>
         <div>
           {chainId && (

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
-import { BackButton, BidderPhaseSwitcher, AssetDetails, AuctionDateTimes } from 'components';
+import { BackButton, BidderPhaseSwitcher } from 'components';
+import Container from 'styles/dashboardStyles';
 
 export default function BidderDashboard() {
   const { web3Context } = useContext(Web3Context);
@@ -31,18 +32,14 @@ export default function BidderDashboard() {
   if (error) return <div>Error {error.message}</div>;
 
   return (
-    <div>
+    <Container>
       <BackButton />
       <h1>Bidder dashboard</h1>
       {auctionAddress ? (
-        <>
-          <AssetDetails auctionAddress={auctionAddress} />
-          <AuctionDateTimes auctionAddress={auctionAddress} />
-          <BidderPhaseSwitcher auctionAddress={auctionAddress} />
-        </>
+        <BidderPhaseSwitcher auctionAddress={auctionAddress} />
       ) : (
         <div>You have no auction invites</div>
       )}
-    </div>
+    </Container>
   );
 }

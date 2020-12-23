@@ -1,62 +1,76 @@
-import React, { useContext, useEffect, useState } from 'react';
-import useContractAt from 'hooks/useContractAt';
-import { Web3Context } from 'contexts/web3Context';
+import React, { useContext, useEffect } from 'react';
+import { useContractAt, usePhase } from 'hooks';
+import { LoadingContext } from 'contexts/loadingContext';
 import Auction from 'contracts/Auction.json';
 import { Button } from 'styles/buttonStyles';
+import { toast } from 'react-toastify';
 
-export default function StartPhases({ auctionAddress }) {
-  const { web3Context } = useContext(Web3Context);
-  const { active } = web3Context;
+// eslint-disable-next-line no-unused-vars
+export default function StartPhases({ auctionAddress, isBidder = false, rerender }) {
   const auctionContract = useContractAt(Auction, auctionAddress);
-  const [auctionDateTimes, setAuctionDateTimes] = useState({});
-  const [winner, setWinner] = useState('');
+  const { phase, setPhase } = usePhase(auctionContract);
+  const { setIsLoading } = useContext(LoadingContext);
 
   useEffect(() => {
-    if (!active || !auctionContract) return;
-    const getDateTimes = async () => {
-      const dateTimes = await auctionContract.getDateTimes();
-      setAuctionDateTimes({
-        startDateTime: dateTimes[0].toNumber(),
-        endDateTime: dateTimes[1].toNumber(),
-      });
-    };
-    getDateTimes();
-  }, [active, auctionContract]);
-
-  useEffect(() => {
-    if (!active || !auctionContract) return null;
-    auctionContract.on('LogSetWinner', bidder => {
-      setWinner(bidder);
+    if (!auctionContract) return null;
+    auctionContract.once('LogPhaseChangeTo', newPhase => {
+      toast.success(`Phase is now ${newPhase}`);
+      setPhase(newPhase);
     });
-    return () => auctionContract.removeAllListeners('LogSetWinner');
+    return () => auctionContract.removeAllListeners('LogPhaseChangeTo');
   });
 
-  const startCommit = () => auctionContract.startCommit();
-  const startReveal = () => auctionContract.startReveal();
-  const startDeliver = () => auctionContract.startDeliver();
-  const startWithdraw = () => auctionContract.startWithdraw();
+  const changePhase = async callback => {
+    setIsLoading(true);
+    try {
+      await callback();
+      toast.info('Changing phase');
+      auctionContract.once('error', error =>
+        toast.error(`Error changing phase: ${error.data?.message || error.message}`),
+      );
+      auctionContract.once('LogPhaseChangeTo', newPhase => {
+        toast.success(`Phase is now ${newPhase}`);
+        setPhase(newPhase);
+      });
+    } catch (error) {
+      toast.error(`Error: ${error.data?.message || error.message}`);
+    }
+    setIsLoading(false);
+  };
+
+  const startCommit = () => {
+    if (auctionContract && !isBidder) changePhase(auctionContract.startCommit);
+  };
+
+  const startReveal = () => {
+    if (auctionContract && !isBidder) changePhase(auctionContract.startReveal);
+  };
+
+  const startDeliver = () => {
+    if (auctionContract && !isBidder) changePhase(auctionContract.startDeliver);
+  };
+
+  const startWithdraw = () => {
+    if (auctionContract && !isBidder) changePhase(auctionContract.startWithdraw);
+  };
 
   return (
     <div>
-      <h2>Phases</h2>
-      <Button type='button' onClick={startCommit}>
-        Start commit
+      <Button active={phase === 'Setup' || !phase} inactive={isBidder} type='button'>
+        Setup
       </Button>
-      <Button type='button' onClick={startReveal}>
-        Start reveal
+      <Button type='button' active={phase === 'Commit'} inactive={isBidder} onClick={startCommit}>
+        Commit
       </Button>
-      <Button type='button' onClick={startDeliver}>
-        Start deliver
+      <Button type='button' active={phase === 'Reveal'} inactive={isBidder} onClick={startReveal}>
+        Reveal
       </Button>
-      <Button type='button' onClick={startWithdraw}>
-        Start withdraw
+      <Button type='button' active={phase === 'Deliver'} inactive={isBidder} onClick={startDeliver}>
+        Deliver
       </Button>
-      <h2>Winner</h2>
-      <pre>
-        <ul>
-          <li>{winner || 'pending'}</li>
-        </ul>
-      </pre>
+      <Button type='button' active={phase === 'Withdraw'} inactive={isBidder} onClick={startWithdraw}>
+        Withdraw
+      </Button>
     </div>
   );
 }

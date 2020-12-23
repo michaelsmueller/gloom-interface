@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import useDeployedContract from 'hooks/useDeployedContract';
+import { useDeployedContract } from 'hooks';
 import { Web3Context } from 'contexts/web3Context';
 import AuctionFactory from 'contracts/AuctionFactory.json';
-import { BackButton, SellerPhaseSwitcher, AssetDetails, AuctionDateTimes, StartPhases } from 'components';
+import { BackButton, SellerPhaseSwitcher } from 'components';
+import Container from 'styles/dashboardStyles';
 
 export default function SellerDashboard() {
   const { web3Context } = useContext(Web3Context);
@@ -31,13 +32,10 @@ export default function SellerDashboard() {
   if (error) return <div>Error {error.message}</div>;
 
   return (
-    <div>
+    <Container>
       <BackButton />
       <h1>Seller dashboard</h1>
       <SellerPhaseSwitcher auctionAddress={auctionAddress} />
-      <AssetDetails auctionAddress={auctionAddress} />
-      <AuctionDateTimes auctionAddress={auctionAddress} />
-      <StartPhases auctionAddress={auctionAddress} />
-    </div>
+    </Container>
   );
 }

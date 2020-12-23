@@ -2,24 +2,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input, Select } from 'styles/formStyles';
 import { Button } from 'styles/buttonStyles';
-// import tokenList from 'data/tokenListLocalhost.json';
+import tokenList from 'data/tokenListKovan';
 
-import MikeToken from 'contracts/MikeToken.json';
-
-const tokenList = [
-  {
-    symbol: 'MIKE',
-    name: 'Mike',
-    address: MikeToken.networks[1337].address,
-  },
-];
-
-export default function TokenAndDatesForm({ onSubmit }) {
+export default function TokenForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Fieldset>
-        <FieldsetTitle>Asset to auction</FieldsetTitle>
+        <FieldsetTitle>Auctioned asset</FieldsetTitle>
         <Label htmlFor='amount'>
           <div>Amount (tokens):</div>
           <Input
@@ -50,30 +40,6 @@ export default function TokenAndDatesForm({ onSubmit }) {
             ))}
           </Select>
           {errors.token && <p>{errors.token.message}</p>}
-        </Label>
-      </Fieldset>
-
-      <Fieldset>
-        <FieldsetTitle>Auction period</FieldsetTitle>
-        <Label htmlFor='start-date'>
-          <div>Start date & time:</div>
-          <Input
-            type='datetime-local'
-            id='start-date'
-            name='startDate'
-            ref={register({ required: 'You must specify a start date & time' })}
-          />
-          {errors.startDate && <p>{errors.startDate.message}</p>}
-        </Label>
-        <Label htmlFor='end-date'>
-          <div>End date & time:</div>
-          <Input
-            type='datetime-local'
-            id='end-date'
-            name='endDate'
-            ref={register({ required: 'You must specify an end date & time' })}
-          />
-          {errors.endDate && <p>{errors.endDate.message}</p>}
         </Label>
       </Fieldset>
 

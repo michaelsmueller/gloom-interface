@@ -57,6 +57,5 @@ export default function Transfer({ auctionAddress }) {
     setIsLoading(false);
   };
 
-  console.log('transfer component, auctionAddress, escrowAddress', auctionAddress, escrowAddress);
   return <TransferForm amount={amount ? formatUnits(amount) : ''} onSubmit={transfer} />;
 }

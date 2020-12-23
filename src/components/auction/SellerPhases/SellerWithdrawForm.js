@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input } from 'styles/formStyles';
 import { Button } from 'styles/buttonStyles';
 
-export default function SellerWithdrawForm({ sellerDeposit, onSubmit }) {
+export default function SellerWithdrawForm({ sellerDeposit, winningBid, onSubmit }) {
   const { handleSubmit } = useForm();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -14,7 +14,14 @@ export default function SellerWithdrawForm({ sellerDeposit, onSubmit }) {
           <Input type='number' value={sellerDeposit} id='seller-deposit' name='sellerDeposit' readOnly />
         </Label>
       </Fieldset>
-      <Button type='submit'>Withdraw deposit</Button>
+      <Fieldset>
+        <FieldsetTitle>Winning bid</FieldsetTitle>
+        <Label htmlFor='bid'>
+          <div>Amount (ETH):</div>
+          <Input type='number' value={winningBid} id='winning-bid' name='winningBid' readOnly />
+        </Label>
+      </Fieldset>
+      <Button type='submit'>Withdraw deposit & bid</Button>
     </form>
   );
 }
