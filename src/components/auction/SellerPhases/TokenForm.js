@@ -2,18 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Fieldset, FieldsetTitle, Label, Input, Select } from 'styles/formStyles';
 import { Button } from 'styles/buttonStyles';
-import MikeToken from 'contracts/MikeToken.json';
-
-const tokenList = [
-  {
-    symbol: 'MIKE (localhost)',
-    address: MikeToken.networks[1337].address,
-  },
-  {
-    symbol: 'LINK (Kovan)',
-    address: '0xa36085F69e2889c224210F603D836748e7dC0088',
-  },
-];
+import tokenList from 'data/tokenListKovan';
 
 export default function TokenForm({ onSubmit }) {
   const { register, handleSubmit, errors } = useForm();

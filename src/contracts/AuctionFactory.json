@@ -5682,12 +5682,13 @@
         }
       },
       "links": {},
-      "address": "0xE7973F9170764728dA92cD062Db97a5eA42AB600",
-      "transactionHash": "0xe410160314b28cab7df5cec0ef4a428c5976e88b6f9433924ac780b7a36ff250"
+      "address": "0xfC213A3324b196859e53844f8148fa174b30E96a",
+      "transactionHash": "0xb17cd80109ac813f216b11f2fd7e1fcff6d4fa90002d7a30f8acd21db5df8ca0"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2020-12-22T22:05:53.126Z",
+  "updatedAt": "2020-12-22T23:57:06.620Z",
+  "networkType": "ethereum",
   "devdoc": {
     "author": "Michael S. Mueller",
     "details": "AuctionFactory inherits ProxyFactory to allow minimal proxy deploy of Auction instancesAuctionFactory inherits Pausable to allow admin to pause deploy of new Auction instances",
