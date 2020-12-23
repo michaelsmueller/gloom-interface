@@ -955,12 +955,12 @@
     "1337": {
       "events": {},
       "links": {},
-      "address": "0x955a43A3CA060525eed8fEb6585e4e8855B8a043",
-      "transactionHash": "0x376fc5cb9001e506d22b3488509251bee287960669be594aa670bf5758e43d80"
+      "address": "0x16a012a9E550811407dD28fdb057fd1B3183F32A",
+      "transactionHash": "0xed2155c736b3f8e695222c3b9d36769436969065320d242f4fbc89c7968762d5"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2020-12-22T23:57:06.724Z",
+  "updatedAt": "2020-12-23T01:03:26.048Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
